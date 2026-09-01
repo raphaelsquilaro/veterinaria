@@ -1,0 +1,45 @@
+<header th:fragment="header" class="header" >
+
+    <div class="header-container">
+
+        <a
+                th:href="@{/dashboard}"
+                class="brand"
+        >
+            🐾 VetMark
+        </a>
+
+
+        <div class="header-user">
+
+        <span>
+            Usuário
+        </span>
+
+
+            <form
+                    th:action="@{/logout}"
+                    method="post"
+            >
+
+                <input
+                        type="hidden"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"
+                >
+
+
+                <button
+                        type="submit"
+                        class="logout-button"
+                >
+                    Sair
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</header>
