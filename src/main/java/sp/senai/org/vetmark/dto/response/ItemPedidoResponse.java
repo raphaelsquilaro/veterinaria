@@ -1,6 +1,7 @@
 package sp.senai.org.vetmark.dto.response;
 
 import sp.senai.org.vetmark.model.entity.Pedido;
+import sp.senai.org.vetmark.model.entity.Produto;
 import sp.senai.org.vetmark.model.entity.Servico;
 
 import java.math.BigDecimal;
@@ -11,6 +12,6 @@ public record ItemPedidoResponse(
         BigDecimal valorUnitario,
         BigDecimal valorTotal,
         Pedido pedido,
-        Servico servico
+        Produto produto
 ) {
 }

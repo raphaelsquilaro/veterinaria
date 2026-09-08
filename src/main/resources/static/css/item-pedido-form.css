@@ -1,0 +1,440 @@
+/* =========================================================
+   ITEM PEDIDO - FORMULÁRIO
+   ========================================================= */
+
+.item-pedido-form-page {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+
+    min-height: calc(100vh - 70px);
+
+    padding: 32px;
+
+    background: #f6f8fb;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.form-page-header {
+    margin-bottom: 24px;
+}
+
+.form-page-header h1 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.form-page-header p {
+    margin: 8px 0 0;
+
+    color: #64748b;
+
+    font-size: 15px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 12px;
+
+    color: #64748b;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+            color 0.2s ease,
+            transform 0.2s ease;
+}
+
+.back-link:hover {
+    color: #2563eb;
+
+    transform: translateX(-2px);
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.form-card {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    box-shadow:
+            0 4px 12px rgba(15, 23, 42, 0.04);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   CABEÇALHO DO CARD
+   ========================================================= */
+
+.form-card-header {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 24px 28px;
+
+    border-bottom: 1px solid #eef0f3;
+}
+
+.form-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+
+    font-size: 24px;
+}
+
+.form-card-header h2 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 18px;
+}
+
+.form-card-header p {
+    margin: 5px 0 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FORMULÁRIO
+   ========================================================= */
+
+.item-pedido-form {
+    padding: 28px;
+}
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 22px 20px;
+}
+
+.form-group {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+
+    color: #374151;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group label span {
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.form-group input,
+.form-group select {
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 11px 13px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   DINHEIRO
+   ========================================================= */
+
+.money-input {
+    display: flex;
+
+    width: 100%;
+}
+
+.money-input span {
+    min-width: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #d1d5db;
+
+    border-right: none;
+
+    border-radius: 9px 0 0 9px;
+
+    background: #f8fafc;
+
+    color: #64748b;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.money-input input {
+    border-radius: 0 9px 9px 0;
+}
+
+.money-input:focus-within span {
+    border-color: #2563eb;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+
+/* =========================================================
+   TOTAL
+   ========================================================= */
+
+.total-preview {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 28px;
+
+    padding: 20px 22px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+}
+
+.total-preview div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.total-preview span {
+    color: #475569;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.total-preview small {
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+.total-preview strong {
+    color: #1d4ed8;
+
+    font-size: 24px;
+}
+
+
+/* =========================================================
+   DIVISOR
+   ========================================================= */
+
+.form-divider {
+    width: 100%;
+    height: 1px;
+
+    margin: 28px 0;
+
+    background: #e5e7eb;
+}
+
+
+/* =========================================================
+   AÇÕES
+   ========================================================= */
+
+.form-actions {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+}
+
+.btn-primary,
+.btn-secondary {
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 0 18px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.btn-primary {
+    border: 1px solid #2563eb;
+
+    background: #2563eb;
+
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+
+    border-color: #1d4ed8;
+}
+
+.btn-secondary {
+    border: 1px solid #d1d5db;
+
+    background: #ffffff;
+
+    color: #475569;
+}
+
+.btn-secondary:hover {
+    background: #f8fafc;
+
+    border-color: #b8c0ca;
+}
+
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .item-pedido-form-page {
+        padding: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-card-header {
+        padding: 20px;
+    }
+
+    .item-pedido-form {
+        padding: 20px;
+    }
+
+    .total-preview {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+
+}

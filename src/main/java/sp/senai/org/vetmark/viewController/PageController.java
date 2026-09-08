@@ -13,9 +13,4 @@ public class PageController {
     public String login() {
         return "index";
     }
-
-    @GetMapping("/dashboard")
-    public String dashboard() {
-        return "dashboard";
-    }
 }

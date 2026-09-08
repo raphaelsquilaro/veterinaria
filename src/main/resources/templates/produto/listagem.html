@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/produto.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <title>Produtos - VetMark</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <aside th:replace="~{fragments/sidebar :: sidebar}"></aside>
+
+    <main class="main-content produto-page">
+
+        <div class="page-header">
+
+            <div>
+                <h1>Produtos</h1>
+
+                <p>
+                    Gerencie os produtos disponíveis para venda na veterinária.
+                </p>
+            </div>
+
+            <a
+                    th:href="@{/produto/cadastro}"
+                    class="btn-primary">
+                + Novo Produto
+            </a>
+
+        </div>
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h2>Lista de Produtos</h2>
+
+                    <p>
+                        Consulte, edite ou remova produtos cadastrados.
+                    </p>
+                </div>
+
+                <div class="search-box">
+
+                    <span>🔍</span>
+
+                    <input
+                            type="text"
+                            id="searchProduto"
+                            placeholder="Buscar produto...">
+
+                </div>
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Produto</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                        <th>Estoque</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr
+                            th:each="produto : ${produtos}"
+                            class="produto-row">
+
+                        <td
+                                th:text="${produto.id}">
+                            1
+                        </td>
+
+                        <td>
+
+                            <div class="produto-info">
+
+                                <div class="produto-icon">
+                                    📦
+                                </div>
+
+                                <strong
+                                        th:text="${produto.nome}">
+                                    Produto
+                                </strong>
+
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <span
+                                    class="produto-descricao"
+                                    th:text="${produto.descricao != null and !produto.descricao.isBlank()
+                                        ? produto.descricao
+                                        : 'Sem descrição'}">
+                                Sem descrição
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <strong class="produto-preco">
+
+                                R$
+                                <span
+                                        th:text="${#numbers.formatDecimal(produto.preco, 1, 'POINT', 2, 'COMMA')}">
+                                    0,00
+                                </span>
+
+                            </strong>
+
+                        </td>
+
+                        <td>
+
+                            <span
+                                    class="estoque"
+                                    th:text="${produto.estoque}">
+                                0
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span
+                                    class="status-badge"
+                                    th:classappend="${produto.ativo}
+                                        ? ' status-ativo'
+                                        : ' status-inativo'"
+                                    th:text="${produto.ativo}
+                                        ? 'Ativo'
+                                        : 'Inativo'">
+                                Ativo
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="table-actions">
+
+                                <a
+                                        th:href="@{/produto/editar/{id}(id=${produto.id})}"
+                                        class="btn-action btn-edit"
+                                        title="Editar">
+                                    ✏️
+                                </a>
+
+                                <a
+                                        th:href="@{/produto/excluir/{id}(id=${produto.id})}"
+                                        class="btn-action btn-delete"
+                                        title="Excluir"
+                                        th:attr="data-id=${produto.id},
+                                                 data-name=${produto.nome}">
+                                    🗑️
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    <tr
+                            th:if="${#lists.isEmpty(produtos)}"
+                            class="empty-row">
+
+                        <td colspan="7">
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    📦
+                                </div>
+
+                                <h3>
+                                    Nenhum produto cadastrado
+                                </h3>
+
+                                <p>
+                                    Comece cadastrando o primeiro produto.
+                                </p>
+
+                                <a
+                                        th:href="@{/produto/cadastro}"
+                                        class="btn-primary">
+                                    + Cadastrar Produto
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/produto.js}"></script>
+
+</body>
+</html>

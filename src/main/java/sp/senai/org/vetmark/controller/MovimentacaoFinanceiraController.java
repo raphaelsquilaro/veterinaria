@@ -1,85 +1,122 @@
 package sp.senai.org.vetmark.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import sp.senai.org.vetmark.exception.ResourceNotFoundException;
 import sp.senai.org.vetmark.model.entity.MovimentacaoFinanceira;
-import sp.senai.org.vetmark.repository.MovimentacaoFinanceiraRepository;
+import sp.senai.org.vetmark.model.enums.CategoriaDespensa;
+import sp.senai.org.vetmark.model.enums.TipoMovimentacao;
+import sp.senai.org.vetmark.repository.PedidoRepository;
+import sp.senai.org.vetmark.service.MovimentacaoFinanceiraService;
+
+import java.time.LocalDate;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/financeiro")
 public class MovimentacaoFinanceiraController {
 
-    private final MovimentacaoFinanceiraRepository repository;
+    private final MovimentacaoFinanceiraService service;
+    private final PedidoRepository pedidoRepository;
 
     @GetMapping("/listagem")
-    public String listarFinanceiro(Model model) {
+    public String listarMovimentacoes(Model model) {
 
         model.addAttribute(
-                "financeiros",
-                repository.findAll()
+                "movimentacoes",
+                service.findAll()
         );
 
-        return "";
+        return "financeiro/listagem";
     }
 
     @GetMapping("/cadastro")
-    public String cadastroFinanceiro(Model model) {
+    public String cadastro(Model model) {
+
+        MovimentacaoFinanceira movimentacao =
+                new MovimentacaoFinanceira();
+
+        movimentacao.setData(LocalDate.now());
 
         model.addAttribute(
-                "financeiro",
-                new MovimentacaoFinanceira()
+                "movimentacao",
+                movimentacao
         );
 
-        return "";
+        carregarDadosFormulario(model);
+
+        return "financeiro/cadastro";
     }
 
     @GetMapping("/editar/{id}")
-    public String editarFinanceiro(
+    public String editar(
             @PathVariable Long id,
             Model model
     ) {
-        MovimentacaoFinanceira movimentacaoFinanceira =
-                repository.findById(id)
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "Financeiro não Encontrado"
-                                )
-                        );
 
         model.addAttribute(
-                "financeiro",
-                movimentacaoFinanceira
+                "movimentacao",
+                service.findById(id)
         );
 
-        return "";
+        carregarDadosFormulario(model);
+
+        return "financeiro/cadastro";
     }
 
     @PostMapping("/salvar")
-    public String salvarFinanceiro(
-            @Valid @ModelAttribute MovimentacaoFinanceira movimentacaoFinanceira,
-            BindingResult result
+    public String salvar(
+            @ModelAttribute("movimentacao")
+            MovimentacaoFinanceira movimentacao,
+
+            @RequestParam(required = false)
+            Long pedidoId
     ) {
-        if (result.hasErrors()) {
-            return "";
+
+        if (movimentacao.getData() == null) {
+            movimentacao.setData(LocalDate.now());
         }
 
-        repository.save(movimentacaoFinanceira);
+        if (pedidoId != null) {
+            movimentacao.setPedido(
+                    pedidoRepository.findById(pedidoId)
+                            .orElse(null)
+            );
+        } else {
+            movimentacao.setPedido(null);
+        }
 
-        return "redirect:";
+        service.save(movimentacao);
+
+        return "redirect:/financeiro/listagem";
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluirFinanceiro(
+    public String excluir(
             @PathVariable Long id
     ) {
-        repository.deleteById(id);
 
-        return "";
+        service.delete(id);
+
+        return "redirect:/financeiro/listagem";
+    }
+
+    private void carregarDadosFormulario(Model model) {
+
+        model.addAttribute(
+                "tipos",
+                TipoMovimentacao.values()
+        );
+
+        model.addAttribute(
+                "categorias",
+                CategoriaDespensa.values()
+        );
+
+        model.addAttribute(
+                "pedidos",
+                pedidoRepository.findAll()
+        );
     }
 }

@@ -1,76 +1,89 @@
-<aside
-        th:fragment="sidebar"
-        class="sidebar"
->
+<aside th:fragment="sidebar" class="sidebar">
 
     <nav class="sidebar-nav">
 
+        <!-- Dashboard -->
+
         <a
                 th:href="@{/dashboard}"
-                class="nav-item"
-        >
+                class="nav-item">
             <span>📊</span>
             Dashboard
         </a>
 
 
+        <!-- Cadastros -->
+
+        <div class="sidebar-section-title">
+            Cadastros
+        </div>
+
         <a
                 th:href="@{/cliente/listagem}"
-                class="nav-item"
-        >
+                class="nav-item">
             <span>👤</span>
             Clientes
         </a>
 
-
         <a
                 th:href="@{/pet/listagem}"
-                class="nav-item"
-        >
+                class="nav-item">
             <span>🐾</span>
             Pets
         </a>
 
         <a
-                th:href="@{/servico/listagem}"
-                class="nav-item"
-        >
-            <span>🩺</span>
+                th:href="@{/produto/listagem}"
+                class="nav-item">
+            <span>📦</span>
+            Produtos
+        </a>
+
+        <a
+            th:href="@{/servico/listagem}"
+            class="nav-item">
+            <span>💉</span>
             Serviços
         </a>
 
-
         <a
                 th:href="@{/agendamento/listagem}"
-                class="nav-item"
-        >
+                class="nav-item">
             <span>📅</span>
             Agendamentos
         </a>
 
 
+        <!-- Vendas -->
+
+        <div class="sidebar-section-title">
+            Vendas
+        </div>
+
         <a
                 th:href="@{/pedido/listagem}"
-                class="nav-item"
-        >
+                class="nav-item">
             <span>🧾</span>
             Pedidos
         </a>
 
 
+        <!-- Financeiro -->
+
+        <div class="sidebar-section-title">
+            Gestão
+        </div>
+
         <a
                 th:href="@{/financeiro/listagem}"
-                class="nav-item"
-        >
+                class="nav-item">
             <span>💰</span>
             Financeiro
         </a>
 
-
         <a
                 th:href="@{/relatorio/listagem}"
-                class="nav-item"
-        >
+                class="nav-item">
             <span>📈</span>
             Relatórios
         </a>

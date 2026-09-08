@@ -44,10 +44,10 @@ public class ItemPedido {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "servico_id",
+            name = "produto_id",
             nullable = false
     )
-    private Servico servico;
+    private Produto produto;
 
     public Long getId() {
         return id;
@@ -89,11 +89,11 @@ public class ItemPedido {
         this.pedido = pedido;
     }
 
-    public Servico getServico() {
-        return servico;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setServico(Servico servico) {
-        this.servico = servico;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 }

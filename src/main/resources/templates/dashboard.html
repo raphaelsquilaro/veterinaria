@@ -6,30 +6,49 @@
 >
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/sidebar.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/header.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/footer.css}">
+
     <title>Dashboard - VetMark</title>
+
 </head>
 
 <body>
 
-<div
-        th:replace="~{fragments/header :: header}"
-></div>
+
+<div th:replace="~{fragments/header :: header}">
+</div>
+
 
 <div class="dashboard-layout">
 
-    <div
-            th:replace="~{fragments/sidebar :: sidebar}"
-    ></div>
+
+    <div th:replace="~{fragments/sidebar :: sidebar}">
+    </div>
 
 
     <main class="main-content">
+
+
+        <!-- Cabeçalho -->
 
         <section class="dashboard-header">
 
@@ -44,9 +63,12 @@
         </section>
 
 
-        <!-- Futuramente: cards de resumo -->
+        <!-- Cards -->
 
         <section class="dashboard-cards">
+
+
+            <!-- Agendamentos -->
 
             <div class="dashboard-card">
 
@@ -54,16 +76,20 @@
                     Agendamentos
                 </h3>
 
-                <p class="dashboard-value">
+                <p
+                        class="dashboard-value"
+                        th:text="${quantidadeAgendamentos}">
                     0
                 </p>
 
                 <span>
-                Agendamentos hoje
-            </span>
+                    Agendamentos hoje
+                </span>
 
             </div>
 
+
+            <!-- Faturamento -->
 
             <div class="dashboard-card">
 
@@ -71,16 +97,24 @@
                     Pedidos
                 </h3>
 
-                <p class="dashboard-value">
+                <p
+                        class="dashboard-value"
+                        th:text="${'R$ ' + #numbers.formatDecimal(
+                            faturamentoMes,
+                            1,
+                            2
+                        )}">
                     R$ 0,00
                 </p>
 
                 <span>
-                Faturamento do mês
-            </span>
+                    Faturamento do mês
+                </span>
 
             </div>
 
+
+            <!-- Gastos -->
 
             <div class="dashboard-card">
 
@@ -88,16 +122,24 @@
                     Gastos
                 </h3>
 
-                <p class="dashboard-value">
+                <p
+                        class="dashboard-value"
+                        th:text="${'R$ ' + #numbers.formatDecimal(
+                            gastosMes,
+                            1,
+                            2
+                        )}">
                     R$ 0,00
                 </p>
 
                 <span>
-                Gastos do mês
-            </span>
+                    Gastos do mês
+                </span>
 
             </div>
 
+
+            <!-- Lucro -->
 
             <div class="dashboard-card">
 
@@ -105,29 +147,38 @@
                     Lucro
                 </h3>
 
-                <p class="dashboard-value">
+                <p
+                        class="dashboard-value"
+                        th:text="${'R$ ' + #numbers.formatDecimal(
+                            lucroMes,
+                            1,
+                            2
+                        )}">
                     R$ 0,00
                 </p>
 
                 <span>
-                Lucro do mês
-            </span>
+                    Resultado do mês
+                </span>
 
             </div>
 
+
         </section>
+
 
     </main>
 
 </div>
 
-<div
-        th:replace="~{fragments/footer :: footer}"
-></div>
 
-<script
-        th:src="@{/js/dashboard.js}"
-></script>
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+
+<script th:src="@{/js/dashboard.js}">
+</script>
+
 
 </body>
 

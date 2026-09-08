@@ -1,10 +1,385 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pedido-form.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <title
+            th:text="${pedido.id == null
+                ? 'Novo Pedido - VetMark'
+                : 'Editar Pedido - VetMark'}">
+        Novo Pedido - VetMark
+    </title>
 </head>
+
 <body>
 
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <aside th:replace="~{fragments/sidebar :: sidebar}"></aside>
+
+    <main class="main-content pedido-form-page">
+
+        <!-- =====================================================
+             CABEÇALHO
+             ===================================================== -->
+
+        <div class="form-page-header">
+
+            <div>
+
+                <a
+                        th:href="@{/pedido/listagem}"
+                        class="back-link"
+                >
+                    ← Voltar para Pedidos
+                </a>
+
+                <h1
+                        th:text="${pedido.id == null
+                            ? 'Novo Pedido'
+                            : 'Editar Pedido'}"
+                >
+                    Novo Pedido
+                </h1>
+
+                <p>
+                    Cadastre um novo pedido para um cliente.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             FORMULÁRIO
+             ===================================================== -->
+
+        <section class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="form-icon">
+                    🧾
+                </div>
+
+                <div>
+
+                    <h2>
+                        Informações do Pedido
+                    </h2>
+
+                    <p>
+                        Preencha os dados abaixo.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form
+                    th:action="@{/pedido/salvar}"
+                    th:object="${pedido}"
+                    method="post"
+                    class="pedido-form"
+            >
+
+                <!-- ID -->
+
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                >
+
+
+                <!-- CSRF -->
+
+                <input
+                        type="hidden"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"
+                >
+
+
+                <div class="form-grid">
+
+                    <!-- =================================================
+                         CLIENTE
+                         ================================================= -->
+
+                    <div class="form-group form-group-full">
+
+                        <label for="clienteId">
+                            Cliente
+                            <span>*</span>
+                        </label>
+
+                        <select
+                                id="clienteId"
+                                name="clienteId"
+                                required
+                        >
+
+                            <option value="">
+                                Selecione o cliente
+                            </option>
+
+                            <option
+                                    th:each="cliente : ${clientes}"
+                                    th:value="${cliente.id}"
+                                    th:text="${cliente.nome}"
+                                    th:selected="${pedido.cliente != null
+                                        and pedido.cliente.id == cliente.id}"
+                            >
+                                Cliente
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         DATA DO PEDIDO
+                         ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="dataPedido">
+                            Data e hora
+                            <span>*</span>
+                        </label>
+
+                        <input
+                                type="datetime-local"
+                                id="dataPedido"
+                                th:field="*{dataPedido}"
+                                required
+                        >
+
+                    </div>
+
+
+                    <!-- =================================================
+                         STATUS
+                         ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="status">
+                            Status
+                            <span>*</span>
+                        </label>
+
+                        <select
+                                id="status"
+                                th:field="*{status}"
+                                required
+                        >
+
+                            <option value="">
+                                Selecione o status
+                            </option>
+
+                            <option
+                                    th:each="status : ${T(sp.senai.org.vetmark.model.enums.StatusPedido).values()}"
+                                    th:value="${status}"
+                                    th:text="${status}"
+                            >
+                                Status
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         VALOR TOTAL
+                         ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="valorTotal">
+                            Valor total
+                            <span>*</span>
+                        </label>
+
+                        <div class="money-input">
+
+                            <span>
+                                R$
+                            </span>
+
+                            <input
+                                    type="number"
+                                    id="valorTotal"
+                                    th:field="*{valorTotal}"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="0,00"
+                                    readonly
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================================
+                     DIVISOR
+                     ===================================================== -->
+
+                <div class="form-divider"></div>
+
+
+                <!-- =====================================================
+                     ITENS DO PEDIDO
+                     ===================================================== -->
+
+                <div class="items-section">
+
+                    <div class="items-header">
+
+                        <div>
+                            <h2>Produtos do Pedido</h2>
+
+                            <p>
+                                Adicione somente produtos já cadastrados na veterinária.
+                            </p>
+                        </div>
+
+                        <button
+                                type="button"
+                                id="addItemButton"
+                                class="btn-add-item">
+                            + Adicionar produto
+                        </button>
+
+                    </div>
+
+                    <div
+                            id="itemsContainer"
+                            class="items-container">
+
+                        <div
+                                id="emptyItems"
+                                class="empty-items">
+
+                            <div class="empty-items-icon">
+                                🛒
+                            </div>
+
+                            <h3>
+                                Nenhum produto adicionado
+                            </h3>
+
+                            <p>
+                                Adicione produtos cadastrados ao pedido.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================================
+                     TOTAL
+                     ===================================================== -->
+
+                <div class="total-box">
+
+                    <span>
+                        Total do pedido
+                    </span>
+
+                    <strong id="displayTotal">
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
+
+                <!-- =====================================================
+                     AÇÕES
+                     ===================================================== -->
+
+                <div class="form-divider"></div>
+
+                <div class="form-actions">
+
+                    <a
+                            th:href="@{/pedido/listagem}"
+                            class="btn-secondary"
+                    >
+                        Cancelar
+                    </a>
+
+                    <button
+                            type="submit"
+                            class="btn-primary"
+                    >
+
+                        <span>
+                            ✓
+                        </span>
+
+                        <span
+                                th:text="${pedido.id == null
+                                    ? 'Cadastrar Pedido'
+                                    : 'Salvar Alterações'}"
+                        >
+                            Cadastrar Pedido
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:inline="javascript">
+    window.vetmarkProdutos = [
+        /*[# th:each="produto, stat : ${produtos}"]*/
+        {
+            id: /*[[${produto.id}]]*/ [],
+            nome: /*[[${produto.nome}]]*/ [],
+            preco: /*[[${produto.preco}]]*/ [],
+            estoque: /*[[${produto.estoque}]]*/ [],
+            ativo: /*[[${produto.ativo}]]*/ []
+        }/*[# th:if="${!stat.last}"],[/]*/
+        /*[/]*/
+    ];
+
+    console.log("Produtos recebidos pelo Thymeleaf:", window.vetmarkProdutos);
+</script>
+
+<script th:src="@{/js/pedido-form.js}"></script>
+
 </body>
+
 </html>

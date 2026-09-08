@@ -1,10 +1,378 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/relatorios.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <title>Pedidos | VetMark</title>
 </head>
+
 <body>
 
+<header th:replace="~{fragments/header :: header}"></header>
+
+<div class="dashboard-layout">
+
+    <aside th:replace="~{fragments/sidebar :: sidebar}"></aside>
+
+    <main class="main-content relatorio-page">
+
+        <!-- Cabeçalho -->
+
+        <div class="page-header">
+
+            <div>
+                <h1>Relatórios</h1>
+
+                <p>
+                    Consulte os dados financeiros da clínica.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- Filtros -->
+
+        <section class="filtro-card">
+
+            <form
+                    th:action="@{/relatorio/listagem}"
+                    method="get"
+                    class="filtro-form">
+
+                <div class="form-group">
+
+                    <label for="dataInicio">
+                        Data inicial
+                    </label>
+
+                    <input
+                            type="date"
+                            id="dataInicio"
+                            name="dataInicio"
+                            th:value="${dataInicio}">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="dataFim">
+                        Data final
+                    </label>
+
+                    <input
+                            type="date"
+                            id="dataFim"
+                            name="dataFim"
+                            th:value="${dataFim}">
+
+                </div>
+
+
+                <div class="filtro-actions">
+
+                    <button
+                            type="submit"
+                            class="btn-primary">
+                        Gerar relatório
+                    </button>
+
+                    <a
+                            th:href="@{/relatorio/listagem}"
+                            class="btn-secondary">
+                        Limpar
+                    </a>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- Resumo -->
+
+        <section class="relatorio-resumo">
+
+            <div class="resumo-card">
+
+                <span>
+                    Entradas
+                </span>
+
+                <strong
+                        th:text="${'R$ ' + #numbers.formatDecimal(
+                            totalEntradas,
+                            1,
+                            2
+                        )}">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="resumo-card">
+
+                <span>
+                    Saídas
+                </span>
+
+                <strong
+                        th:text="${'R$ ' + #numbers.formatDecimal(
+                            totalSaidas,
+                            1,
+                            2
+                        )}">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="resumo-card">
+
+                <span>
+                    Saldo
+                </span>
+
+                <strong
+                        th:text="${'R$ ' + #numbers.formatDecimal(
+                            saldo,
+                            1,
+                            2
+                        )}">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="resumo-card">
+
+                <span>
+                    Movimentações
+                </span>
+
+                <strong
+                        th:text="${#lists.size(movimentacoes)}">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- Relatório -->
+
+        <section class="table-card">
+
+            <div class="table-header">
+
+                <div>
+
+                    <h2>
+                        Relatório financeiro
+                    </h2>
+
+                    <p
+                            th:if="${dataInicio == null and dataFim == null}">
+                        Todas as movimentações financeiras.
+                    </p>
+
+                    <p
+                            th:if="${dataInicio != null or dataFim != null}">
+
+                        Período:
+
+                        <span
+                                th:if="${dataInicio != null}"
+                                th:text="${#temporals.format(
+                                    dataInicio,
+                                    'dd/MM/yyyy'
+                                )}">
+                            01/01/2026
+                        </span>
+
+                        <span
+                                th:if="${dataInicio != null and dataFim != null}">
+                            até
+                        </span>
+
+                        <span
+                                th:if="${dataFim != null}"
+                                th:text="${#temporals.format(
+                                    dataFim,
+                                    'dd/MM/yyyy'
+                                )}">
+                            31/01/2026
+                        </span>
+
+                    </p>
+
+                </div>
+
+                <button
+                        type="button"
+                        id="btnImprimir"
+                        class="btn-secondary">
+                    🖨️ Imprimir
+                </button>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Data</th>
+
+                        <th>Descrição</th>
+
+                        <th>Tipo</th>
+
+                        <th>Categoria</th>
+
+                        <th>Pedido</th>
+
+                        <th>Valor</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr
+                            th:each="movimentacao : ${movimentacoes}">
+
+                        <td
+                                th:text="${#temporals.format(
+                                    movimentacao.data,
+                                    'dd/MM/yyyy'
+                                )}">
+                            08/09/2026
+                        </td>
+
+                        <td
+                                th:text="${movimentacao.descricao}">
+                            Descrição
+                        </td>
+
+                        <td>
+
+                            <span
+                                    class="tipo-badge"
+                                    th:classappend="${movimentacao.tipo.name() == 'ENTRADA'}
+                                        ? ' tipo-entrada'
+                                        : ' tipo-saida'"
+                                    th:text="${movimentacao.tipo}">
+                                ENTRADA
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span
+                                    th:if="${movimentacao.categoria != null}"
+                                    th:text="${movimentacao.categoria}">
+                                Categoria
+                            </span>
+
+                            <span
+                                    th:if="${movimentacao.categoria == null}">
+                                —
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span
+                                    th:if="${movimentacao.pedido != null}"
+                                    th:text="${'#' + movimentacao.pedido.id}">
+                                #1
+                            </span>
+
+                            <span
+                                    th:if="${movimentacao.pedido == null}">
+                                —
+                            </span>
+
+                        </td>
+
+                        <td
+                                th:text="${'R$ ' + #numbers.formatDecimal(
+                                    movimentacao.valor,
+                                    1,
+                                    2
+                                )}">
+                            R$ 0,00
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Vazio -->
+
+                    <tr
+                            th:if="${#lists.isEmpty(movimentacoes)}">
+
+                        <td
+                                colspan="6"
+                                class="empty-state">
+
+                            <div>
+                                📊
+                            </div>
+
+                            <h3>
+                                Nenhuma movimentação encontrada
+                            </h3>
+
+                            <p>
+                                Não existem movimentações para o período
+                                selecionado.
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+<script th:src="@{/js/relatorio.js}"></script>
+
 </body>
+
 </html>

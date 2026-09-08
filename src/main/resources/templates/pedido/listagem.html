@@ -1,10 +1,286 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pedido.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <title>Pedidos | VetMark</title>
 </head>
+
 <body>
 
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <aside th:replace="~{fragments/sidebar :: sidebar}"></aside>
+
+    <main class="main-content pedido-page">
+
+        <!-- =====================================================
+             CABEÇALHO
+             ===================================================== -->
+
+        <div class="page-header">
+
+            <div class="page-title">
+
+                <h1>Pedidos</h1>
+
+                <p>
+                    Gerencie os pedidos realizados pelos clientes.
+                </p>
+
+            </div>
+
+            <a
+                    th:href="@{/pedido/cadastro}"
+                    class="btn-primary"
+            >
+                <span>+</span>
+                Novo Pedido
+            </a>
+
+        </div>
+
+
+        <!-- =====================================================
+             CARD PRINCIPAL
+             ===================================================== -->
+
+        <section class="content-card">
+
+            <!-- Busca -->
+
+            <div class="search-area">
+
+                <div class="search-box">
+
+                    <span class="search-icon">🔎</span>
+
+                    <input
+                            type="text"
+                            id="searchPedido"
+                            placeholder="Buscar por pedido ou cliente..."
+                            autocomplete="off"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TABELA
+                 ================================================= -->
+
+            <div class="table-container">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Pedido</th>
+
+                        <th>Data</th>
+
+                        <th>Cliente</th>
+
+                        <th>Valor total</th>
+
+                        <th>Status</th>
+
+                        <th>Ações</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="pedidoTableBody">
+
+                    <!-- =================================================
+                         PEDIDOS
+                         ================================================= -->
+
+                    <tr
+                            th:each="pedido : ${pedidos}"
+                            class="pedido-row"
+                    >
+
+                        <!-- ID -->
+
+                        <td class="pedido-id">
+
+                            <span
+                                    th:text="${'#' + pedido.id}"
+                            >
+                                #001
+                            </span>
+
+                        </td>
+
+
+                        <!-- DATA -->
+
+                        <td class="pedido-data">
+
+                            <span
+                                    th:text="${#temporals.format(
+                                        pedido.dataPedido,
+                                        'dd/MM/yyyy HH:mm'
+                                    )}"
+                            >
+                                08/09/2026 10:30
+                            </span>
+
+                        </td>
+
+
+                        <!-- CLIENTE -->
+
+                        <td class="pedido-cliente">
+
+                            <div class="cliente-info">
+
+                                <div class="cliente-avatar">
+                                    👤
+                                </div>
+
+                                <span
+                                        th:text="${pedido.cliente.nome}"
+                                >
+                                    Cliente
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- VALOR -->
+
+                        <td class="pedido-valor">
+
+                            <span
+                                    th:text="${'R$ ' + #numbers.formatDecimal(
+                                        pedido.valorTotal,
+                                        2,
+                                        'POINT',
+                                        2,
+                                        'COMMA'
+                                    )}"
+                            >
+                                R$ 150,00
+                            </span>
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            <span
+                                    class="status-badge"
+                                    th:attr="data-status=${pedido.status}"
+                                    th:text="${pedido.status}"
+                            >
+                                PENDENTE
+                            </span>
+
+                        </td>
+
+
+                        <!-- AÇÕES -->
+
+                        <td class="actions">
+
+                            <a
+                                    th:href="@{/pedido/editar/{id}(id=${pedido.id})}"
+                                    class="btn-action btn-edit"
+                                    title="Editar pedido"
+                            >
+                                ✏️
+                            </a>
+
+                            <a
+                                    th:href="@{/pedido/excluir/{id}(id=${pedido.id})}"
+                                    class="btn-action btn-delete"
+                                    title="Excluir pedido"
+                                    th:attr="data-id=${pedido.id}"
+                            >
+                                🗑️
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- =================================================
+                         ESTADO VAZIO
+                         ================================================= -->
+
+                    <tr
+                            th:if="${#lists.isEmpty(pedidos)}"
+                    >
+
+                        <td
+                                colspan="6"
+                                class="empty-state"
+                        >
+
+                            <div class="empty-icon">
+                                🧾
+                            </div>
+
+                            <h3>
+                                Nenhum pedido encontrado
+                            </h3>
+
+                            <p>
+                                Ainda não existem pedidos cadastrados.
+                            </p>
+
+                            <a
+                                    th:href="@{/pedido/cadastro}"
+                                    class="btn-primary"
+                            >
+                                Criar primeiro pedido
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+<script th:src="@{/js/pedido.js}"></script>
+
 </body>
+
 </html>

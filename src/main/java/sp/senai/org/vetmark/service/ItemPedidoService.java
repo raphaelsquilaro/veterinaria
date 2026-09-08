@@ -27,19 +27,36 @@ public class ItemPedidoService {
     public ItemPedidoResponse findById(Long id) {
         ItemPedido itemPedido = repository.findById(id)
                 .orElseThrow();
+
         return toResponse(itemPedido);
     }
 
     public ItemPedidoResponse create(ItemPedidoRequest request) {
+
         ItemPedido itemPedido = new ItemPedido();
 
-        itemPedido.setQuantidade(request.quantidade());
-        itemPedido.setValorUnitario(request.valorUnitario());
-        itemPedido.setValorTotal(request.valorTotal());
-        itemPedido.setPedido(request.pedido());
-        itemPedido.setServico(request.servico());
+        itemPedido.setQuantidade(
+                request.quantidade()
+        );
 
-        ItemPedido savedItemPedido = repository.save(itemPedido);
+        itemPedido.setValorUnitario(
+                request.valorUnitario()
+        );
+
+        itemPedido.setValorTotal(
+                request.valorTotal()
+        );
+
+        itemPedido.setPedido(
+                request.pedido()
+        );
+
+        itemPedido.setProduto(
+                request.produto()
+        );
+
+        ItemPedido savedItemPedido =
+                repository.save(itemPedido);
 
         return toResponse(savedItemPedido);
     }
@@ -48,14 +65,17 @@ public class ItemPedidoService {
         repository.deleteById(id);
     }
 
-    private ItemPedidoResponse toResponse(ItemPedido itemPedido) {
+    private ItemPedidoResponse toResponse(
+            ItemPedido itemPedido
+    ) {
+
         return new ItemPedidoResponse(
                 itemPedido.getId(),
                 itemPedido.getQuantidade(),
                 itemPedido.getValorUnitario(),
                 itemPedido.getValorTotal(),
                 itemPedido.getPedido(),
-                itemPedido.getServico()
+                itemPedido.getProduto()
         );
     }
 }

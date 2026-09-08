@@ -1,10 +1,321 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Title</title>
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/style.css}"
+    >
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/financeiro.css}"
+    >
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/sidebar.css}"
+    >
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/header.css}"
+    >
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/footer.css}"
+    >
+
+    <title>Itens dos Pedidos | VetMark</title>
+
 </head>
+
 <body>
 
+<header th:replace="~{fragments/header :: header}"></header>
+
+<div class="dashboard-layout">
+
+    <aside th:replace="~{fragments/sidebar :: sidebar}"></aside>
+
+    <main class="main-content financeiro-page">
+
+        <div class="page-header">
+
+            <div>
+                <h1>Financeiro</h1>
+                <p>
+                    Controle das movimentações financeiras da clínica.
+                </p>
+            </div>
+
+            <a th:href="@{/financeiro/cadastro}"
+               class="btn-primary">
+                + Nova movimentação
+            </a>
+
+        </div>
+
+
+        <!-- Resumo -->
+
+        <section class="financeiro-resumo">
+
+            <div class="resumo-card">
+                <span class="resumo-label">
+                    Total de movimentações
+                </span>
+
+                <strong th:text="${#lists.size(movimentacoes)}">
+                    0
+                </strong>
+            </div>
+
+            <div class="resumo-card">
+                <span class="resumo-label">
+                    Entradas
+                </span>
+
+                <strong>
+                    —
+                </strong>
+            </div>
+
+            <div class="resumo-card">
+                <span class="resumo-label">
+                    Saídas
+                </span>
+
+                <strong>
+                    —
+                </strong>
+            </div>
+
+        </section>
+
+
+        <!-- Busca -->
+
+        <section class="table-card">
+
+            <div class="table-toolbar">
+
+                <div>
+                    <h2>Movimentações</h2>
+                    <p>
+                        Histórico financeiro
+                    </p>
+                </div>
+
+                <div class="search-box">
+                    <input
+                            type="text"
+                            id="searchFinanceiro"
+                            placeholder="Buscar movimentação..."
+                            autocomplete="off">
+                </div>
+
+            </div>
+
+
+            <!-- Tabela -->
+
+            <div class="table-responsive">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Descrição</th>
+
+                        <th>Tipo</th>
+
+                        <th>Categoria</th>
+
+                        <th>Valor</th>
+
+                        <th>Data</th>
+
+                        <th>Pedido</th>
+
+                        <th>Ações</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="financeiroTableBody">
+
+                    <tr
+                            th:each="movimentacao : ${movimentacoes}"
+                            class="financeiro-row">
+
+                        <td>
+
+                            <strong
+                                    th:text="${movimentacao.descricao}">
+                                Descrição
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    class="tipo-badge"
+                                    th:classappend="${movimentacao.tipo.name() == 'ENTRADA'}
+                                        ? ' tipo-entrada'
+                                        : ' tipo-saida'"
+                                    th:text="${movimentacao.tipo}">
+                                ENTRADA
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    th:if="${movimentacao.categoria != null}"
+                                    th:text="${movimentacao.categoria}">
+                                Categoria
+                            </span>
+
+                            <span
+                                    th:if="${movimentacao.categoria == null}"
+                                    class="text-muted">
+                                —
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <strong
+                                    class="valor-financeiro"
+                                    th:text="${'R$ ' + #numbers.formatDecimal(movimentacao.valor, 1, 2)}">
+                                R$ 0,00
+                            </strong>
+
+                        </td>
+
+
+                        <td
+                                th:text="${#temporals.format(
+                                    movimentacao.data,
+                                    'dd/MM/yyyy'
+                                )}">
+                            08/09/2026
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    th:if="${movimentacao.pedido != null}"
+                                    th:text="${'#' + movimentacao.pedido.id}">
+                                #1
+                            </span>
+
+                            <span
+                                    th:if="${movimentacao.pedido == null}"
+                                    class="text-muted">
+                                —
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="action-buttons">
+
+                                <a
+                                        th:href="@{/financeiro/editar/{id}(id=${movimentacao.id})}"
+                                        class="btn-action btn-edit"
+                                        title="Editar">
+                                    ✏️
+                                </a>
+
+                                <a
+                                        th:href="@{/financeiro/excluir/{id}(id=${movimentacao.id})}"
+                                        class="btn-action btn-delete"
+                                        th:attr="data-name=${movimentacao.descricao}"
+                                        title="Excluir">
+                                    🗑️
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Estado vazio -->
+
+                    <tr
+                            th:if="${#lists.isEmpty(movimentacoes)}">
+
+                        <td
+                                colspan="7"
+                                class="empty-state">
+
+                            <div class="empty-icon">
+                                💰
+                            </div>
+
+                            <h3>
+                                Nenhuma movimentação encontrada
+                            </h3>
+
+                            <p>
+                                Cadastre uma movimentação financeira
+                                para começar.
+                            </p>
+
+                            <a
+                                    th:href="@{/financeiro/cadastro}"
+                                    class="btn-primary">
+                                Nova movimentação
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+
+<script th:src="@{/js/financeiro.js}"></script>
+
 </body>
+
 </html>

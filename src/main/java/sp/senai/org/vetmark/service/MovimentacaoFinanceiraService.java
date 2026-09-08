@@ -1,64 +1,40 @@
 package sp.senai.org.vetmark.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sp.senai.org.vetmark.dto.request.MovimentacaoFinanceiraRequest;
-import sp.senai.org.vetmark.dto.response.AgendamentoResponse;
-import sp.senai.org.vetmark.dto.response.MovimentacaoFinanceiraResponse;
+import sp.senai.org.vetmark.exception.ResourceNotFoundException;
 import sp.senai.org.vetmark.model.entity.MovimentacaoFinanceira;
 import sp.senai.org.vetmark.repository.MovimentacaoFinanceiraRepository;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class MovimentacaoFinanceiraService {
 
     private final MovimentacaoFinanceiraRepository repository;
 
-    public MovimentacaoFinanceiraService(MovimentacaoFinanceiraRepository repository) {
-        this.repository = repository;
+    public List<MovimentacaoFinanceira> findAll() {
+        return repository.findAll();
     }
 
-    public List<MovimentacaoFinanceiraResponse> findAll() {
-        return repository.findAll()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+    public MovimentacaoFinanceira findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Movimentação financeira não encontrada"
+                        )
+                );
     }
 
-    public MovimentacaoFinanceiraResponse findById(Long id) {
-        MovimentacaoFinanceira movimentacaoFinanceira = repository.findById(id)
-                .orElseThrow();
-        return toResponse(movimentacaoFinanceira);
-    }
-
-    public MovimentacaoFinanceiraResponse create(MovimentacaoFinanceiraRequest request) {
-        MovimentacaoFinanceira movimentacaoFinanceira = new MovimentacaoFinanceira();
-
-        movimentacaoFinanceira.setDescricao(request.descricao());
-        movimentacaoFinanceira.setValor(request.valor());
-        movimentacaoFinanceira.setTipo(request.tipo());
-        movimentacaoFinanceira.setCategoria(request.categoria());
-        movimentacaoFinanceira.setData(request.data());
-        movimentacaoFinanceira.setPedido(request.pedido());
-
-        MovimentacaoFinanceira savedMovimentacaoFinanceira = repository.save(movimentacaoFinanceira);
-
-        return toResponse(savedMovimentacaoFinanceira);
+    public MovimentacaoFinanceira save(
+            MovimentacaoFinanceira movimentacao
+    ) {
+        return repository.save(movimentacao);
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
-    }
-
-    private MovimentacaoFinanceiraResponse toResponse(MovimentacaoFinanceira movimentacaoFinanceira) {
-        return new MovimentacaoFinanceiraResponse(
-                movimentacaoFinanceira.getId(),
-                movimentacaoFinanceira.getDescricao(),
-                movimentacaoFinanceira.getValor(),
-                movimentacaoFinanceira.getTipo(),
-                movimentacaoFinanceira.getCategoria(),
-                movimentacaoFinanceira.getData(),
-                movimentacaoFinanceira.getPedido()
-        );
+        MovimentacaoFinanceira movimentacao = findById(id);
+        repository.delete(movimentacao);
     }
 }
