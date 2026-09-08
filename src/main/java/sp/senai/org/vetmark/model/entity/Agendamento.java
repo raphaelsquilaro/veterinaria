@@ -49,6 +49,10 @@ public class Agendamento {
             name = "pet_id",
             nullable = false
     )
+    private Pet pet;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "servico_id", nullable = false)
     private Servico servico;
 
     public Long getId() {
@@ -89,6 +93,14 @@ public class Agendamento {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 
     public Servico getServico() {

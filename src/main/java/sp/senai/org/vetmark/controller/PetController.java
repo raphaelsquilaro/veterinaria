@@ -1,42 +1,33 @@
 package sp.senai.org.vetmark.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import sp.senai.org.vetmark.exception.ResourceNotFoundException;
 import sp.senai.org.vetmark.model.entity.Pet;
-import sp.senai.org.vetmark.repository.PetRepository;
+import sp.senai.org.vetmark.repository.ClienteRepository;
+import sp.senai.org.vetmark.service.PetService;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/pet")
 public class PetController {
 
-    private final PetRepository repository;
+    private final PetService petService;
+    private final ClienteRepository clienteRepository;
 
     @GetMapping("/listagem")
-    public String listarPet(Model model) {
-
-        model.addAttribute(
-                "pet",
-                repository.findAll()
-        );
-
-        return "";
+    public String listarPets(Model model) {
+        model.addAttribute("pets", petService.findAll());
+        return "pet/listagem";
     }
 
     @GetMapping("/cadastro")
     public String cadastroPet(Model model) {
+        model.addAttribute("pet", new Pet());
+        model.addAttribute("clientes", clienteRepository.findAll());
 
-        model.addAttribute(
-                "pet",
-                new Pet()
-        );
-
-        return "";
+        return "pet/cadastro";
     }
 
     @GetMapping("/editar/{id}")
@@ -44,42 +35,21 @@ public class PetController {
             @PathVariable Long id,
             Model model
     ) {
-        Pet pet =
-                repository.findById(id)
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "Pet não Encontrado"
-                                )
-                        );
+        model.addAttribute("pet", petService.findById(id));
+        model.addAttribute("clientes", clienteRepository.findAll());
 
-        model.addAttribute(
-                "pet",
-                pet
-        );
-
-        return "";
+        return "pet/cadastro";
     }
 
     @PostMapping("/salvar")
-    public String salvarPet(
-            @Valid @ModelAttribute Pet pet,
-            BindingResult result
-    ) {
-        if (result.hasErrors()) {
-            return "";
-        }
-
-        repository.save(pet);
-
-        return "redirect:";
+    public String salvarPet(@ModelAttribute("pet") Pet pet) {
+        petService.save(pet);
+        return "redirect:/pet/listagem";
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluirPet(
-            @PathVariable Long id
-    ) {
-        repository.deleteById(id);
-
-        return "";
+    public String excluirPet(@PathVariable Long id) {
+        petService.delete(id);
+        return "redirect:/pet/listagem";
     }
 }

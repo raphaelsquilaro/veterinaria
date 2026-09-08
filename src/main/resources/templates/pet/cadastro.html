@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pet-form.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <title
+            th:text="${pet.id == null ? 'Novo Pet - VetMark' : 'Editar Pet - VetMark'}">
+        Novo Pet - VetMark
+    </title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <aside th:replace="~{fragments/sidebar :: sidebar}"></aside>
+
+    <main class="main-content pet-form-page">
+
+        <div class="form-page-header">
+
+            <div>
+                <a
+                        th:href="@{/pet/listagem}"
+                        class="back-link"
+                >
+                    ← Voltar para Pets
+                </a>
+
+                <h1
+                        th:text="${pet.id == null ? 'Novo Pet' : 'Editar Pet'}">
+                    Novo Pet
+                </h1>
+
+                <p>
+                    Cadastre as informações do animal e vincule-o ao seu responsável.
+                </p>
+            </div>
+
+        </div>
+
+
+        <section class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="form-icon">
+                    🐾
+                </div>
+
+                <div>
+                    <h2>Informações do Pet</h2>
+
+                    <p>
+                        Preencha os dados abaixo.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form
+                    th:action="@{/pet/salvar}"
+                    th:object="${pet}"
+                    method="post"
+                    class="pet-form"
+            >
+
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                >
+
+                <input
+                        type="hidden"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"
+                >
+
+
+                <div class="form-grid">
+
+                    <!-- Nome -->
+                    <div class="form-group">
+
+                        <label for="nome">
+                            Nome do Pet
+                            <span>*</span>
+                        </label>
+
+                        <input
+                                type="text"
+                                id="nome"
+                                th:field="*{nome}"
+                                placeholder="Digite o nome do pet"
+                                maxlength="100"
+                                required
+                        >
+
+                    </div>
+
+
+                    <!-- Espécie -->
+                    <div class="form-group">
+
+                        <label for="especie">
+                            Espécie
+                            <span>*</span>
+                        </label>
+
+                        <select
+                                id="especie"
+                                th:field="*{especie}"
+                                required
+                        >
+
+                            <option value="">
+                                Selecione a espécie
+                            </option>
+
+                            <option
+                                    th:each="especie : ${T(sp.senai.org.vetmark.model.enums.EspeciePet).values()}"
+                                    th:value="${especie}"
+                                    th:text="${especie}"
+                            >
+                                Cão
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Raça -->
+                    <div class="form-group">
+
+                        <label for="raca">
+                            Raça
+                        </label>
+
+                        <input
+                                type="text"
+                                id="raca"
+                                th:field="*{raca}"
+                                placeholder="Ex.: Golden Retriever"
+                                maxlength="100"
+                        >
+
+                    </div>
+
+
+                    <!-- Data de nascimento -->
+                    <div class="form-group">
+
+                        <label for="dataNascimento">
+                            Data de nascimento
+                        </label>
+
+                        <input
+                                type="date"
+                                id="dataNascimento"
+                                th:field="*{dataNascimento}"
+                        >
+
+                    </div>
+
+
+                    <!-- Cliente -->
+                    <div class="form-group form-group-full">
+
+                        <label for="cliente">
+                            Responsável
+                            <span>*</span>
+                        </label>
+
+                        <select
+                                id="cliente"
+                                th:field="*{cliente}"
+                                required
+                        >
+
+                            <option value="">
+                                Selecione o responsável
+                            </option>
+
+                            <option
+                                    th:each="cliente : ${clientes}"
+                                    th:value="${cliente.id}"
+                                    th:text="${cliente.nome}"
+                            >
+                                Cliente
+                            </option>
+
+                        </select>
+
+                        <small>
+                            O pet será vinculado ao cliente selecionado.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-divider"></div>
+
+
+                <div class="form-actions">
+
+                    <a
+                            th:href="@{/pet/listagem}"
+                            class="btn-secondary"
+                    >
+                        Cancelar
+                    </a>
+
+                    <button
+                            type="submit"
+                            class="btn-primary"
+                    >
+                        <span>✓</span>
+
+                        <span
+                                th:text="${pet.id == null ? 'Cadastrar Pet' : 'Salvar Alterações'}"
+                        >
+                Cadastrar Pet
+            </span>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

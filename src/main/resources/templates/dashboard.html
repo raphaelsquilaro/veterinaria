@@ -5,9 +5,15 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 
-<head
-        th:replace="~{fragments/head :: head('Dashboard | VetMark')}"
->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <title>Dashboard - VetMark</title>
 </head>
 
 <body>

@@ -25,7 +25,7 @@ public class ServicoController {
                 repository.findAll()
         );
 
-        return "";
+        return "servico/listagem";
     }
 
     @GetMapping("/cadastro")
@@ -36,7 +36,7 @@ public class ServicoController {
                 new Servico()
         );
 
-        return "";
+        return "servico/cadastro";
     }
 
     @GetMapping("/editar/{id}")
@@ -44,42 +44,48 @@ public class ServicoController {
             @PathVariable Long id,
             Model model
     ) {
-        Servico servico =
-                repository.findById(id)
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "Serviço não Encontrado"
-                                )
-                        );
+
+        Servico servico = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Serviço não encontrado"
+                        )
+                );
 
         model.addAttribute(
                 "servico",
                 servico
         );
 
-        return "";
+        return "servico/cadastro";
     }
 
     @PostMapping("/salvar")
     public String salvarServico(
-            @Valid @ModelAttribute Servico servico,
+            @Valid @ModelAttribute("servico") Servico servico,
             BindingResult result
     ) {
+
         if (result.hasErrors()) {
-            return "";
+            return "servico/cadastro";
+        }
+
+        if (servico.getAtivo() == null) {
+            servico.setAtivo(true);
         }
 
         repository.save(servico);
 
-        return "redirect:";
+        return "redirect:/servico/listagem";
     }
 
     @GetMapping("/excluir/{id}")
     public String excluirServico(
             @PathVariable Long id
     ) {
+
         repository.deleteById(id);
 
-        return "";
+        return "redirect:/servico/listagem";
     }
 }

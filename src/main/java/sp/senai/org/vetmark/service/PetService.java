@@ -1,8 +1,6 @@
 package sp.senai.org.vetmark.service;
 
 import org.springframework.stereotype.Service;
-import sp.senai.org.vetmark.dto.request.PetRequest;
-import sp.senai.org.vetmark.dto.response.PetResponse;
 import sp.senai.org.vetmark.model.entity.Pet;
 import sp.senai.org.vetmark.repository.PetRepository;
 
@@ -17,45 +15,22 @@ public class PetService {
         this.repository = repository;
     }
 
-    public List<PetResponse> findAll() {
-        return repository.findAll()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+    public List<Pet> findAll() {
+        return repository.findAll();
     }
 
-    public PetResponse findById(Long id) {
-        Pet pet = repository.findById(id)
-                .orElseThrow();
-        return toResponse(pet);
+    public Pet findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Pet não encontrado")
+                );
     }
 
-    public PetResponse create(PetRequest request) {
-        Pet pet = new Pet();
-
-        pet.setNome(request.nome());
-        pet.setEspecie(request.especie());
-        pet.setRaca(request.raca());
-        pet.setDataNascimento(request.dataNascimento());
-        pet.setCliente(request.cliente());
-
-        Pet savedPet = repository.save(pet);
-
-        return toResponse(savedPet);
+    public Pet save(Pet pet) {
+        return repository.save(pet);
     }
 
     public void delete(Long id) {
         repository.deleteById(id);
-    }
-
-    private PetResponse toResponse(Pet pet) {
-        return new PetResponse(
-                pet.getId(),
-                pet.getNome(),
-                pet.getEspecie(),
-                pet.getRaca(),
-                pet.getDataNascimento(),
-                pet.getCliente()
-        );
     }
 }

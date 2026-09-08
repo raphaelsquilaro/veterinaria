@@ -1,0 +1,642 @@
+/* =========================================================
+   VETMARK - PETS
+   Arquivo: pet.css
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   PÁGINA
+   --------------------------------------------------------- */
+
+.pets-page {
+    flex: 1;
+    min-width: 0;
+
+    padding: 32px;
+
+    min-height: calc(100vh - 70px);
+
+    background: #f6f8fb;
+
+    box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   CABEÇALHO
+   --------------------------------------------------------- */
+
+.pets-page .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 28px;
+}
+
+.pets-page .page-header h1 {
+    margin: 0 0 6px;
+
+    color: #1f2937;
+
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.pets-page .page-header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 15px;
+}
+
+
+/* ---------------------------------------------------------
+   BOTÃO PRINCIPAL
+   --------------------------------------------------------- */
+
+.pets-page .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 12px 18px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.pets-page .btn-primary:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+            0 5px 14px rgba(37, 99, 235, 0.20);
+}
+
+.pets-page .btn-primary span {
+    font-size: 20px;
+    line-height: 1;
+}
+
+
+/* ---------------------------------------------------------
+   TOOLBAR
+   --------------------------------------------------------- */
+
+.pets-page .pets-toolbar {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+
+/* ---------------------------------------------------------
+   BUSCA
+   --------------------------------------------------------- */
+
+.pets-page .search-box {
+    position: relative;
+
+    width: 100%;
+    max-width: 480px;
+}
+
+.pets-page .search-icon {
+    position: absolute;
+
+    left: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #9ca3af;
+
+    font-size: 21px;
+
+    pointer-events: none;
+}
+
+.pets-page .search-box input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 16px 0 44px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #dbe1e8;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #1f2937;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.pets-page .search-box input::placeholder {
+    color: #9ca3af;
+}
+
+.pets-page .search-box input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* ---------------------------------------------------------
+   CARD
+   --------------------------------------------------------- */
+
+.pets-page .table-card {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ---------------------------------------------------------
+   CABEÇALHO DA TABELA
+   --------------------------------------------------------- */
+
+.pets-page .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 24px;
+
+    border-bottom: 1px solid #eef0f3;
+}
+
+.pets-page .table-header h2 {
+    margin: 0 0 4px;
+
+    color: #1f2937;
+
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.pets-page .pet-count {
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* ---------------------------------------------------------
+   WRAPPER
+   --------------------------------------------------------- */
+
+.pets-page .table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* ---------------------------------------------------------
+   TABELA
+   --------------------------------------------------------- */
+
+.pets-page .pets-table {
+    width: 100%;
+
+    min-width: 1000px;
+
+    border-collapse: collapse;
+
+    text-align: left;
+}
+
+.pets-page .pets-table thead {
+    background: #f8fafc;
+}
+
+.pets-page .pets-table th {
+    padding: 14px 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    color: #6b7280;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.04em;
+
+    white-space: nowrap;
+}
+
+.pets-page .pets-table td {
+    padding: 16px 20px;
+
+    border-bottom: 1px solid #eef0f3;
+
+    color: #374151;
+
+    font-size: 14px;
+
+    vertical-align: middle;
+}
+
+.pets-page .pets-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.pets-page .pets-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.pets-page .pets-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ---------------------------------------------------------
+   INFORMAÇÕES DO PET
+   --------------------------------------------------------- */
+
+.pets-page .pet-info {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 180px;
+}
+
+.pets-page .pet-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    font-size: 21px;
+}
+
+.pets-page .pet-info strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #1f2937;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pets-page .pet-info small {
+    display: block;
+
+    color: #9ca3af;
+
+    font-size: 12px;
+}
+
+
+/* ---------------------------------------------------------
+   BADGE DE ESPÉCIE
+   --------------------------------------------------------- */
+
+.pets-page .species-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   CLIENTE / TUTOR
+   --------------------------------------------------------- */
+
+.pets-page .owner-info {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    min-width: 150px;
+}
+
+.pets-page .owner-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #f1f5f9;
+
+    color: #475569;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.pets-page .owner-info > span {
+    color: #374151;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   INFORMAÇÃO NÃO CADASTRADA
+   --------------------------------------------------------- */
+
+.pets-page .not-informed {
+    color: #9ca3af !important;
+
+    font-size: 13px;
+}
+
+
+/* ---------------------------------------------------------
+   AÇÕES
+   --------------------------------------------------------- */
+
+.pets-page .actions-column {
+    width: 100px;
+
+    text-align: center;
+}
+
+.pets-page .action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+}
+
+.pets-page .action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    border: 1px solid transparent;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    font-size: 16px;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease;
+}
+
+.pets-page .action-button:hover {
+    transform: translateY(-1px);
+}
+
+
+/* Editar */
+
+.pets-page .action-button.edit {
+    background: #eff6ff;
+
+    border-color: #dbeafe;
+}
+
+.pets-page .action-button.edit:hover {
+    background: #dbeafe;
+}
+
+
+/* Excluir */
+
+.pets-page .action-button.delete {
+    background: #fef2f2;
+
+    border-color: #fee2e2;
+}
+
+.pets-page .action-button.delete:hover {
+    background: #fee2e2;
+}
+
+
+/* ---------------------------------------------------------
+   ESTADO VAZIO
+   --------------------------------------------------------- */
+
+.pets-page .empty-state {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    padding: 60px 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    text-align: center;
+
+    box-shadow:
+            0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.pets-page .empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 70px;
+    height: 70px;
+
+    margin-bottom: 18px;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    font-size: 30px;
+}
+
+.pets-page .empty-state h2 {
+    margin: 0 0 8px;
+
+    color: #1f2937;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.pets-page .empty-state p {
+    max-width: 420px;
+
+    margin: 0 0 24px;
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* ---------------------------------------------------------
+   NENHUM RESULTADO
+   --------------------------------------------------------- */
+
+.pets-page .no-search-results {
+    padding: 35px 20px;
+
+    color: #6b7280;
+
+    text-align: center;
+}
+
+.pets-page .no-search-results span {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 28px;
+}
+
+.pets-page .no-search-results p {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVIDADE
+   --------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+
+    .pets-page {
+        padding: 24px;
+    }
+
+    .pets-page .page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .pets-page .page-header .btn-primary {
+        width: 100%;
+    }
+
+    .pets-page .search-box {
+        max-width: none;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .pets-page {
+        padding: 18px;
+    }
+
+    .pets-page .page-header h1 {
+        font-size: 25px;
+    }
+
+    .pets-page .page-header p {
+        font-size: 13px;
+    }
+
+    .pets-page .table-header {
+        padding: 16px;
+    }
+
+    .pets-page .pets-table th,
+    .pets-page .pets-table td {
+        padding: 13px 14px;
+    }
+
+    .pets-page .empty-state {
+        padding: 45px 20px;
+    }
+}

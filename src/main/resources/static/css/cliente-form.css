@@ -1,0 +1,582 @@
+/* =========================================================
+   VETMARK - FORMULÁRIO DE CLIENTE
+   Arquivo: cliente-form.css
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   PÁGINA
+   --------------------------------------------------------- */
+
+.cliente-form-page {
+    padding: 32px;
+    min-height: calc(100vh - 70px);
+
+    background: #f6f8fb;
+
+    box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   CABEÇALHO
+   --------------------------------------------------------- */
+
+.cliente-form-page .page-header {
+    margin-bottom: 26px;
+}
+
+.cliente-form-page .page-header h1 {
+    margin: 10px 0 6px;
+
+    color: #1f2937;
+
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.cliente-form-page .page-header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 15px;
+}
+
+
+/* ---------------------------------------------------------
+   LINK VOLTAR
+   --------------------------------------------------------- */
+
+.cliente-form-page .back-link {
+    display: inline-flex;
+    align-items: center;
+
+    color: #2563eb;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+            color 0.2s ease,
+            transform 0.2s ease;
+}
+
+.cliente-form-page .back-link:hover {
+    color: #1d4ed8;
+
+    transform: translateX(-2px);
+}
+
+
+/* ---------------------------------------------------------
+   CARD DO FORMULÁRIO
+   --------------------------------------------------------- */
+
+.cliente-form-page .form-card {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+
+    overflow: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   CABEÇALHO DO CARD
+   --------------------------------------------------------- */
+
+.cliente-form-page .form-card-header {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 24px 28px;
+
+    border-bottom: 1px solid #eef0f3;
+}
+
+.cliente-form-page .form-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+
+    font-size: 23px;
+}
+
+.cliente-form-page .form-card-header h2 {
+    margin: 0 0 4px;
+
+    color: #1f2937;
+
+    font-size: 18px;
+    font-weight: 650;
+}
+
+.cliente-form-page .form-card-header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* ---------------------------------------------------------
+   FORMULÁRIO
+   --------------------------------------------------------- */
+
+.cliente-form-page .cliente-form {
+    padding: 28px;
+}
+
+
+/* ---------------------------------------------------------
+   SEÇÃO DO FORMULÁRIO
+   --------------------------------------------------------- */
+
+.cliente-form-page .form-section {
+    margin-bottom: 26px;
+}
+
+.cliente-form-page .form-section h3 {
+    margin: 0 0 20px;
+
+    color: #374151;
+
+    font-size: 15px;
+    font-weight: 650;
+}
+
+
+/* ---------------------------------------------------------
+   GRID DOS CAMPOS
+   --------------------------------------------------------- */
+
+.cliente-form-page .form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* ---------------------------------------------------------
+   GRUPO DO CAMPO
+   --------------------------------------------------------- */
+
+.cliente-form-page .form-group {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.cliente-form-page .form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* ---------------------------------------------------------
+   LABEL
+   --------------------------------------------------------- */
+
+.cliente-form-page .form-group label {
+    margin-bottom: 8px;
+
+    color: #374151;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.cliente-form-page .form-group label span {
+    color: #dc2626;
+    margin-left: 2px;
+}
+
+
+/* ---------------------------------------------------------
+   INPUTS
+   --------------------------------------------------------- */
+
+.cliente-form-page .form-group input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #1f2937;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+}
+
+.cliente-form-page .form-group input::placeholder {
+    color: #9ca3af;
+}
+
+.cliente-form-page .form-group input:hover {
+    border-color: #9ca3af;
+}
+
+.cliente-form-page .form-group input:focus {
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* ---------------------------------------------------------
+   INPUT INVÁLIDO
+   --------------------------------------------------------- */
+
+.cliente-form-page .form-group input:invalid:not(:placeholder-shown) {
+    border-color: #fca5a5;
+}
+
+.cliente-form-page .form-group input:invalid:not(:placeholder-shown):focus {
+    border-color: #dc2626;
+
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08);
+}
+
+
+/* ---------------------------------------------------------
+   MENSAGENS DE ERRO
+   --------------------------------------------------------- */
+
+.cliente-form-page .field-error {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #dc2626;
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+
+/* ---------------------------------------------------------
+   INFORMAÇÃO DE CADASTRO
+   --------------------------------------------------------- */
+
+.cliente-form-page .registration-info {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 26px;
+    padding: 14px 16px;
+
+    border: 1px solid #dbeafe;
+    border-radius: 10px;
+
+    background: #eff6ff;
+
+    color: #374151;
+}
+
+.cliente-form-page .registration-info > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    font-size: 17px;
+}
+
+.cliente-form-page .registration-info strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #374151;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.cliente-form-page .registration-info p {
+    margin: 0;
+
+    color: #2563eb;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------
+   AÇÕES
+   --------------------------------------------------------- */
+
+.cliente-form-page .form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid #eef0f3;
+}
+
+
+/* ---------------------------------------------------------
+   BOTÃO SECUNDÁRIO
+   --------------------------------------------------------- */
+
+.cliente-form-page .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 100px;
+    height: 44px;
+
+    padding: 0 18px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #4b5563;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            border-color 0.2s ease,
+            color 0.2s ease;
+}
+
+.cliente-form-page .btn-secondary:hover {
+    background: #f9fafb;
+
+    border-color: #9ca3af;
+
+    color: #1f2937;
+}
+
+
+/* ---------------------------------------------------------
+   BOTÃO PRINCIPAL
+   --------------------------------------------------------- */
+
+.cliente-form-page .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-width: 150px;
+    height: 44px;
+
+    padding: 0 20px;
+
+    box-sizing: border-box;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.cliente-form-page .btn-primary:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 14px rgba(37, 99, 235, 0.20);
+}
+
+.cliente-form-page .btn-primary:active {
+    transform: translateY(0);
+}
+
+.cliente-form-page .btn-primary span {
+    font-size: 16px;
+    line-height: 1;
+}
+
+
+/* ---------------------------------------------------------
+   BOTÃO DESABILITADO
+   --------------------------------------------------------- */
+
+.cliente-form-page .btn-primary:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVIDADE - TABLET
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    .cliente-form-page {
+        padding: 24px;
+    }
+
+    .cliente-form-page .form-card {
+        max-width: 100%;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVIDADE - CELULAR
+   --------------------------------------------------------- */
+
+@media (max-width: 650px) {
+
+    .cliente-form-page {
+        padding: 18px;
+    }
+
+    .cliente-form-page .page-header h1 {
+        font-size: 25px;
+    }
+
+    .cliente-form-page .page-header p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .cliente-form-page .form-card-header {
+        padding: 20px;
+    }
+
+    .cliente-form-page .cliente-form {
+        padding: 20px;
+    }
+
+    .cliente-form-page .form-grid {
+        grid-template-columns: 1fr;
+
+        gap: 17px;
+    }
+
+    .cliente-form-page .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .cliente-form-page .form-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+    .cliente-form-page .btn-primary,
+    .cliente-form-page .btn-secondary {
+        width: 100%;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   CELULAR PEQUENO
+   --------------------------------------------------------- */
+
+@media (max-width: 400px) {
+
+    .cliente-form-page {
+        padding: 14px;
+    }
+
+    .cliente-form-page .form-card-header {
+        align-items: flex-start;
+    }
+
+    .cliente-form-page .form-icon {
+        width: 42px;
+        height: 42px;
+
+        font-size: 20px;
+    }
+
+    .cliente-form-page .form-card-header h2 {
+        font-size: 16px;
+    }
+
+    .cliente-form-page .cliente-form {
+        padding: 16px;
+    }
+}

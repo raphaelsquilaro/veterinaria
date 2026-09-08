@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/cliente.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <title>Clientes - VetMark</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <main class="main-content clientes-page">
+
+        <!-- Cabeçalho -->
+        <div class="page-header">
+
+            <div>
+                <h1>Clientes</h1>
+                <p>Gerencie os clientes cadastrados na clínica.</p>
+            </div>
+
+            <a th:href="@{/cliente/cadastro}" class="btn-primary">
+                <span>+</span>
+                Novo Cliente
+            </a>
+
+        </div>
+
+        <!-- Barra de busca -->
+        <section class="clientes-toolbar">
+
+            <div class="search-box">
+                <span class="search-icon">⌕</span>
+
+                <input
+                        type="text"
+                        id="searchCliente"
+                        placeholder="Buscar por nome, CPF ou telefone..."
+                        autocomplete="off"
+                >
+            </div>
+
+        </section>
+
+        <!-- Mensagem quando não existem clientes -->
+        <div
+                th:if="${#lists.isEmpty(clientes)}"
+                class="empty-state"
+                id="emptyState"
+        >
+            <div class="empty-icon">👥</div>
+
+            <h2>Nenhum cliente cadastrado</h2>
+
+            <p>
+                Comece cadastrando o primeiro cliente da clínica.
+            </p>
+
+            <a th:href="@{/cliente/cadastro}" class="btn-primary">
+                Cadastrar cliente
+            </a>
+        </div>
+
+        <!-- Tabela -->
+        <section
+                class="table-card"
+                th:if="${!#lists.isEmpty(clientes)}"
+        >
+
+            <div class="table-header">
+
+                <div>
+                    <h2>Clientes cadastrados</h2>
+
+                    <span
+                            class="client-count"
+                            th:text="${#lists.size(clientes) + ' cliente(s)'}"
+                    >
+                        0 clientes
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table class="clientes-table">
+
+                    <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                        <th>Pets</th>
+                        <th class="actions-column">Ações</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="clientesTableBody">
+
+                    <tr
+                            th:each="cliente : ${clientes}"
+                            class="cliente-row"
+                    >
+
+                        <!-- Cliente -->
+                        <td>
+
+                            <div class="cliente-info">
+
+                                <div class="cliente-avatar"
+                                     th:text="${#strings.substring(cliente.nome, 0, 1).toUpperCase()}">
+                                    C
+                                </div>
+
+                                <div>
+                                    <strong th:text="${cliente.nome}">
+                                        Nome do Cliente
+                                    </strong>
+
+                                    <small
+                                            th:text="${'Cliente #' + cliente.id}"
+                                    >
+                                        Cliente #1
+                                    </small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <!-- CPF -->
+                        <td>
+                            <span
+                                    th:text="${cliente.cpf != null && !#strings.isEmpty(cliente.cpf)
+                                    ? cliente.cpf
+                                    : 'Não informado'}"
+                            >
+                                Não informado
+                            </span>
+                        </td>
+
+                        <!-- Telefone -->
+                        <td>
+                            <span
+                                    th:text="${cliente.telefone != null && !#strings.isEmpty(cliente.telefone)
+                                    ? cliente.telefone
+                                    : 'Não informado'}"
+                            >
+                                Não informado
+                            </span>
+                        </td>
+
+                        <!-- E-mail -->
+                        <td>
+                            <span
+                                    th:text="${cliente.email != null && !#strings.isEmpty(cliente.email)
+                                    ? cliente.email
+                                    : 'Não informado'}"
+                            >
+                                Não informado
+                            </span>
+                        </td>
+
+                        <!-- Pets -->
+                        <td>
+
+                            <span class="pets-badge">
+
+                                <span
+                                        th:text="${cliente.pets != null
+                                        ? #lists.size(cliente.pets)
+                                        : 0}"
+                                >
+                                    0
+                                </span>
+
+                                <span>pet(s)</span>
+
+                            </span>
+
+                        </td>
+
+                        <!-- Ações -->
+                        <td class="actions-column">
+
+                            <div class="action-buttons">
+
+                                <a
+                                        th:href="@{/cliente/editar/{id}(id=${cliente.id})}"
+                                        class="action-button edit"
+                                        title="Editar cliente"
+                                >
+                                    ✏
+                                </a>
+
+                                <button
+                                        type="button"
+                                        class="action-button delete"
+                                        title="Excluir cliente"
+                                        th:attr="data-id=${cliente.id},data-name=${cliente.nome}"
+                                >
+                                    🗑
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- Resultado da busca -->
+            <div
+                    id="noSearchResults"
+                    class="no-search-results"
+                    style="display: none;"
+            >
+                <span>🔎</span>
+                <p>Nenhum cliente encontrado para essa busca.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/cliente.js}"></script>
+
+</body>
+</html>

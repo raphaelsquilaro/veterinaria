@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/servico.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <title>Serviços - VetMark</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <aside th:replace="~{fragments/sidebar :: sidebar}"></aside>
+
+    <main class="main-content servicos-page">
+
+        <!-- Cabeçalho -->
+
+        <div class="page-header">
+
+            <div>
+                <h1>Serviços</h1>
+
+                <p>
+                    Gerencie os serviços oferecidos pela clínica.
+                </p>
+            </div>
+
+            <a
+                    th:href="@{/servico/cadastro}"
+                    class="btn-primary"
+            >
+                <span>+</span>
+                Novo Serviço
+            </a>
+
+        </div>
+
+
+        <!-- Busca -->
+
+        <section class="servicos-toolbar">
+
+            <div class="search-box">
+
+                <span class="search-icon">⌕</span>
+
+                <input
+                        type="text"
+                        id="searchServico"
+                        placeholder="Buscar por nome ou descrição..."
+                        autocomplete="off"
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- Estado vazio -->
+
+        <div
+                th:if="${#lists.isEmpty(servicos)}"
+                class="empty-state"
+                id="emptyState"
+        >
+
+            <div class="empty-icon">
+                🩺
+            </div>
+
+            <h2>Nenhum serviço cadastrado</h2>
+
+            <p>
+                Comece cadastrando o primeiro serviço oferecido pela clínica.
+            </p>
+
+            <a
+                    th:href="@{/servico/cadastro}"
+                    class="btn-primary"
+            >
+                Cadastrar serviço
+            </a>
+
+        </div>
+
+
+        <!-- Tabela -->
+
+        <section
+                class="table-card"
+                th:if="${!#lists.isEmpty(servicos)}"
+        >
+
+            <div class="table-header">
+
+                <div>
+
+                    <h2>
+                        Serviços cadastrados
+                    </h2>
+
+                    <span
+                            class="servico-count"
+                            th:text="${#lists.size(servicos) + ' serviço(s)'}"
+                    >
+                        0 serviços
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="servicos-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Serviço
+                        </th>
+
+                        <th>
+                            Descrição
+                        </th>
+
+                        <th>
+                            Valor
+                        </th>
+
+                        <th class="actions-column">
+                            Ações
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="servicosTableBody">
+
+                    <tr
+                            th:each="servico : ${servicos}"
+                            class="servico-row"
+                    >
+
+                        <!-- Serviço -->
+
+                        <td>
+
+                            <div class="servico-info">
+
+                                <div class="servico-avatar">
+                                    🩺
+                                </div>
+
+                                <div>
+
+                                    <strong
+                                            th:text="${servico.nome}"
+                                    >
+                                        Consulta Veterinária
+                                    </strong>
+
+                                    <small
+                                            th:text="${'Serviço #' + servico.id}"
+                                    >
+                                        Serviço #1
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Descrição -->
+
+                        <td>
+
+                            <span
+                                    th:if="${servico.descricao != null &&
+                                    !#strings.isEmpty(servico.descricao)}"
+                                    class="description-text"
+                                    th:text="${servico.descricao}"
+                            >
+                                Consulta clínica completa
+                            </span>
+
+                            <span
+                                    th:if="${servico.descricao == null ||
+                                    #strings.isEmpty(servico.descricao)}"
+                                    class="not-informed"
+                            >
+                                Não informada
+                            </span>
+
+                        </td>
+
+
+                        <!-- Valor -->
+
+                        <td>
+
+                            <span
+                                    th:if="${servico.valor != null}"
+                                    class="price"
+                                    th:text="${'R$ ' + #numbers.formatDecimal(
+                                        servico.valor,
+                                        2,
+                                        2
+                                    )}"
+                            >
+                                R$ 100,00
+                            </span>
+
+                            <span
+                                    th:if="${servico.valor == null}"
+                                    class="not-informed"
+                            >
+                                Não informado
+                            </span>
+
+                        </td>
+
+                        <!-- Ações -->
+
+                        <td class="actions-column">
+
+                            <div class="action-buttons">
+
+                                <a
+                                        th:href="@{/servico/editar/{id}(id=${servico.id})}"
+                                        class="action-button edit"
+                                        title="Editar serviço"
+                                >
+                                    ✏
+                                </a>
+
+                                <button
+                                        type="button"
+                                        class="action-button delete"
+                                        title="Excluir serviço"
+                                        th:attr="
+                                            data-id=${servico.id},
+                                            data-name=${servico.nome}"
+                                >
+                                    🗑
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- Nenhum resultado da busca -->
+
+            <div
+                    id="noSearchResults"
+                    class="no-search-results"
+                    style="display: none;"
+            >
+
+                <span>
+                    🔎
+                </span>
+
+                <p>
+                    Nenhum serviço encontrado para essa busca.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+<script th:src="@{/js/servico.js}"></script>
+
+</body>
+
+</html>

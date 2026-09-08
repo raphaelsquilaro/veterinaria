@@ -6,26 +6,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import sp.senai.org.vetmark.exception.ResourceNotFoundException;
 import sp.senai.org.vetmark.model.entity.Cliente;
-import sp.senai.org.vetmark.repository.ClienteRepository;
+import sp.senai.org.vetmark.service.ClienteService;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/cliente")
 public class ClienteController {
 
-    private final ClienteRepository repository;
+    private final ClienteService service;
 
     @GetMapping("/listagem")
     public String listarCliente(Model model) {
 
         model.addAttribute(
                 "clientes",
-                repository.findAll()
+                service.findAll()
         );
 
-        return "";
+        return "cliente/listagem";
     }
 
     @GetMapping("/cadastro")
@@ -36,7 +35,7 @@ public class ClienteController {
                 new Cliente()
         );
 
-        return "";
+        return "cliente/cadastro";
     }
 
     @GetMapping("/editar/{id}")
@@ -44,42 +43,37 @@ public class ClienteController {
             @PathVariable Long id,
             Model model
     ) {
-        Cliente cliente =
-                repository.findById(id)
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "Cliente não Encontrado"
-                                )
-                        );
 
         model.addAttribute(
                 "cliente",
-                cliente
+                service.findById(id)
         );
 
-        return "";
+        return "cliente/cadastro";
     }
 
     @PostMapping("/salvar")
     public String salvarCliente(
-            @Valid @ModelAttribute Cliente cliente,
+            @Valid @ModelAttribute("cliente") Cliente cliente,
             BindingResult result
     ) {
+
         if (result.hasErrors()) {
-            return "";
+            return "cliente/cadastro";
         }
 
-        repository.save(cliente);
+        service.save(cliente);
 
-        return "redirect:";
+        return "redirect:/cliente/listagem";
     }
 
     @GetMapping("/excluir/{id}")
     public String excluirCliente(
             @PathVariable Long id
     ) {
-        repository.deleteById(id);
 
-        return "";
+        service.delete(id);
+
+        return "redirect:/cliente/listagem";
     }
 }

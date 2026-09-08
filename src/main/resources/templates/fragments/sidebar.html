@@ -15,7 +15,7 @@
 
 
         <a
-                th:href="@{/clientes}"
+                th:href="@{/cliente/listagem}"
                 class="nav-item"
         >
             <span>👤</span>
@@ -24,16 +24,24 @@
 
 
         <a
-                th:href="@{/pets}"
+                th:href="@{/pet/listagem}"
                 class="nav-item"
         >
             <span>🐾</span>
             Pets
         </a>
 
+        <a
+                th:href="@{/servico/listagem}"
+                class="nav-item"
+        >
+            <span>🩺</span>
+            Serviços
+        </a>
+
 
         <a
-                th:href="@{/agendamentos}"
+                th:href="@{/agendamento/listagem}"
                 class="nav-item"
         >
             <span>📅</span>
@@ -42,7 +50,7 @@
 
 
         <a
-                th:href="@{/pedidos}"
+                th:href="@{/pedido/listagem}"
                 class="nav-item"
         >
             <span>🧾</span>
@@ -51,7 +59,7 @@
 
 
         <a
-                th:href="@{/financeiro}"
+                th:href="@{/financeiro/listagem}"
                 class="nav-item"
         >
             <span>💰</span>
@@ -60,7 +68,7 @@
 
 
         <a
-                th:href="@{/relatorios}"
+                th:href="@{/relatorio/listagem}"
                 class="nav-item"
         >
             <span>📈</span>

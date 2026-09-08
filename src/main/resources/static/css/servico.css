@@ -1,0 +1,445 @@
+.servicos-page {
+    flex: 1;
+    min-width: 0;
+    padding: 32px;
+    min-height: calc(100vh - 70px);
+    background: #f6f8fb;
+    box-sizing: border-box;
+}
+
+.servicos-page .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.servicos-page .page-header h1 {
+    margin: 0 0 6px;
+    color: #1f2937;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.servicos-page .page-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.servicos-page .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1px solid #2563eb;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.servicos-page .btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(37, 99, 235, 0.20);
+}
+
+.servicos-page .btn-primary span {
+    font-size: 20px;
+    line-height: 1;
+}
+
+
+/* Toolbar */
+
+.servicos-toolbar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.servicos-page .search-box {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+}
+
+.servicos-page .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 21px;
+    pointer-events: none;
+}
+
+.servicos-page .search-box input {
+    width: 100%;
+    height: 46px;
+    padding: 0 16px 0 44px;
+    box-sizing: border-box;
+    border: 1px solid #dbe1e8;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #1f2937;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.servicos-page .search-box input::placeholder {
+    color: #9ca3af;
+}
+
+.servicos-page .search-box input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* Card */
+
+.servicos-page .table-card {
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.servicos-page .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #eef0f3;
+}
+
+.servicos-page .table-header h2 {
+    margin: 0 0 4px;
+    color: #1f2937;
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.servicos-page .servico-count {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+
+/* Tabela */
+
+.servicos-page .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.servicos-page .servicos-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.servicos-page .servicos-table thead {
+    background: #f8fafc;
+}
+
+.servicos-page .servicos-table th {
+    padding: 14px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.servicos-page .servicos-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #eef0f3;
+    color: #374151;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.servicos-page .servicos-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.servicos-page .servicos-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.servicos-page .servicos-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* Serviço */
+
+.servico-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 200px;
+}
+
+.servico-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #eff6ff;
+    font-size: 20px;
+}
+
+.servico-info strong {
+    display: block;
+    margin-bottom: 3px;
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.servico-info small {
+    display: block;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+
+/* Descrição */
+
+.description-text {
+    display: block;
+    max-width: 300px;
+    overflow: hidden;
+    color: #4b5563;
+    font-size: 13px;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* Valor */
+
+.price {
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* Duração */
+
+.duration-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* Informações não preenchidas */
+
+.not-informed {
+    color: #9ca3af !important;
+    font-size: 13px;
+}
+
+
+/* Ações */
+
+.actions-column {
+    width: 100px;
+    text-align: center;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+            background 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease;
+}
+
+.action-button:hover {
+    transform: translateY(-1px);
+}
+
+.action-button.edit {
+    background: #eff6ff;
+    border-color: #dbeafe;
+}
+
+.action-button.edit:hover {
+    background: #dbeafe;
+}
+
+.action-button.delete {
+    background: #fef2f2;
+    border-color: #fee2e2;
+}
+
+.action-button.delete:hover {
+    background: #fee2e2;
+}
+
+
+/* Estado vazio */
+
+.servicos-page .empty-state {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 60px 30px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.servicos-page .empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    margin-bottom: 18px;
+    border-radius: 50%;
+    background: #eff6ff;
+    font-size: 30px;
+}
+
+.servicos-page .empty-state h2 {
+    margin: 0 0 8px;
+    color: #1f2937;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.servicos-page .empty-state p {
+    max-width: 420px;
+    margin: 0 0 24px;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* Busca sem resultados */
+
+.servicos-page .no-search-results {
+    padding: 35px 20px;
+    color: #6b7280;
+    text-align: center;
+}
+
+.servicos-page .no-search-results span {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.servicos-page .no-search-results p {
+    margin: 0;
+    font-size: 14px;
+}
+
+
+/* Responsividade */
+
+@media (max-width: 1000px) {
+
+    .servicos-page {
+        padding: 24px;
+    }
+
+    .servicos-page .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .servicos-page .page-header .btn-primary {
+        width: 100%;
+    }
+
+    .servicos-page .search-box {
+        max-width: none;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .servicos-page {
+        padding: 18px;
+    }
+
+    .servicos-page .page-header h1 {
+        font-size: 25px;
+    }
+
+    .servicos-page .page-header p {
+        font-size: 13px;
+    }
+
+    .servicos-page .table-header {
+        padding: 16px;
+    }
+
+    .servicos-page .servicos-table th,
+    .servicos-page .servicos-table td {
+        padding: 13px 14px;
+    }
+
+    .servicos-page .empty-state {
+        padding: 45px 20px;
+    }
+}

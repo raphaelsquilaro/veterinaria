@@ -1,0 +1,486 @@
+/* =========================================================
+   VETMARK - LISTAGEM DE AGENDAMENTOS
+   ========================================================= */
+
+.agendamento-page {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    padding: 32px;
+    background: #f6f8fb;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CABEÇALHO DA PÁGINA
+   ========================================================= */
+
+.agendamento-page .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.agendamento-page .page-header h1 {
+    margin: 0 0 7px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #1f2937;
+    letter-spacing: -0.5px;
+}
+
+.agendamento-page .page-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   BOTÃO PRINCIPAL
+   ========================================================= */
+
+.agendamento-page .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 44px;
+    padding: 0 18px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.agendamento-page .btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(37, 99, 235, 0.20);
+}
+
+.agendamento-page .btn-primary:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   CARD PRINCIPAL
+   ========================================================= */
+
+.agendamento-page .content-card {
+    width: 100%;
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   ÁREA DE BUSCA
+   ========================================================= */
+
+.agendamento-page .search-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 22px;
+
+    border-bottom: 1px solid #eef0f3;
+    background: #ffffff;
+}
+
+.agendamento-page .search-box {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    max-width: 390px;
+}
+
+.agendamento-page .search-box span {
+    position: absolute;
+    left: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+    color: #9ca3af;
+
+    pointer-events: none;
+}
+
+.agendamento-page .search-box input {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 14px 0 42px;
+
+    border: 1px solid #dfe3e8;
+    border-radius: 9px;
+
+    background: #f9fafb;
+    color: #1f2937;
+
+    font-size: 14px;
+    outline: none;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+}
+
+.agendamento-page .search-box input::placeholder {
+    color: #9ca3af;
+}
+
+.agendamento-page .search-box input:focus {
+    background: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================================================
+   CONTAINER DA TABELA
+   ========================================================= */
+
+.agendamento-page .table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   TABELA
+   ========================================================= */
+
+.agendamento-page .data-table {
+    width: 100%;
+    min-width: 850px;
+
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    font-size: 14px;
+}
+
+
+/* Cabeçalho */
+
+.agendamento-page .data-table thead {
+    background: #f8fafc;
+}
+
+.agendamento-page .data-table thead th {
+    height: 48px;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    color: #6b7280;
+
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+
+    white-space: nowrap;
+}
+
+
+/* Corpo */
+
+.agendamento-page .data-table tbody tr.agendamento-row {
+    background: #ffffff;
+
+    transition:
+            background 0.15s ease;
+}
+
+.agendamento-page .data-table tbody tr.agendamento-row:hover {
+    background: #f8fafc;
+}
+
+.agendamento-page .data-table tbody td {
+    height: 64px;
+
+    padding: 10px 20px;
+
+    border-bottom: 1px solid #eef0f3;
+
+    color: #374151;
+
+    vertical-align: middle;
+}
+
+
+/* =========================================================
+   COLUNAS
+   ========================================================= */
+
+.agendamento-page .data-table tbody td:first-child {
+    color: #1f2937;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.agendamento-page .data-table tbody td:nth-child(2) {
+    color: #1f2937;
+    font-weight: 500;
+}
+
+.agendamento-page .data-table tbody td:nth-child(3) {
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.agendamento-page .data-table tbody td:nth-child(4) {
+    color: #4b5563;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.agendamento-page .status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 92px;
+    min-height: 30px;
+
+    padding: 0 11px;
+
+    border-radius: 999px;
+
+    background: #eff6ff;
+    color: #2563eb;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/*
+ * Alguns status comuns.
+ * Caso o enum use exatamente esses nomes,
+ * podemos estilizar individualmente depois.
+ */
+
+.agendamento-page .status-badge[data-status="AGENDADO"] {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.agendamento-page .status-badge[data-status="CONFIRMADO"] {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.agendamento-page .status-badge[data-status="CANCELADO"] {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.agendamento-page .status-badge[data-status="CONCLUIDO"] {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+
+/* =========================================================
+   AÇÕES
+   ========================================================= */
+
+.agendamento-page .actions {
+    display: flex;
+
+    align-items: center;
+    gap: 8px;
+
+    white-space: nowrap;
+}
+
+.agendamento-page .btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+}
+
+
+/* Editar */
+
+.agendamento-page .btn-edit {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.agendamento-page .btn-edit:hover {
+    background: #dbeafe;
+    transform: translateY(-1px);
+}
+
+
+/* Excluir */
+
+.agendamento-page .btn-delete {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.agendamento-page .btn-delete:hover {
+    background: #fee2e2;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ESTADO VAZIO
+   ========================================================= */
+
+.agendamento-page .empty-state {
+    padding: 65px 20px !important;
+
+    text-align: center;
+
+    color: #6b7280;
+}
+
+.agendamento-page .empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 64px;
+    height: 64px;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    font-size: 28px;
+}
+
+.agendamento-page .empty-state h3 {
+    margin: 0 0 8px;
+
+    color: #374151;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.agendamento-page .empty-state p {
+    margin: 0 0 22px;
+
+    color: #9ca3af;
+
+    font-size: 14px;
+}
+
+.agendamento-page .empty-state .btn-primary {
+    display: inline-flex;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .agendamento-page {
+        padding: 24px;
+    }
+
+    .agendamento-page .page-header {
+        align-items: flex-start;
+    }
+
+    .agendamento-page .page-header h1 {
+        font-size: 26px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .agendamento-page {
+        padding: 18px;
+    }
+
+    .agendamento-page .page-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+    }
+
+    .agendamento-page .page-header .btn-primary {
+        width: 100%;
+    }
+
+    .agendamento-page .search-area {
+        padding: 16px;
+    }
+
+    .agendamento-page .search-box {
+        max-width: none;
+    }
+
+    .agendamento-page .content-card {
+        border-radius: 10px;
+    }
+
+}

@@ -79,7 +79,7 @@ public class SecurityConfig {
                         auth -> auth
 
                                 .requestMatchers(
-                                        "/",
+                                        "/**",
                                         "/login",
                                         "/css/**",
                                         "/images/**",

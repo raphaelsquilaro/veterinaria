@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/cliente-form.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <title>Clientes - VetMark</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <main class="main-content cliente-form-page">
+
+        <!-- Cabeçalho -->
+        <div class="page-header">
+
+            <div>
+
+                <a
+                        th:href="@{/cliente/listagem}"
+                        class="back-link"
+                >
+                    ← Voltar para clientes
+                </a>
+
+                <h1
+                        th:if="${cliente.id == null}"
+                >
+                    Novo Cliente
+                </h1>
+
+                <h1
+                        th:if="${cliente.id != null}"
+                >
+                    Editar Cliente
+                </h1>
+
+                <p
+                        th:if="${cliente.id == null}"
+                >
+                    Cadastre um novo cliente da clínica.
+                </p>
+
+                <p
+                        th:if="${cliente.id != null}"
+                >
+                    Atualize as informações do cliente.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Formulário -->
+        <section class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="form-icon">
+                    👤
+                </div>
+
+                <div>
+                    <h2>Informações do cliente</h2>
+                    <p>
+                        Preencha os dados abaixo.
+                    </p>
+                </div>
+
+            </div>
+
+            <form
+                    th:action="@{/cliente/salvar}"
+                    th:object="${cliente}"
+                    method="post"
+                    class="cliente-form"
+                    id="clienteForm"
+            >
+
+                <!-- CSRF -->
+                <input
+                        type="hidden"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"
+                >
+
+                <!-- ID para edição -->
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                >
+
+                <div class="form-section">
+
+                    <h3>Dados pessoais</h3>
+
+                    <div class="form-grid">
+
+                        <!-- Nome -->
+                        <div class="form-group full-width">
+
+                            <label for="nome">
+                                Nome completo
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="nome"
+                                    th:field="*{nome}"
+                                    placeholder="Digite o nome completo"
+                                    maxlength="150"
+                                    required
+                            >
+
+                            <small
+                                    class="field-error"
+                                    th:if="${#fields.hasErrors('nome')}"
+                                    th:errors="*{nome}"
+                            >
+                                Nome inválido
+                            </small>
+
+                        </div>
+
+                        <!-- CPF -->
+                        <div class="form-group">
+
+                            <label for="cpf">
+                                CPF
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="cpf"
+                                    th:field="*{cpf}"
+                                    placeholder="000.000.000-00"
+                                    maxlength="14"
+                            >
+
+                            <small
+                                    class="field-error"
+                                    th:if="${#fields.hasErrors('cpf')}"
+                                    th:errors="*{cpf}"
+                            >
+                                CPF inválido
+                            </small>
+
+                        </div>
+
+                        <!-- Telefone -->
+                        <div class="form-group">
+
+                            <label for="telefone">
+                                Telefone
+                            </label>
+
+                            <input
+                                    type="tel"
+                                    id="telefone"
+                                    th:field="*{telefone}"
+                                    placeholder="(00) 00000-0000"
+                                    maxlength="20"
+                            >
+
+                            <small
+                                    class="field-error"
+                                    th:if="${#fields.hasErrors('telefone')}"
+                                    th:errors="*{telefone}"
+                            >
+                                Telefone inválido
+                            </small>
+
+                        </div>
+
+                        <!-- E-mail -->
+                        <div class="form-group full-width">
+
+                            <label for="email">
+                                E-mail
+                            </label>
+
+                            <input
+                                    type="email"
+                                    id="email"
+                                    th:field="*{email}"
+                                    placeholder="cliente@email.com"
+                                    maxlength="150"
+                            >
+
+                            <small
+                                    class="field-error"
+                                    th:if="${#fields.hasErrors('email')}"
+                                    th:errors="*{email}"
+                            >
+                                E-mail inválido
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Informações do cadastro -->
+                <div
+                        class="registration-info"
+                        th:if="${cliente.id != null && cliente.dataCadastro != null}"
+                >
+
+                    <span>📅</span>
+
+                    <div>
+                        <strong>Cliente cadastrado em</strong>
+
+                        <p
+                                th:text="${#temporals.format(cliente.dataCadastro, 'dd/MM/yyyy HH:mm')}"
+                        >
+                            08/09/2026 10:30
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Ações -->
+                <div class="form-actions">
+
+                    <a
+                            th:href="@{/cliente/listagem}"
+                            class="btn-secondary"
+                    >
+                        Cancelar
+                    </a>
+
+                    <button
+                            type="submit"
+                            class="btn-primary"
+                            id="saveButton"
+                    >
+                        <span>✓</span>
+                        Salvar Cliente
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/cliente-form.js}"></script>
+
+</body>
+</html>

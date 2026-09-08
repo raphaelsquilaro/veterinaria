@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/servico-form.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <title
+            th:text="${servico.id == null
+                ? 'Novo Serviço - VetMark'
+                : 'Editar Serviço - VetMark'}">
+        Novo Serviço - VetMark
+    </title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <aside th:replace="~{fragments/sidebar :: sidebar}"></aside>
+
+    <main class="main-content servico-form-page">
+
+        <div class="form-page-header">
+
+            <div>
+
+                <a
+                        th:href="@{/servico/listagem}"
+                        class="back-link"
+                >
+                    ← Voltar para Serviços
+                </a>
+
+                <h1
+                        th:text="${servico.id == null
+                            ? 'Novo Serviço'
+                            : 'Editar Serviço'}"
+                >
+                    Novo Serviço
+                </h1>
+
+                <p>
+                    Cadastre os serviços oferecidos pela clínica veterinária.
+                </p>
+
+            </div>
+
+        </div>
+
+        <section class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="form-icon">
+                    🩺
+                </div>
+
+                <div>
+
+                    <h2>
+                        Informações do Serviço
+                    </h2>
+
+                    <p>
+                        Preencha os dados abaixo para cadastrar o serviço.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <form
+                    th:action="@{/servico/salvar}"
+                    th:object="${servico}"
+                    method="post"
+                    class="servico-form"
+            >
+
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                >
+
+                <input
+                        type="hidden"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"
+                >
+
+                <div class="form-grid">
+
+                    <!-- Nome -->
+
+                    <div class="form-group form-group-full">
+
+                        <label for="nome">
+                            Nome do serviço
+                            <span>*</span>
+                        </label>
+
+                        <input
+                                type="text"
+                                id="nome"
+                                th:field="*{nome}"
+                                placeholder="Ex.: Consulta veterinária"
+                                maxlength="150"
+                                required
+                        >
+
+                        <small>
+                            Informe o nome que será exibido para os clientes.
+                        </small>
+
+                    </div>
+
+                    <!-- Valor -->
+
+                    <div class="form-group">
+
+                        <label for="valor">
+                            Valor
+                            <span>*</span>
+                        </label>
+
+                        <div class="input-prefix">
+
+                            <span>
+                                R$
+                            </span>
+
+                            <input
+                                    type="number"
+                                    id="valor"
+                                    th:field="*{valor}"
+                                    placeholder="0.00"
+                                    min="0"
+                                    step="0.01"
+                                    required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- Descrição -->
+
+                    <div class="form-group form-group-full">
+
+                        <label for="descricao">
+                            Descrição
+                        </label>
+
+                        <textarea
+                                id="descricao"
+                                th:field="*{descricao}"
+                                rows="6"
+                                maxlength="1000"
+                                placeholder="Descreva o serviço, o que está incluso e outras informações importantes..."
+                        ></textarea>
+
+                        <small>
+                            Campo opcional. Máximo de 1000 caracteres.
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="form-divider"></div>
+
+                <div class="form-actions">
+
+                    <a
+                            th:href="@{/servico/listagem}"
+                            class="btn-secondary"
+                    >
+                        Cancelar
+                    </a>
+
+                    <button
+                            type="submit"
+                            class="btn-primary"
+                    >
+
+                        <span>✓</span>
+
+                        <span
+                                th:text="${servico.id == null
+                                    ? 'Cadastrar Serviço'
+                                    : 'Salvar Alterações'}"
+                        >
+                            Cadastrar Serviço
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

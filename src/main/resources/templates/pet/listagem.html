@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pet.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <title>Pets - VetMark</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <main class="main-content pets-page">
+
+        <!-- Cabeçalho -->
+        <div class="page-header">
+
+            <div>
+                <h1>Pets</h1>
+
+                <p>
+                    Gerencie os animais cadastrados na clínica.
+                </p>
+            </div>
+
+            <a
+                    th:href="@{/pet/cadastro}"
+                    class="btn-primary"
+            >
+                <span>+</span>
+                Novo Pet
+            </a>
+
+        </div>
+
+
+        <!-- Barra de busca -->
+        <section class="pets-toolbar">
+
+            <div class="search-box">
+
+                <span class="search-icon">⌕</span>
+
+                <input
+                        type="text"
+                        id="searchPet"
+                        placeholder="Buscar por nome, raça ou cliente..."
+                        autocomplete="off"
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- Estado vazio -->
+        <div
+                th:if="${#lists.isEmpty(pets)}"
+                class="empty-state"
+                id="emptyState"
+        >
+
+            <div class="empty-icon">
+                🐾
+            </div>
+
+            <h2>Nenhum pet cadastrado</h2>
+
+            <p>
+                Comece cadastrando o primeiro pet da clínica.
+            </p>
+
+            <a
+                    th:href="@{/pet/cadastro}"
+                    class="btn-primary"
+            >
+                Cadastrar pet
+            </a>
+
+        </div>
+
+
+        <!-- Tabela -->
+        <section
+                class="table-card"
+                th:if="${!#lists.isEmpty(pets)}"
+        >
+
+            <!-- Cabeçalho da tabela -->
+            <div class="table-header">
+
+                <div>
+
+                    <h2>
+                        Pets cadastrados
+                    </h2>
+
+                    <span
+                            class="pet-count"
+                            th:text="${#lists.size(pets) + ' pet(s)'}"
+                    >
+                        0 pets
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Tabela -->
+            <div class="table-wrapper">
+
+                <table class="pets-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Pet</th>
+
+                        <th>Espécie</th>
+
+                        <th>Raça</th>
+
+                        <th>Data de nascimento</th>
+
+                        <th>Cliente</th>
+
+                        <th class="actions-column">
+                            Ações
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="petsTableBody">
+
+                    <tr
+                            th:each="pet : ${pets}"
+                            class="pet-row"
+                    >
+
+                        <!-- Pet -->
+                        <td>
+
+                            <div class="pet-info">
+
+                                <div class="pet-avatar">
+
+                                    <span
+                                            th:if="${pet.especie != null and pet.especie.name() == 'CAO'}"
+                                    >
+                                        🐶
+                                    </span>
+
+                                    <span
+                                            th:if="${pet.especie != null and pet.especie.name() == 'GATO'}"
+                                    >
+                                        🐱
+                                    </span>
+
+                                    <span
+                                            th:if="${pet.especie == null or
+                                            (pet.especie.name() != 'CAO' and
+                                            pet.especie.name() != 'GATO')}"
+                                    >
+                                        🐾
+                                    </span>
+
+                                </div>
+
+                                <div>
+
+                                    <strong
+                                            th:text="${pet.nome}"
+                                    >
+                                        Nome do Pet
+                                    </strong>
+
+                                    <small
+                                            th:text="${'Pet #' + pet.id}"
+                                    >
+                                        Pet #1
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Espécie -->
+                        <td>
+
+                            <span
+                                    class="species-badge"
+                                    th:text="${pet.especie}"
+                            >
+                                Cão
+                            </span>
+
+                        </td>
+
+
+                        <!-- Raça -->
+                        <td>
+
+                            <span
+                                    th:text="${pet.raca != null && !#strings.isEmpty(pet.raca)
+                                    ? pet.raca
+                                    : 'Não informada'}"
+                            >
+                                Não informada
+                            </span>
+
+                        </td>
+
+
+                        <!-- Data de nascimento -->
+                        <td>
+
+                            <span
+                                    th:if="${pet.dataNascimento != null}"
+                                    th:text="${#temporals.format(pet.dataNascimento, 'dd/MM/yyyy')}"
+                            >
+                                01/01/2020
+                            </span>
+
+                            <span
+                                    th:if="${pet.dataNascimento == null}"
+                                    class="not-informed"
+                            >
+                                Não informada
+                            </span>
+
+                        </td>
+
+
+                        <!-- Cliente -->
+                        <td>
+
+                            <div class="owner-info">
+
+                                <div class="owner-avatar">
+
+                                    <span
+                                            th:if="${pet.cliente != null &&
+                                            pet.cliente.nome != null &&
+                                            !#strings.isEmpty(pet.cliente.nome)}"
+                                            th:text="${#strings.substring(pet.cliente.nome, 0, 1).toUpperCase()}"
+                                    >
+                                        C
+                                    </span>
+
+                                </div>
+
+                                <span
+                                        th:if="${pet.cliente != null}"
+                                        th:text="${pet.cliente.nome}"
+                                >
+                                    Cliente
+                                </span>
+
+                                <span
+                                        th:if="${pet.cliente == null}"
+                                        class="not-informed"
+                                >
+                                    Não informado
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Ações -->
+                        <td class="actions-column">
+
+                            <div class="action-buttons">
+
+                                <a
+                                        th:href="@{/pet/editar/{id}(id=${pet.id})}"
+                                        class="action-button edit"
+                                        title="Editar pet"
+                                >
+                                    ✏
+                                </a>
+
+                                <button
+                                        type="button"
+                                        class="action-button delete"
+                                        title="Excluir pet"
+                                        th:attr="data-id=${pet.id},data-name=${pet.nome}"
+                                >
+                                    🗑
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- Nenhum resultado da pesquisa -->
+            <div
+                    id="noSearchResults"
+                    class="no-search-results"
+                    style="display: none;"
+            >
+
+                <span>🔎</span>
+
+                <p>
+                    Nenhum pet encontrado para essa busca.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+<script th:src="@{/js/pet.js}"></script>
+
+</body>
+</html>
