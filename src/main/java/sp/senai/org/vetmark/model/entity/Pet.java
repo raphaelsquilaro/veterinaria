@@ -5,6 +5,8 @@ import lombok.*;
 import sp.senai.org.vetmark.model.enums.EspeciePet;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pets")
@@ -37,6 +39,14 @@ public class Pet {
             nullable = false
     )
     private Cliente cliente;
+
+    @OneToMany(
+            mappedBy = "pet",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @Builder.Default
+    private List<HistoricoClinico> historicos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -84,5 +94,13 @@ public class Pet {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public List<HistoricoClinico> getHistoricos() {
+        return historicos;
+    }
+
+    public void setHistoricos(List<HistoricoClinico> historicos) {
+        this.historicos = historicos;
     }
 }

@@ -1,17 +1,15 @@
 package sp.senai.org.vetmark.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import sp.senai.org.vetmark.exception.ResourceNotFoundException;
 import sp.senai.org.vetmark.model.entity.Agendamento;
-import sp.senai.org.vetmark.repository.AgendamentoRepository;
-import sp.senai.org.vetmark.repository.ClienteRepository;
-import sp.senai.org.vetmark.repository.PetRepository;
-import sp.senai.org.vetmark.repository.ServicoRepository;
+import sp.senai.org.vetmark.repository.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,14 +20,95 @@ public class AgendamentoController {
     private final ClienteRepository clienteRepository;
     private final PetRepository petRepository;
     private final ServicoRepository servicoRepository;
+    private final VeterinarioRepository veterinarioRepository;
 
     @GetMapping("/listagem")
-    public String listarAgendamento(Model model) {
+    public String listarAgendamento(
+            @RequestParam(defaultValue = "diario") String modo,
+            @RequestParam(required = false) LocalDate data,
+            Model model
+    ) {
 
-        model.addAttribute(
-                "agendamentos",
+        if (data == null) {
+            data = LocalDate.now();
+        }
+
+        LocalDate inicio;
+        LocalDate fim;
+
+        if ("semanal".equals(modo)) {
+
+            inicio = data.with(
+                    java.time.DayOfWeek.MONDAY
+            );
+
+            fim = inicio.plusDays(6);
+
+        } else if ("mensal".equals(modo)) {
+
+            inicio = data.withDayOfMonth(1);
+
+            fim = data.withDayOfMonth(
+                    data.lengthOfMonth()
+            );
+
+        } else {
+
+            modo = "diario";
+
+            inicio = data;
+            fim = data;
+        }
+
+        List<Agendamento> agendamentos =
                 repository.findAll()
-        );
+                        .stream()
+                        .filter(agendamento ->
+                                agendamento.getDataHora() != null
+                        )
+                        .filter(agendamento -> {
+
+                            LocalDate dataAgendamento =
+                                    agendamento.getDataHora()
+                                            .toLocalDate();
+
+                            return !dataAgendamento.isBefore(inicio)
+                                    && !dataAgendamento.isAfter(fim);
+                        })
+                        .toList();
+
+        LocalDate anterior;
+        LocalDate proxima;
+
+        if ("diario".equals(modo)) {
+
+            anterior = data.minusDays(1);
+            proxima = data.plusDays(1);
+
+        } else if ("semanal".equals(modo)) {
+
+            anterior = data.minusWeeks(1);
+            proxima = data.plusWeeks(1);
+
+        } else {
+
+            anterior = data.minusMonths(1);
+            proxima = data.plusMonths(1);
+        }
+
+        model.addAttribute("agendamentos", agendamentos);
+
+        model.addAttribute("modo", modo);
+
+        model.addAttribute("data", data);
+
+        model.addAttribute("inicio", inicio);
+
+        model.addAttribute("fim", fim);
+
+        model.addAttribute("anterior", anterior);
+
+        model.addAttribute("proxima", proxima);
 
         return "agendamento/listagem";
     }
@@ -37,12 +116,12 @@ public class AgendamentoController {
     @GetMapping("/cadastro")
     public String cadastroAgendamento(Model model) {
 
-        model.addAttribute(
-                "agendamento",
-                new Agendamento()
-        );
+        model.addAttribute("agendamento", new Agendamento());
 
-        carregarDadosFormulario(model);
+        model.addAttribute("clientes", clienteRepository.findAll());
+        model.addAttribute("pets", petRepository.findAll());
+        model.addAttribute("servicos", servicoRepository.findAll());
+        model.addAttribute("veterinarios", veterinarioRepository.findAll());
 
         return "agendamento/cadastro";
     }
@@ -53,65 +132,55 @@ public class AgendamentoController {
             Model model
     ) {
 
-        Agendamento agendamento = repository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Agendamento não encontrado"
-                        )
-                );
+        Agendamento agendamento =
+                repository.findById(id)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Agendamento não encontrado"
+                                )
+                        );
 
-        model.addAttribute(
-                "agendamento",
-                agendamento
-        );
+        model.addAttribute("agendamento", agendamento);
 
-        carregarDadosFormulario(model);
+        model.addAttribute("clientes", clienteRepository.findAll());
+        model.addAttribute("pets", petRepository.findAll());
+        model.addAttribute("servicos", servicoRepository.findAll());
+        model.addAttribute("veterinarios", veterinarioRepository.findAll());
 
         return "agendamento/cadastro";
     }
 
     @PostMapping("/salvar")
     public String salvarAgendamento(
-            @Valid @ModelAttribute("agendamento") Agendamento agendamento,
-            BindingResult result,
+            @ModelAttribute("agendamento") Agendamento agendamento,
             @RequestParam Long clienteId,
             @RequestParam Long petId,
             @RequestParam Long servicoId,
-            Model model
+            @RequestParam Long veterinarioId
     ) {
-
-        if (result.hasErrors()) {
-
-            carregarDadosFormulario(model);
-
-            return "agendamento/cadastro";
-        }
 
         agendamento.setCliente(
                 clienteRepository.findById(clienteId)
                         .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "Cliente não encontrado"
-                                )
-                        )
+                                new ResourceNotFoundException("Cliente não encontrado"))
         );
 
         agendamento.setPet(
                 petRepository.findById(petId)
                         .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "Pet não encontrado"
-                                )
-                        )
+                                new ResourceNotFoundException("Pet não encontrado"))
         );
 
         agendamento.setServico(
                 servicoRepository.findById(servicoId)
                         .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "Serviço não encontrado"
-                                )
-                        )
+                                new ResourceNotFoundException("Serviço não encontrado"))
+        );
+
+        agendamento.setVeterinario(
+                veterinarioRepository.findById(veterinarioId)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException("Veterinário não encontrado"))
         );
 
         repository.save(agendamento);
@@ -144,6 +213,11 @@ public class AgendamentoController {
         model.addAttribute(
                 "servicos",
                 servicoRepository.findAll()
+        );
+
+        model.addAttribute(
+                "veterinarios",
+                veterinarioRepository.findAll()
         );
     }
 }

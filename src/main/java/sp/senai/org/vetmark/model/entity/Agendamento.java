@@ -52,6 +52,10 @@ public class Agendamento {
     private Pet pet;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "veterinario_id", nullable = false)
+    private Veterinario veterinario;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "servico_id", nullable = false)
     private Servico servico;
 
@@ -109,5 +113,13 @@ public class Agendamento {
 
     public void setServico(Servico servico) {
         this.servico = servico;
+    }
+
+    public Veterinario getVeterinario() {
+        return veterinario;
+    }
+
+    public void setVeterinario(Veterinario veterinario) {
+        this.veterinario = veterinario;
     }
 }

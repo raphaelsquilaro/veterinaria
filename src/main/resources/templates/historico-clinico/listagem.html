@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Histórico Clínico | VetMark</title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/style.css}"
+    >
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/historico-clinico.css}"
+    >
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/sidebar.css}"
+    >
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/header.css}"
+    >
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/footer.css}"
+    >
+
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <aside th:replace="~{fragments/sidebar :: sidebar}"></aside>
+
+    <main class="main-content historico-page">
+
+        <section class="page-header">
+
+            <div>
+
+                <h1>Histórico Clínico</h1>
+
+                <p>
+                    Consulte os atendimentos realizados pelos pacientes.
+                </p>
+
+            </div>
+
+            <a
+                    th:href="@{/historico-clinico/cadastro}"
+                    class="btn-primary"
+            >
+                <span>+</span>
+                Novo atendimento
+            </a>
+
+        </section>
+
+
+        <!-- BARRA DE PESQUISA -->
+
+        <section class="toolbar">
+
+            <div class="search-box">
+
+                <span class="search-icon">🔎</span>
+
+                <input
+                        type="text"
+                        id="searchHistorico"
+                        placeholder="Buscar por pet, veterinário ou diagnóstico..."
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- TABELA -->
+
+        <section class="table-card">
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Data</th>
+
+                        <th>Pet</th>
+
+                        <th>Veterinário</th>
+
+                        <th>Diagnóstico</th>
+
+                        <th>Tratamento</th>
+
+                        <th>Ações</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="historicoTableBody">
+
+                    <tr
+                            th:each="historico : ${historicos}"
+                            class="historico-row"
+                    >
+
+                        <td>
+
+                            <div class="date-info">
+
+                                <strong
+                                        th:text="${#temporals.format(historico.dataConsulta, 'dd/MM/yyyy')}"
+                                >
+                                    14/09/2026
+                                </strong>
+
+                                <span
+                                        th:text="${#temporals.format(historico.dataConsulta, 'HH:mm')}"
+                                >
+                                    14:30
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="pet-info">
+
+                                <div class="pet-avatar">
+                                    🐾
+                                </div>
+
+                                <div>
+
+                                    <strong
+                                            th:text="${historico.pet.nome}"
+                                    >
+                                        Rex
+                                    </strong>
+
+                                    <span
+                                            th:text="${historico.pet.cliente.nome}"
+                                    >
+                                        Cliente
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="veterinario-info">
+
+                                <strong
+                                        th:text="${historico.veterinario.nome}"
+                                >
+                                    Veterinário
+                                </strong>
+
+                                <span
+                                        th:text="${historico.veterinario.crmv != null
+                                            ? 'CRMV ' + historico.veterinario.crmv
+                                            : 'CRMV não informado'}"
+                                >
+                                    CRMV
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    class="text-preview"
+                                    th:text="${historico.diagnostico != null
+                                        and !historico.diagnostico.isBlank()
+                                        ? historico.diagnostico
+                                        : 'Não informado'}"
+                            >
+                                Diagnóstico
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    class="text-preview"
+                                    th:text="${historico.tratamento != null
+                                        and !historico.tratamento.isBlank()
+                                        ? historico.tratamento
+                                        : 'Não informado'}"
+                            >
+                                Tratamento
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="action-buttons">
+
+                                <a
+                                        th:href="@{/historico-clinico/editar/{id}(id=${historico.id})}"
+                                        class="action-button edit"
+                                        title="Editar"
+                                >
+                                    ✏️
+                                </a>
+
+                                <button
+                                        type="button"
+                                        class="action-button view"
+                                        title="Ver atendimento"
+                                        th:attr="
+                                            data-pet=${historico.pet.nome},
+                                            data-diagnostico=${historico.diagnostico},
+                                            data-tratamento=${historico.tratamento},
+                                            data-medicacao=${historico.medicacao},
+                                            data-observacoes=${historico.observacoes}
+                                        "
+                                >
+                                    👁️
+                                </button>
+
+                                <button
+                                        type="button"
+                                        class="action-button delete"
+                                        title="Excluir"
+                                        th:attr="
+                                            data-id=${historico.id},
+                                            data-pet=${historico.pet.nome}
+                                        "
+                                >
+                                    🗑️
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ESTADO VAZIO -->
+
+                    <tr
+                            th:if="${#lists.isEmpty(historicos)}"
+                            id="emptyHistorico"
+                    >
+
+                        <td
+                                colspan="6"
+                                class="empty-state"
+                        >
+
+                            <div class="empty-icon">
+                                📋
+                            </div>
+
+                            <h3>
+                                Nenhum atendimento registrado
+                            </h3>
+
+                            <p>
+                                Comece registrando o primeiro atendimento clínico.
+                            </p>
+
+                            <a
+                                    th:href="@{/historico-clinico/cadastro}"
+                                    class="btn-primary"
+                            >
+                                + Registrar atendimento
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- SEM RESULTADO DE PESQUISA -->
+
+                    <tr
+                            id="noSearchResults"
+                            style="display: none;"
+                    >
+
+                        <td
+                                colspan="6"
+                                class="empty-state"
+                        >
+
+                            <div class="empty-icon">
+                                🔎
+                            </div>
+
+                            <h3>
+                                Nenhum resultado encontrado
+                            </h3>
+
+                            <p>
+                                Tente pesquisar por outro termo.
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+<!-- MODAL -->
+
+<div
+        id="historicoModal"
+        class="modal-overlay"
+        style="display: none;"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>Atendimento clínico</h2>
+
+                <p id="modalPet">
+                    Pet
+                </p>
+
+            </div>
+
+            <button
+                    type="button"
+                    id="closeModal"
+                    class="modal-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="modal-section">
+
+                <h3>Diagnóstico</h3>
+
+                <p id="modalDiagnostico">
+                    Não informado.
+                </p>
+
+            </div>
+
+
+            <div class="modal-section">
+
+                <h3>Tratamento</h3>
+
+                <p id="modalTratamento">
+                    Não informado.
+                </p>
+
+            </div>
+
+
+            <div class="modal-section">
+
+                <h3>Medicação</h3>
+
+                <p id="modalMedicacao">
+                    Não informado.
+                </p>
+
+            </div>
+
+
+            <div class="modal-section">
+
+                <h3>Observações</h3>
+
+                <p id="modalObservacoes">
+                    Não informado.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script
+        th:src="@{/js/historico-clinico.js}"
+></script>
+
+</body>
+
+</html>

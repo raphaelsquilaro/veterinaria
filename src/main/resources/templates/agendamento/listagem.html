@@ -24,24 +24,171 @@
 
     <main class="main-content agendamento-page">
 
-        <!-- Cabeçalho -->
+        <!-- =====================================================
+             CABEÇALHO
+             ===================================================== -->
+
         <div class="page-header">
 
             <div>
                 <h1>Agendamentos</h1>
-                <p>Gerencie os agendamentos da clínica veterinária.</p>
+
+                <p>
+                    Gerencie os agendamentos da clínica veterinária.
+                </p>
             </div>
 
-            <a th:href="@{/agendamento/cadastro}" class="btn-primary">
+            <a
+                    th:href="@{/agendamento/cadastro}"
+                    class="btn-primary">
                 + Novo Agendamento
             </a>
 
         </div>
 
-        <!-- Área de conteúdo -->
+
+        <!-- =====================================================
+             CONTROLES DA AGENDA
+             ===================================================== -->
+
+        <section class="agenda-controls">
+
+            <!-- Navegação -->
+
+            <div class="agenda-navigation">
+
+                <a
+                        class="agenda-nav-button"
+                        th:href="@{/agendamento/listagem(
+                            modo=${modo},
+                            data=${anterior}
+                        )}">
+                    ←
+                </a>
+
+                <a
+                        class="agenda-today"
+                        th:href="@{/agendamento/listagem(
+                            modo=${modo},
+                            data=${T(java.time.LocalDate).now()}
+                        )}">
+                    Hoje
+                </a>
+
+                <a
+                        class="agenda-nav-button"
+                        th:href="@{/agendamento/listagem(
+                            modo=${modo},
+                            data=${proxima}
+                        )}">
+                    →
+                </a>
+
+            </div>
+
+
+            <!-- Período atual -->
+
+            <div class="agenda-period">
+
+                <!-- Diário -->
+
+                <span th:if="${modo == 'diario'}">
+
+                    <strong
+                            th:text="${#temporals.format(data, 'dd/MM/yyyy')}">
+                        01/01/2026
+                    </strong>
+
+                </span>
+
+
+                <!-- Semanal -->
+
+                <span th:if="${modo == 'semanal'}">
+
+                    <strong>
+
+                        Semana de
+
+                        <span
+                                th:text="${#temporals.format(inicio, 'dd/MM/yyyy')}">
+                            01/01/2026
+                        </span>
+
+                        até
+
+                        <span
+                                th:text="${#temporals.format(fim, 'dd/MM/yyyy')}">
+                            07/01/2026
+                        </span>
+
+                    </strong>
+
+                </span>
+
+
+                <!-- Mensal -->
+
+                <span th:if="${modo == 'mensal'}">
+
+                    <strong
+                            th:text="${#temporals.format(data, 'MMMM yyyy')}">
+                        Janeiro 2026
+                    </strong>
+
+                </span>
+
+            </div>
+
+
+            <!-- Modos de visualização -->
+
+            <div class="agenda-view-buttons">
+
+                <a
+                        th:href="@{/agendamento/listagem(
+                            modo='diario',
+                            data=${data}
+                        )}"
+                        class="view-button"
+                        th:classappend="${modo == 'diario'} ? ' active' : ''">
+                    Diário
+                </a>
+
+                <a
+                        th:href="@{/agendamento/listagem(
+                            modo='semanal',
+                            data=${data}
+                        )}"
+                        class="view-button"
+                        th:classappend="${modo == 'semanal'} ? ' active' : ''">
+                    Semanal
+                </a>
+
+                <a
+                        th:href="@{/agendamento/listagem(
+                            modo='mensal',
+                            data=${data}
+                        )}"
+                        class="view-button"
+                        th:classappend="${modo == 'mensal'} ? ' active' : ''">
+                    Mensal
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTEÚDO
+             ===================================================== -->
+
         <section class="content-card">
 
             <!-- Busca -->
+
             <div class="search-area">
 
                 <div class="search-box">
@@ -51,138 +198,391 @@
                     <input
                             type="text"
                             id="searchAgendamento"
-                            placeholder="Buscar agendamento..."
-                    >
+                            placeholder="Buscar agendamento...">
 
                 </div>
 
             </div>
 
-            <!-- Tabela -->
-            <div class="table-container">
 
-                <table class="data-table">
+            <!-- =================================================
+                 VISÃO DIÁRIA
+                 ================================================= -->
 
-                    <thead>
+            <div
+                    th:if="${modo == 'diario'}"
+                    class="agenda-list">
 
-                    <tr>
-                        <th>Data e hora</th>
-                        <th>Cliente</th>
-                        <th>Pet</th>
-                        <th>Serviço</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
+                <div
+                        th:each="agendamento : ${agendamentos}"
+                        class="agenda-item agendamento-row">
 
-                    </thead>
+                    <!-- Horário -->
 
-                    <tbody id="agendamentoTableBody">
+                    <div class="agenda-time">
 
-                    <!-- Agendamentos -->
-                    <tr
-                            th:each="agendamento : ${agendamentos}"
-                            class="agendamento-row"
-                    >
-
-                        <!-- Data e hora -->
-                        <td
+                        <strong
                                 th:text="${#temporals.format(
                                     agendamento.dataHora,
-                                    'dd/MM/yyyy HH:mm'
-                                )}"
-                        >
-                            01/01/2026 10:00
-                        </td>
+                                    'HH:mm'
+                                )}">
+                            10:00
+                        </strong>
 
-                        <!-- Cliente -->
-                        <td
-                                th:text="${agendamento.cliente.nome}"
-                        >
-                            Cliente
-                        </td>
+                    </div>
 
-                        <!-- Pet -->
-                        <td
-                                th:text="${agendamento.pet.nome}"
-                        >
+
+                    <!-- Informações -->
+
+                    <div class="agenda-info">
+
+                        <h3
+                                th:text="${agendamento.pet.nome}">
                             Pet
-                        </td>
+                        </h3>
 
-                        <!-- Serviço -->
-                        <td
-                                th:text="${agendamento.servico.nome}"
-                        >
-                            Serviço
-                        </td>
+                        <p>
+                            Cliente:
 
-                        <!-- Status -->
-                        <td>
+                            <span
+                                    th:text="${agendamento.cliente.nome}">
+                                Cliente
+                            </span>
+                        </p>
+
+                        <p>
+                            Serviço:
+
+                            <span
+                                    th:text="${agendamento.servico.nome}">
+                                Serviço
+                            </span>
+                        </p>
+
+                        <p
+                                th:if="${agendamento.veterinario != null}">
+                            Veterinário:
+
+                            <span
+                                    th:text="${agendamento.veterinario.nome}">
+                                Veterinário
+                            </span>
+                        </p>
+
+                    </div>
+
+
+                    <!-- Status -->
+
+                    <div class="agenda-status">
+
+                        <span
+                                class="status-badge"
+                                th:text="${agendamento.status}">
+                            AGENDADO
+                        </span>
+
+                    </div>
+
+
+                    <!-- Ações -->
+
+                    <div class="actions">
+
+                        <a
+                                th:href="@{/agendamento/editar/{id}(
+                                    id=${agendamento.id}
+                                )}"
+                                class="btn-action btn-edit"
+                                title="Editar">
+                            ✏️
+                        </a>
+
+                        <a
+                                th:href="@{/agendamento/excluir/{id}(
+                                    id=${agendamento.id}
+                                )}"
+                                class="btn-action btn-delete"
+                                title="Excluir"
+                                onclick="return confirm('Deseja realmente excluir este agendamento?');">
+                            🗑️
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Sem agendamentos -->
+
+                <div
+                        th:if="${#lists.isEmpty(agendamentos)}"
+                        class="empty-state">
+
+                    <div class="empty-icon">
+                        📅
+                    </div>
+
+                    <h3>
+                        Nenhum agendamento neste dia
+                    </h3>
+
+                    <p>
+                        Não existem consultas agendadas para esta data.
+                    </p>
+
+                    <a
+                            th:href="@{/agendamento/cadastro}"
+                            class="btn-primary">
+                        Criar agendamento
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 VISÃO SEMANAL
+                 ================================================= -->
+
+            <div
+                    th:if="${modo == 'semanal'}"
+                    class="week-view">
+
+                <div
+                        th:each="dia : ${#numbers.sequence(0, 6)}"
+                        class="week-day">
+
+                    <!-- Cabeçalho -->
+
+                    <div class="week-day-header">
+
+                        <strong
+                                th:text="${#temporals.format(
+                                    inicio.plusDays(dia),
+                                    'EEEE'
+                                )}">
+                            Segunda-feira
+                        </strong>
+
+                        <span
+                                th:text="${#temporals.format(
+                                    inicio.plusDays(dia),
+                                    'dd/MM'
+                                )}">
+                            01/01
+                        </span>
+
+                    </div>
+
+
+                    <!-- Conteúdo -->
+
+                    <div class="week-day-content">
+
+                        <div
+                                th:each="agendamento : ${agendamentos}"
+                                th:if="${agendamento.dataHora != null
+                                    and agendamento.dataHora.toLocalDate()
+                                    .equals(inicio.plusDays(dia))}"
+                                class="week-appointment agendamento-row">
+
+                            <strong
+                                    th:text="${#temporals.format(
+                                        agendamento.dataHora,
+                                        'HH:mm'
+                                    )}">
+                                10:00
+                            </strong>
+
+                            <span
+                                    th:text="${agendamento.pet.nome}">
+                                Pet
+                            </span>
+
+                            <small
+                                    th:text="${agendamento.servico.nome}">
+                                Consulta
+                            </small>
+
+                            <span
+                                    th:if="${agendamento.veterinario != null}">
+                                <small
+                                        th:text="${agendamento.veterinario.nome}">
+                                    Veterinário
+                                </small>
+                            </span>
 
                             <span
                                     class="status-badge"
-                                    th:text="${agendamento.status}"
-                            >
-                                Agendado
+                                    th:text="${agendamento.status}">
+                                AGENDADO
                             </span>
 
-                        </td>
+                            <div class="actions">
 
-                        <!-- Ações -->
-                        <td class="actions">
+                                <a
+                                        th:href="@{/agendamento/editar/{id}(
+                                            id=${agendamento.id}
+                                        )}"
+                                        class="btn-action btn-edit"
+                                        title="Editar">
+                                    ✏️
+                                </a>
 
-                            <a
-                                    th:href="@{/agendamento/editar/{id}(id=${agendamento.id})}"
-                                    class="btn-action btn-edit"
-                                    title="Editar"
-                            >
-                                ✏️
-                            </a>
+                                <a
+                                        th:href="@{/agendamento/excluir/{id}(
+                                            id=${agendamento.id}
+                                        )}"
+                                        class="btn-action btn-delete"
+                                        title="Excluir"
+                                        onclick="return confirm('Deseja realmente excluir este agendamento?');">
+                                    🗑️
+                                </a>
 
-                            <a
-                                    th:href="@{/agendamento/excluir/{id}(id=${agendamento.id})}"
-                                    class="btn-action btn-delete"
-                                    title="Excluir"
-                                    th:attr="data-id=${agendamento.id}"
-                            >
-                                🗑️
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                    <!-- Estado vazio -->
-                    <tr th:if="${#lists.isEmpty(agendamentos)}">
-
-                        <td
-                                colspan="6"
-                                class="empty-state"
-                        >
-
-                            <div class="empty-icon">
-                                📅
                             </div>
 
-                            <h3>Nenhum agendamento encontrado</h3>
+                        </div>
 
-                            <p>
-                                Ainda não existem agendamentos cadastrados.
-                            </p>
 
-                            <a
-                                    th:href="@{/agendamento/cadastro}"
-                                    class="btn-primary"
-                            >
-                                Criar primeiro agendamento
-                            </a>
+                        <!-- Mensagem para o dia sem agendamento -->
 
-                        </td>
+                        <div
+                                th:if="${#lists.isEmpty(
+                                    agendamentos?.of()[
+                                        dataHora != null
+                                        and dataHora.toLocalDate()
+                                        .equals(inicio.plusDays(dia))
+                                    ]
+                                )}"
+                                class="no-appointments">
 
-                    </tr>
+                            Nenhum agendamento.
 
-                    </tbody>
+                        </div>
 
-                </table>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 VISÃO MENSAL
+                 ================================================= -->
+
+            <div
+                    th:if="${modo == 'mensal'}"
+                    class="month-view">
+
+                <div class="month-grid">
+
+                    <!-- Dias da semana -->
+
+                    <div class="month-weekday">
+                        Seg
+                    </div>
+
+                    <div class="month-weekday">
+                        Ter
+                    </div>
+
+                    <div class="month-weekday">
+                        Qua
+                    </div>
+
+                    <div class="month-weekday">
+                        Qui
+                    </div>
+
+                    <div class="month-weekday">
+                        Sex
+                    </div>
+
+                    <div class="month-weekday">
+                        Sáb
+                    </div>
+
+                    <div class="month-weekday">
+                        Dom
+                    </div>
+
+
+                    <!-- Espaços antes do primeiro dia -->
+
+                    <th:block
+                            th:with="primeiroDia=${data.withDayOfMonth(1)}">
+
+                        <div
+                                th:each="i : ${#numbers.sequence(
+                                    1,
+                                    primeiroDia.dayOfWeek.value - 1
+                                )}"
+                                class="month-day month-day-empty">
+                        </div>
+
+                    </th:block>
+
+
+                    <!-- Dias do mês -->
+
+                    <div
+                            th:each="dia : ${#numbers.sequence(
+                                1,
+                                data.lengthOfMonth()
+                            )}"
+                            class="month-day">
+
+                        <!-- Número -->
+
+                        <div class="month-day-number">
+
+                            <span
+                                    th:text="${dia}">
+                                1
+                            </span>
+
+                        </div>
+
+
+                        <!-- Agendamentos -->
+
+                        <div class="month-appointments">
+
+                            <div
+                                    th:each="agendamento : ${agendamentos}"
+                                    th:if="${agendamento.dataHora != null
+                                        and agendamento.dataHora.toLocalDate()
+                                        .equals(data.withDayOfMonth(dia))}"
+                                    class="month-appointment agendamento-row">
+
+                                <strong
+                                        th:text="${#temporals.format(
+                                            agendamento.dataHora,
+                                            'HH:mm'
+                                        )}">
+                                    10:00
+                                </strong>
+
+                                <span
+                                        th:text="${agendamento.pet.nome}">
+                                    Pet
+                                </span>
+
+                                <small
+                                        th:text="${agendamento.servico.nome}">
+                                    Serviço
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
