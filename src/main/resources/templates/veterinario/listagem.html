@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/veterinario.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <title>Veterinários - VetMark</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <main class="main-content veterinarios-page">
+
+        <!-- Cabeçalho -->
+        <div class="page-header">
+
+            <div>
+                <h1>Veterinários</h1>
+
+                <p>
+                    Gerencie os profissionais veterinários cadastrados na clínica.
+                </p>
+            </div>
+
+            <a
+                    th:href="@{/veterinario/cadastro}"
+                    class="btn-primary"
+            >
+                <span>+</span>
+                Novo Veterinário
+            </a>
+
+        </div>
+
+        <!-- Barra de busca -->
+        <section class="veterinarios-toolbar">
+
+            <div class="search-box">
+
+                <span class="search-icon">⌕</span>
+
+                <input
+                        type="text"
+                        id="searchVeterinario"
+                        placeholder="Buscar por nome, CPF, CRMV ou especialidade..."
+                        autocomplete="off"
+                >
+
+            </div>
+
+        </section>
+
+        <!-- Mensagem quando não existem veterinários -->
+        <div
+                th:if="${#lists.isEmpty(veterinarios)}"
+                class="empty-state"
+                id="emptyState"
+        >
+
+            <div class="empty-icon">🩺</div>
+
+            <h2>Nenhum veterinário cadastrado</h2>
+
+            <p>
+                Comece cadastrando o primeiro profissional veterinário da clínica.
+            </p>
+
+            <a
+                    th:href="@{/veterinario/cadastro}"
+                    class="btn-primary"
+            >
+                Cadastrar veterinário
+            </a>
+
+        </div>
+
+        <!-- Tabela -->
+        <section
+                class="table-card"
+                th:if="${!#lists.isEmpty(veterinarios)}"
+        >
+
+            <div class="table-header">
+
+                <div>
+
+                    <h2>Veterinários cadastrados</h2>
+
+                    <span
+                            class="veterinario-count"
+                            th:text="${#lists.size(veterinarios) + ' veterinário(s)'}"
+                    >
+                        0 veterinários
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table class="veterinarios-table">
+
+                    <thead>
+
+                    <tr>
+                        <th>Veterinário</th>
+                        <th>CRMV</th>
+                        <th>Especialidade</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                        <th>Status</th>
+                        <th class="actions-column">Ações</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="veterinariosTableBody">
+
+                    <tr
+                            th:each="veterinario : ${veterinarios}"
+                            class="veterinario-row"
+                    >
+
+                        <!-- Veterinário -->
+                        <td>
+
+                            <div class="veterinario-info">
+
+                                <div
+                                        class="veterinario-avatar"
+                                        th:text="${#strings.substring(veterinario.nome, 0, 1).toUpperCase()}"
+                                >
+                                    V
+                                </div>
+
+                                <div>
+
+                                    <strong
+                                            th:text="${veterinario.nome}"
+                                    >
+                                        Nome do Veterinário
+                                    </strong>
+
+                                    <small
+                                            th:text="${'Veterinário #' + veterinario.id}"
+                                    >
+                                        Veterinário #1
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <!-- CRMV -->
+                        <td>
+
+                            <span
+                                    th:text="${veterinario.crmv != null && !#strings.isEmpty(veterinario.crmv)
+                                    ? veterinario.crmv
+                                    : 'Não informado'}"
+                            >
+                                Não informado
+                            </span>
+
+                        </td>
+
+                        <!-- Especialidade -->
+                        <td>
+
+                            <span
+                                    th:text="${veterinario.especialidade != null && !#strings.isEmpty(veterinario.especialidade)
+                                    ? veterinario.especialidade
+                                    : 'Não informada'}"
+                            >
+                                Não informada
+                            </span>
+
+                        </td>
+
+                        <!-- Telefone -->
+                        <td>
+
+                            <span
+                                    th:text="${veterinario.telefone != null && !#strings.isEmpty(veterinario.telefone)
+                                    ? veterinario.telefone
+                                    : 'Não informado'}"
+                            >
+                                Não informado
+                            </span>
+
+                        </td>
+
+                        <!-- E-mail -->
+                        <td>
+
+                            <span
+                                    th:text="${veterinario.email != null && !#strings.isEmpty(veterinario.email)
+                                    ? veterinario.email
+                                    : 'Não informado'}"
+                            >
+                                Não informado
+                            </span>
+
+                        </td>
+
+                        <!-- Status -->
+                        <td>
+
+                            <span
+                                    class="status-badge"
+                                    th:classappend="${veterinario.ativo}
+                                        ? ' status-active'
+                                        : ' status-inactive'"
+                                    th:text="${veterinario.ativo}
+                                        ? 'Ativo'
+                                        : 'Inativo'"
+                            >
+                                Ativo
+                            </span>
+
+                        </td>
+
+                        <!-- Ações -->
+                        <td class="actions-column">
+
+                            <div class="action-buttons">
+
+                                <a
+                                        th:href="@{/veterinario/editar/{id}(id=${veterinario.id})}"
+                                        class="action-button edit"
+                                        title="Editar veterinário"
+                                >
+                                    ✏
+                                </a>
+
+                                <button
+                                        type="button"
+                                        class="action-button delete"
+                                        title="Excluir veterinário"
+                                        th:attr="data-id=${veterinario.id},data-name=${veterinario.nome}"
+                                >
+                                    🗑
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- Resultado da busca -->
+            <div
+                    id="noSearchResults"
+                    class="no-search-results"
+                    style="display: none;"
+            >
+
+                <span>🔎</span>
+
+                <p>
+                    Nenhum veterinário encontrado para essa busca.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/veterinario.js}"></script>
+
+</body>
+</html>

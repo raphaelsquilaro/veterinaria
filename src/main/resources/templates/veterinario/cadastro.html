@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/veterinario-form.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <title>Veterinários - VetMark</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="dashboard-layout">
+
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <main class="main-content veterinario-form-page">
+
+        <!-- Cabeçalho -->
+        <div class="page-header">
+
+            <div>
+
+                <a
+                        th:href="@{/veterinario/listagem}"
+                        class="back-link"
+                >
+                    ← Voltar para veterinários
+                </a>
+
+                <h1
+                        th:if="${veterinario.id == null}"
+                >
+                    Novo Veterinário
+                </h1>
+
+                <h1
+                        th:if="${veterinario.id != null}"
+                >
+                    Editar Veterinário
+                </h1>
+
+                <p
+                        th:if="${veterinario.id == null}"
+                >
+                    Cadastre um novo profissional veterinário.
+                </p>
+
+                <p
+                        th:if="${veterinario.id != null}"
+                >
+                    Atualize as informações do profissional.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Formulário -->
+        <section class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="form-icon">
+                    🩺
+                </div>
+
+                <div>
+                    <h2>Informações do veterinário</h2>
+                    <p>
+                        Preencha os dados abaixo.
+                    </p>
+                </div>
+
+            </div>
+
+            <form
+                    th:action="@{/veterinario/salvar}"
+                    th:object="${veterinario}"
+                    method="post"
+                    class="veterinario-form"
+                    id="veterinarioForm"
+            >
+
+                <!-- CSRF -->
+                <input
+                        type="hidden"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"
+                >
+
+                <!-- ID para edição -->
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                >
+
+                <!-- Dados pessoais -->
+                <div class="form-section">
+
+                    <h3>Dados pessoais</h3>
+
+                    <div class="form-grid">
+
+                        <!-- Nome -->
+                        <div class="form-group full-width">
+
+                            <label for="nome">
+                                Nome completo
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="nome"
+                                    th:field="*{nome}"
+                                    placeholder="Digite o nome completo"
+                                    maxlength="150"
+                                    required
+                            >
+
+                            <small
+                                    class="field-error"
+                                    th:if="${#fields.hasErrors('nome')}"
+                                    th:errors="*{nome}"
+                            >
+                                Nome inválido
+                            </small>
+
+                        </div>
+
+                        <!-- CPF -->
+                        <div class="form-group">
+
+                            <label for="cpf">
+                                CPF
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="cpf"
+                                    th:field="*{cpf}"
+                                    placeholder="000.000.000-00"
+                                    maxlength="14"
+                            >
+
+                            <small
+                                    class="field-error"
+                                    th:if="${#fields.hasErrors('cpf')}"
+                                    th:errors="*{cpf}"
+                            >
+                                CPF inválido
+                            </small>
+
+                        </div>
+
+                        <!-- Telefone -->
+                        <div class="form-group">
+
+                            <label for="telefone">
+                                Telefone
+                            </label>
+
+                            <input
+                                    type="tel"
+                                    id="telefone"
+                                    th:field="*{telefone}"
+                                    placeholder="(00) 00000-0000"
+                                    maxlength="20"
+                            >
+
+                            <small
+                                    class="field-error"
+                                    th:if="${#fields.hasErrors('telefone')}"
+                                    th:errors="*{telefone}"
+                            >
+                                Telefone inválido
+                            </small>
+
+                        </div>
+
+                        <!-- E-mail -->
+                        <div class="form-group full-width">
+
+                            <label for="email">
+                                E-mail
+                            </label>
+
+                            <input
+                                    type="email"
+                                    id="email"
+                                    th:field="*{email}"
+                                    placeholder="veterinario@email.com"
+                                    maxlength="150"
+                            >
+
+                            <small
+                                    class="field-error"
+                                    th:if="${#fields.hasErrors('email')}"
+                                    th:errors="*{email}"
+                            >
+                                E-mail inválido
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Dados profissionais -->
+                <div class="form-section">
+
+                    <h3>Dados profissionais</h3>
+
+                    <div class="form-grid">
+
+                        <!-- CRMV -->
+                        <div class="form-group">
+
+                            <label for="crmv">
+                                CRMV
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="crmv"
+                                    th:field="*{crmv}"
+                                    placeholder="Ex.: CRMV-SP 12345"
+                                    maxlength="20"
+                                    required
+                            >
+
+                            <small
+                                    class="field-error"
+                                    th:if="${#fields.hasErrors('crmv')}"
+                                    th:errors="*{crmv}"
+                            >
+                                CRMV inválido
+                            </small>
+
+                        </div>
+
+                        <!-- Especialidade -->
+                        <div class="form-group">
+
+                            <label for="especialidade">
+                                Especialidade
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="especialidade"
+                                    th:field="*{especialidade}"
+                                    placeholder="Ex.: Clínica geral"
+                                    maxlength="100"
+                            >
+
+                            <small
+                                    class="field-error"
+                                    th:if="${#fields.hasErrors('especialidade')}"
+                                    th:errors="*{especialidade}"
+                            >
+                                Especialidade inválida
+                            </small>
+
+                        </div>
+
+                        <!-- Status -->
+                        <div class="form-group full-width">
+
+                            <label for="ativo">
+                                Status
+                            </label>
+
+                            <div class="status-field">
+
+                                <label class="switch">
+
+                                    <input
+                                            type="checkbox"
+                                            id="ativo"
+                                            th:field="*{ativo}"
+                                    >
+
+                                    <span class="slider"></span>
+
+                                </label>
+
+                                <span
+                                        id="statusText"
+                                        class="status-text"
+                                >
+                                    Veterinário ativo
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Informação de edição -->
+                <div
+                        class="registration-info"
+                        th:if="${veterinario.id != null}"
+                >
+
+                    <span>🩺</span>
+
+                    <div>
+                        <strong>Profissional cadastrado</strong>
+
+                        <p>
+                            Este cadastro está sendo editado.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Ações -->
+                <div class="form-actions">
+
+                    <a
+                            th:href="@{/veterinario/listagem}"
+                            class="btn-secondary"
+                    >
+                        Cancelar
+                    </a>
+
+                    <button
+                            type="submit"
+                            class="btn-primary"
+                            id="saveButton"
+                    >
+                        <span>✓</span>
+                        Salvar Veterinário
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/veterinario-form.js}"></script>
+
+</body>
+</html>
