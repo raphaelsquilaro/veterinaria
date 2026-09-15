@@ -1,5 +1,43 @@
 /* =========================================================
-   LAYOUT GERAL DO SISTEMA
+   IDENTIDADE VISUAL — VETMARK
+   ========================================================= */
+
+:root {
+    /* Cores principais */
+    --primary: #2A9D8F;
+    --primary-dark: #217A70;
+    --primary-light: #DFF3EF;
+
+    /* Cor secundária */
+    --secondary: #4A90A4;
+    --secondary-light: #E6F3F7;
+
+    /* Fundo */
+    --background: #F5FAF9;
+    --surface: #FFFFFF;
+
+    /* Textos */
+    --text-primary: #263B3A;
+    --text-secondary: #667A78;
+    --text-muted: #8A9A98;
+
+    /* Bordas */
+    --border: #DCE9E6;
+    --border-light: #EAF2F0;
+
+    /* Estados */
+    --success: #3BAA72;
+    --warning: #E9A23B;
+    --danger: #D95C5C;
+
+    /* Sombras */
+    --shadow-sm: 0 2px 8px rgba(38, 59, 58, 0.06);
+    --shadow-md: 0 6px 20px rgba(38, 59, 58, 0.08);
+}
+
+
+/* =========================================================
+   RESET
    ========================================================= */
 
 * {
@@ -13,12 +51,30 @@ body {
     min-height: 100%;
 }
 
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
 body {
     overflow-x: hidden;
+
+    background-color: var(--background);
+
+    color: var(--text-primary);
+
+    font-family:
+            Inter,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            sans-serif;
 }
 
 
-/* Área abaixo do header */
+/* =========================================================
+   LAYOUT GERAL DO SISTEMA
+   ========================================================= */
 
 .dashboard-layout {
     display: flex;
@@ -26,10 +82,14 @@ body {
 
     width: 100%;
     min-height: calc(100vh - 70px);
+
+    background-color: var(--background);
 }
 
 
-/* Conteúdo principal */
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+   ========================================================= */
 
 .dashboard-layout .main-content {
     flex: 1;
@@ -38,4 +98,38 @@ body {
     width: auto;
 
     box-sizing: border-box;
+
+    background-color: var(--background);
+}
+
+
+/* =========================================================
+   SELEÇÃO DE TEXTO
+   ========================================================= */
+
+::selection {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #B8D8D3;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
 }

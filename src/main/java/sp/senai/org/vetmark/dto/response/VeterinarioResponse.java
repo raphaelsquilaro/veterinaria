@@ -1,12 +1,13 @@
 package sp.senai.org.vetmark.dto.response;
 
-import java.time.LocalDateTime;
-
-public record ClienteResponse(
+public record VeterinarioResponse(
         Long id,
         String nome,
         String telefone,
         String email,
         String cpf,
-        LocalDateTime dataCadastro
-) {}
+        String crmv,
+        String especialidade,
+        Boolean ativo
+) {
+}

@@ -1,7 +1,6 @@
 package sp.senai.org.vetmark.service;
 
 import org.springframework.stereotype.Service;
-import sp.senai.org.vetmark.dto.request.ItemPedidoRequest;
 import sp.senai.org.vetmark.dto.response.ItemPedidoResponse;
 import sp.senai.org.vetmark.model.entity.ItemPedido;
 import sp.senai.org.vetmark.repository.ItemPedidoRepository;
@@ -18,6 +17,7 @@ public class ItemPedidoService {
     }
 
     public List<ItemPedidoResponse> findAll() {
+
         return repository.findAll()
                 .stream()
                 .map(this::toResponse)
@@ -25,44 +25,29 @@ public class ItemPedidoService {
     }
 
     public ItemPedidoResponse findById(Long id) {
-        ItemPedido itemPedido = repository.findById(id)
-                .orElseThrow();
+
+        ItemPedido itemPedido =
+                repository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Item do pedido não encontrado"
+                                )
+                        );
 
         return toResponse(itemPedido);
     }
 
-    public ItemPedidoResponse create(ItemPedidoRequest request) {
-
-        ItemPedido itemPedido = new ItemPedido();
-
-        itemPedido.setQuantidade(
-                request.quantidade()
-        );
-
-        itemPedido.setValorUnitario(
-                request.valorUnitario()
-        );
-
-        itemPedido.setValorTotal(
-                request.valorTotal()
-        );
-
-        itemPedido.setPedido(
-                request.pedido()
-        );
-
-        itemPedido.setProduto(
-                request.produto()
-        );
-
-        ItemPedido savedItemPedido =
-                repository.save(itemPedido);
-
-        return toResponse(savedItemPedido);
-    }
-
     public void delete(Long id) {
-        repository.deleteById(id);
+
+        ItemPedido itemPedido =
+                repository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Item do pedido não encontrado"
+                                )
+                        );
+
+        repository.delete(itemPedido);
     }
 
     private ItemPedidoResponse toResponse(
@@ -71,11 +56,15 @@ public class ItemPedidoService {
 
         return new ItemPedidoResponse(
                 itemPedido.getId(),
+                itemPedido.getProduto() != null
+                        ? itemPedido.getProduto().getId()
+                        : null,
+                itemPedido.getProduto() != null
+                        ? itemPedido.getProduto().getNome()
+                        : null,
                 itemPedido.getQuantidade(),
                 itemPedido.getValorUnitario(),
-                itemPedido.getValorTotal(),
-                itemPedido.getPedido(),
-                itemPedido.getProduto()
+                itemPedido.getValorTotal()
         );
     }
 }

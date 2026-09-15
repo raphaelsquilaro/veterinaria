@@ -1,7 +1,5 @@
 package sp.senai.org.vetmark.dto.response;
 
-import sp.senai.org.vetmark.model.entity.Cliente;
-import sp.senai.org.vetmark.model.entity.ItemPedido;
 import sp.senai.org.vetmark.model.enums.StatusPedido;
 
 import java.math.BigDecimal;
@@ -13,7 +11,8 @@ public record PedidoResponse(
         LocalDateTime dataPedido,
         StatusPedido status,
         BigDecimal valorTotal,
-        Cliente cliente,
-        List<ItemPedido> itens
+        Long clienteId,
+        String clienteNome,
+        List<ItemPedidoResponse> itens
 ) {
 }

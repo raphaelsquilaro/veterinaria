@@ -1,16 +1,24 @@
 package sp.senai.org.vetmark.dto.request;
 
-import sp.senai.org.vetmark.model.entity.Cliente;
-import sp.senai.org.vetmark.model.entity.Servico;
+import lombok.Data;
 import sp.senai.org.vetmark.model.enums.StatusAgendamento;
 
 import java.time.LocalDateTime;
 
-public record AgendamentoRequest(
-        LocalDateTime dataHora,
-        StatusAgendamento status,
-        String observacoes,
-        Cliente cliente,
-        Servico servico
-) {
+@Data
+public class AgendamentoRequest {
+
+    private LocalDateTime dataHora;
+
+    private StatusAgendamento status;
+
+    private String observacoes;
+
+    private Long clienteId;
+
+    private Long petId;
+
+    private Long veterinarioId;
+
+    private Long servicoId;
 }

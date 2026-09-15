@@ -1,364 +1,1000 @@
+/* =========================================================
+   VETMARK - SERVIÇOS
+   Cadastro / Edição
+   Arquivo: servico-form.css
+   ========================================================= */
+
+
+/* =========================================================
+   VARIÁVEIS
+   ========================================================= */
+
+:root {
+    --vet-primary: #2A9D8F;
+    --vet-primary-dark: #217A70;
+    --vet-primary-light: #DFF3EF;
+
+    --vet-secondary: #4A90A4;
+    --vet-secondary-light: #E8F4F7;
+
+    --vet-background: #F4F8F7;
+    --vet-surface: #FFFFFF;
+    --vet-surface-soft: #F8FBFA;
+
+    --vet-text: #203331;
+    --vet-text-secondary: #5F7471;
+    --vet-text-muted: #8A9A98;
+
+    --vet-border: #DDEAE7;
+    --vet-border-light: #EAF2F0;
+
+    --vet-success: #3BAA72;
+    --vet-success-light: #E5F6ED;
+
+    --vet-danger: #D95C5C;
+    --vet-danger-dark: #BD4949;
+    --vet-danger-light: #FDEAEA;
+
+    --vet-shadow-xs:
+            0 1px 3px rgba(32, 51, 49, 0.04);
+
+    --vet-shadow-sm:
+            0 4px 12px rgba(32, 51, 49, 0.06);
+
+    --vet-shadow-md:
+            0 8px 24px rgba(32, 51, 49, 0.08);
+
+    --vet-shadow-lg:
+            0 16px 40px rgba(32, 51, 49, 0.10);
+
+    --vet-radius-sm: 8px;
+    --vet-radius-md: 11px;
+    --vet-radius-lg: 14px;
+    --vet-radius-xl: 18px;
+    --vet-radius-xxl: 22px;
+
+    --vet-transition-fast: 0.15s ease;
+    --vet-transition-normal: 0.25s ease;
+}
+
+
+/* =========================================================
+   PÁGINA
+   ========================================================= */
+
 .servico-form-page {
+    position: relative;
+
     flex: 1;
     min-width: 0;
     width: 100%;
-    padding: 32px;
+
     min-height: calc(100vh - 70px);
-    background: #f6f8fb;
+
+    padding: 32px;
+
     box-sizing: border-box;
+
+    background:
+            radial-gradient(
+                    circle at top right,
+                    rgba(42, 157, 143, 0.055),
+                    transparent 30%
+            ),
+            linear-gradient(
+                    180deg,
+                    #F7FAF9 0%,
+                    var(--vet-background) 100%
+            );
+
+    color: var(--vet-text);
 }
 
-.form-page-header {
-    margin-bottom: 26px;
+
+/* =========================================================
+   CABEÇALHO DA PÁGINA
+   ========================================================= */
+
+.servico-form-page .form-page-header {
+    position: relative;
+
+    margin-bottom: 28px;
 }
 
-.back-link {
+.servico-form-page .form-page-header::before {
+    content: "";
+
+    position: absolute;
+
+    top: -12px;
+    left: 0;
+
+    width: 42px;
+    height: 3px;
+
+    border-radius: 999px;
+
+    background: linear-gradient(
+            90deg,
+            var(--vet-primary),
+            var(--vet-secondary)
+    );
+}
+
+
+/* =========================================================
+   VOLTAR
+   ========================================================= */
+
+.servico-form-page .back-link {
     display: inline-flex;
     align-items: center;
+
+    gap: 6px;
+
     margin-bottom: 14px;
-    color: #64748b;
+
+    color: var(--vet-text-secondary);
+
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
+
     text-decoration: none;
-    transition: color 0.2s ease;
+
+    transition:
+            color var(--vet-transition-fast),
+            transform var(--vet-transition-fast);
 }
 
-.back-link:hover {
-    color: #2563eb;
+.servico-form-page .back-link:hover {
+    color: var(--vet-primary-dark);
+
+    transform: translateX(-2px);
 }
 
-.form-page-header h1 {
-    margin: 0 0 6px;
-    color: #1f2937;
+
+/* =========================================================
+   TÍTULO
+   ========================================================= */
+
+.servico-form-page .form-page-header h1 {
+    margin: 0 0 7px;
+
+    color: var(--vet-text);
+
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 750;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.025em;
 }
 
-.form-page-header p {
+.servico-form-page .form-page-header p {
     margin: 0;
-    color: #6b7280;
-    font-size: 15px;
+
+    color: var(--vet-text-secondary);
+
+    font-size: 14px;
+
+    line-height: 1.6;
 }
 
-.form-card {
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.servico-form-page .form-card {
+    position: relative;
+
     width: 100%;
-    max-width: 850px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    max-width: 900px;
+
+    margin: 0 auto;
+
     box-sizing: border-box;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #FFFFFF 0%,
+                    #FEFFFF 100%
+            );
+
+    border: 1px solid var(--vet-border);
+    border-radius: var(--vet-radius-lg);
+
+    box-shadow: var(--vet-shadow-md);
+
+    overflow: hidden;
 }
 
-.form-card-header {
+.servico-form-page .form-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+
+    background: linear-gradient(
+            90deg,
+            var(--vet-primary),
+            var(--vet-secondary)
+    );
+}
+
+
+/* =========================================================
+   CABEÇALHO DO CARD
+   ========================================================= */
+
+.servico-form-page .form-card-header {
     display: flex;
     align-items: center;
-    gap: 14px;
+
+    gap: 15px;
+
     padding: 24px;
-    border-bottom: 1px solid #eef0f3;
+
+    border-bottom: 1px solid var(--vet-border-light);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    rgba(248, 251, 250, 0.90),
+                    rgba(255, 255, 255, 0.96)
+            );
 }
 
-.form-icon {
+
+/* =========================================================
+   ÍCONE
+   ========================================================= */
+
+.servico-form-page .form-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+
+    width: 50px;
+    height: 50px;
+
     flex-shrink: 0;
-    border-radius: 12px;
-    background: #eff6ff;
-    font-size: 23px;
+
+    border: 1px solid rgba(42, 157, 143, 0.12);
+    border-radius: var(--vet-radius-md);
+
+    background:
+            linear-gradient(
+                    145deg,
+                    var(--vet-primary-light),
+                    var(--vet-secondary-light)
+            );
+
+    color: var(--vet-primary-dark);
+
+    font-size: 24px;
+
+    box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, 0.75),
+            0 5px 14px rgba(42, 157, 143, 0.07);
 }
 
-.form-card-header h2 {
-    margin: 0 0 4px;
-    color: #1f2937;
+
+/* =========================================================
+   TEXTOS DO CARD
+   ========================================================= */
+
+.servico-form-page .form-card-header h2 {
+    margin: 0 0 5px;
+
+    color: var(--vet-text);
+
     font-size: 18px;
-    font-weight: 650;
+    font-weight: 750;
+
+    letter-spacing: -0.01em;
 }
 
-.form-card-header p {
+.servico-form-page .form-card-header p {
     margin: 0;
-    color: #6b7280;
+
+    color: var(--vet-text-secondary);
+
     font-size: 13px;
-}
 
-.servico-form {
-    padding: 28px 24px 24px;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px 20px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-
-.form-group-full {
-    grid-column: 1 / -1;
-}
-
-.form-group label {
-    margin-bottom: 8px;
-    color: #374151;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.form-group label span {
-    color: #dc2626;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid #dbe1e8;
-    border-radius: 9px;
-    background: #ffffff;
-    color: #1f2937;
-    font-family: inherit;
-    font-size: 14px;
-    outline: none;
-    transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
-}
-
-.form-group input {
-    height: 46px;
-    padding: 0 14px;
-}
-
-.form-group textarea {
-    min-height: 130px;
-    padding: 13px 14px;
-    resize: vertical;
     line-height: 1.5;
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: #9ca3af;
+
+/* =========================================================
+   FORMULÁRIO
+   ========================================================= */
+
+.servico-form-page .servico-form {
+    padding: 28px 28px 24px;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.servico-form-page .form-grid {
+    display: grid;
+
+    grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    gap: 22px 20px;
 }
 
-.form-group small {
-    margin-top: 7px;
-    color: #9ca3af;
-    font-size: 12px;
+
+/* =========================================================
+   GRUPOS
+   ========================================================= */
+
+.servico-form-page .form-group {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.servico-form-page .form-group-full {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.servico-form-page .form-group label {
+    margin-bottom: 8px;
+
+    color: var(--vet-text);
+
+    font-size: 13px;
+    font-weight: 700;
+
     line-height: 1.4;
 }
 
+.servico-form-page .form-group label span {
+    margin-left: 2px;
 
-/* Campo de valor */
-
-.input-prefix {
-    display: flex;
-    align-items: center;
-    height: 46px;
-    overflow: hidden;
-    border: 1px solid #dbe1e8;
-    border-radius: 9px;
-    background: #ffffff;
-    transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
+    color: var(--vet-danger);
 }
 
-.input-prefix:focus-within {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
-}
 
-.input-prefix > span {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    padding-left: 14px;
-    color: #6b7280;
+/* =========================================================
+   INPUTS / TEXTAREA
+   ========================================================= */
+
+.servico-form-page .form-group input,
+.servico-form-page .form-group textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--vet-border);
+    border-radius: var(--vet-radius-sm);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #FFFFFF,
+                    #FBFDFC
+            );
+
+    color: var(--vet-text);
+
+    font-family: inherit;
     font-size: 14px;
-    font-weight: 600;
-}
 
-.input-prefix input {
-    height: 100%;
-    padding-left: 8px;
-    border: none;
     outline: none;
-    box-shadow: none;
+
+    box-shadow: var(--vet-shadow-xs);
+
+    transition:
+            border-color var(--vet-transition-normal),
+            box-shadow var(--vet-transition-normal),
+            background var(--vet-transition-normal);
 }
 
-.input-prefix input:focus {
-    border: none;
-    box-shadow: none;
+.servico-form-page .form-group input {
+    height: 46px;
+
+    padding: 0 14px;
+}
+
+.servico-form-page .form-group textarea {
+    min-height: 130px;
+
+    padding: 13px 14px;
+
+    resize: vertical;
+
+    line-height: 1.55;
+}
+
+.servico-form-page .form-group input::placeholder,
+.servico-form-page .form-group textarea::placeholder {
+    color: var(--vet-text-muted);
 }
 
 
-/* Campo de duração */
+/* =========================================================
+   HOVER
+   ========================================================= */
 
-.input-suffix {
+.servico-form-page .form-group input:hover,
+.servico-form-page .form-group textarea:hover {
+    border-color: #C7DCD8;
+}
+
+
+/* =========================================================
+   FOCO
+   ========================================================= */
+
+.servico-form-page .form-group input:focus,
+.servico-form-page .form-group textarea:focus {
+    border-color: var(--vet-primary);
+
+    background: var(--vet-surface);
+
+    box-shadow:
+            0 0 0 3px rgba(42, 157, 143, 0.11),
+            var(--vet-shadow-sm);
+}
+
+
+/* =========================================================
+   TEXTO AUXILIAR
+   ========================================================= */
+
+.servico-form-page .form-group small {
+    margin-top: 7px;
+
+    color: var(--vet-text-muted);
+
+    font-size: 12px;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   CAMPO DE VALOR
+   ========================================================= */
+
+.servico-form-page .input-prefix {
     display: flex;
     align-items: center;
+
     height: 46px;
+
     overflow: hidden;
-    border: 1px solid #dbe1e8;
-    border-radius: 9px;
-    background: #ffffff;
+
+    border: 1px solid var(--vet-border);
+    border-radius: var(--vet-radius-sm);
+
+    background: var(--vet-surface);
+
+    box-shadow: var(--vet-shadow-xs);
+
     transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
+            border-color var(--vet-transition-normal),
+            box-shadow var(--vet-transition-normal);
 }
 
-.input-suffix:focus-within {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+.servico-form-page .input-prefix:focus-within {
+    border-color: var(--vet-primary);
+
+    box-shadow:
+            0 0 0 3px rgba(42, 157, 143, 0.11),
+            var(--vet-shadow-sm);
 }
 
-.input-suffix input {
-    flex: 1;
+.servico-form-page .input-prefix > span {
+    display: flex;
+    align-items: center;
+
     height: 100%;
-    border: none;
-    outline: none;
-    box-shadow: none;
-}
 
-.input-suffix input:focus {
-    border: none;
-    box-shadow: none;
-}
+    padding: 0 13px;
 
-.input-suffix > span {
-    padding-right: 14px;
-    color: #6b7280;
+    border-right: 1px solid var(--vet-border);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #F8FBFA,
+                    #F2F7F5
+            );
+
+    color: var(--vet-text-secondary);
+
     font-size: 13px;
+    font-weight: 750;
+
+    white-space: nowrap;
+}
+
+.servico-form-page .input-prefix input {
+    flex: 1;
+
+    width: auto;
+
+    height: 100%;
+
+    padding: 0 13px;
+
+    border: none;
+
+    border-radius: 0;
+
+    background: transparent;
+
+    box-shadow: none;
+}
+
+.servico-form-page .input-prefix input:hover,
+.servico-form-page .input-prefix input:focus {
+    border: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   CAMPO DE DURAÇÃO
+   ========================================================= */
+
+.servico-form-page .input-suffix {
+    display: flex;
+    align-items: center;
+
+    height: 46px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--vet-border);
+    border-radius: var(--vet-radius-sm);
+
+    background: var(--vet-surface);
+
+    box-shadow: var(--vet-shadow-xs);
+
+    transition:
+            border-color var(--vet-transition-normal),
+            box-shadow var(--vet-transition-normal);
+}
+
+.servico-form-page .input-suffix:focus-within {
+    border-color: var(--vet-primary);
+
+    box-shadow:
+            0 0 0 3px rgba(42, 157, 143, 0.11),
+            var(--vet-shadow-sm);
+}
+
+.servico-form-page .input-suffix input {
+    flex: 1;
+
+    width: 100%;
+
+    height: 100%;
+
+    padding: 0 13px;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    box-shadow: none;
+}
+
+.servico-form-page .input-suffix input:hover,
+.servico-form-page .input-suffix input:focus {
+    border: none;
+
+    box-shadow: none;
+}
+
+.servico-form-page .input-suffix > span {
+    padding-right: 14px;
+
+    color: var(--vet-text-secondary);
+
+    font-size: 13px;
+    font-weight: 600;
+
     white-space: nowrap;
 }
 
 
-/* Divisor */
+/* =========================================================
+   DIVISOR
+   ========================================================= */
 
-.form-divider {
+.servico-form-page .form-divider {
     height: 1px;
+
     margin: 28px 0 22px;
-    background: #eef0f3;
+
+    background:
+            linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--vet-border),
+                    transparent
+            );
 }
 
 
-/* Botões */
+/* =========================================================
+   AÇÕES
+   ========================================================= */
 
-.form-actions {
+.servico-form-page .form-actions {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
     gap: 12px;
 }
 
-.btn-primary,
-.btn-secondary {
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+.servico-form-page .btn-primary,
+.servico-form-page .btn-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     gap: 8px;
+
     min-height: 44px;
+
     padding: 0 18px;
-    border-radius: 9px;
+
     box-sizing: border-box;
+
+    border-radius: var(--vet-radius-md);
+
     font-family: inherit;
+
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
+
+    line-height: 1;
+
     text-decoration: none;
+
     cursor: pointer;
+
     transition:
-            background 0.2s ease,
-            border-color 0.2s ease,
-            transform 0.2s ease;
+            background var(--vet-transition-normal),
+            border-color var(--vet-transition-normal),
+            color var(--vet-transition-normal),
+            transform var(--vet-transition-normal),
+            box-shadow var(--vet-transition-normal);
 }
 
-.btn-primary {
-    border: 1px solid #2563eb;
-    background: #2563eb;
-    color: #ffffff;
+
+/* =========================================================
+   BOTÃO PRIMÁRIO
+   ========================================================= */
+
+.servico-form-page .btn-primary {
+    position: relative;
+
+    border: 1px solid transparent;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    var(--vet-primary),
+                    var(--vet-primary-dark)
+            );
+
+    color: #FFFFFF;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 5px 14px rgba(42, 157, 143, 0.18);
 }
 
-.btn-primary:hover {
-    background: #1d4ed8;
-    border-color: #1d4ed8;
+.servico-form-page .btn-primary::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.20),
+            transparent
+    );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.55s ease;
+}
+
+.servico-form-page .btn-primary:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 9px 22px rgba(42, 157, 143, 0.23);
+}
+
+.servico-form-page .btn-primary:hover::before {
+    left: 140%;
+}
+
+.servico-form-page .btn-primary:active {
+    transform: translateY(0);
+}
+
+.servico-form-page .btn-primary:disabled {
+    opacity: 0.65;
+
+    transform: none;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+.servico-form-page .btn-primary:disabled::before {
+    display: none;
+}
+
+
+/* =========================================================
+   BOTÃO SECUNDÁRIO
+   ========================================================= */
+
+.servico-form-page .btn-secondary {
+    border: 1px solid var(--vet-border);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #FFFFFF,
+                    #F9FCFB
+            );
+
+    color: var(--vet-text-secondary);
+
+    box-shadow: var(--vet-shadow-xs);
+}
+
+.servico-form-page .btn-secondary:hover {
+    border-color: #C5DAD6;
+
+    background: var(--vet-surface-soft);
+
+    color: var(--vet-text);
+
     transform: translateY(-1px);
-}
 
-.btn-secondary {
-    border: 1px solid #dbe1e8;
-    background: #ffffff;
-    color: #4b5563;
-}
-
-.btn-secondary:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
+    box-shadow: var(--vet-shadow-sm);
 }
 
 
-/* Responsividade */
+/* =========================================================
+   ACESSIBILIDADE
+   ========================================================= */
 
-@media (max-width: 800px) {
+.servico-form-page a:focus-visible,
+.servico-form-page button:focus-visible,
+.servico-form-page input:focus-visible,
+.servico-form-page textarea:focus-visible {
+    outline: 3px solid rgba(42, 157, 143, 0.22);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   SELEÇÃO
+   ========================================================= */
+
+.servico-form-page ::selection {
+    background: var(--vet-primary-light);
+
+    color: var(--vet-primary-dark);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
 
     .servico-form-page {
         padding: 24px;
     }
 
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-group-full {
-        grid-column: auto;
-    }
-
-    .form-card {
+    .servico-form-page .form-card {
         max-width: none;
     }
 }
 
+
+/* =========================================================
+   RESPONSIVIDADE - TABLET MENOR
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .servico-form-page {
+        padding: 22px;
+    }
+
+    .servico-form-page .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .servico-form-page .form-group-full {
+        grid-column: auto;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - CELULAR
+   ========================================================= */
+
 @media (max-width: 600px) {
 
     .servico-form-page {
+        min-height: calc(100vh - 60px);
+
         padding: 18px;
     }
 
-    .form-page-header h1 {
+    .servico-form-page .form-page-header {
+        margin-bottom: 22px;
+    }
+
+    .servico-form-page .form-page-header::before {
+        top: -8px;
+
+        width: 34px;
+    }
+
+    .servico-form-page .form-page-header h1 {
         font-size: 25px;
     }
 
-    .form-page-header p {
+    .servico-form-page .form-page-header p {
         font-size: 13px;
+
+        line-height: 1.55;
     }
 
-    .form-card-header {
-        padding: 20px;
+    .servico-form-page .form-card {
+        border-radius: var(--vet-radius-md);
     }
 
-    .servico-form {
-        padding: 22px 18px 18px;
+    .servico-form-page .form-card-header {
+        align-items: flex-start;
+
+        gap: 12px;
+
+        padding: 18px;
     }
 
-    .form-actions {
+    .servico-form-page .form-icon {
+        width: 44px;
+        height: 44px;
+
+        font-size: 21px;
+    }
+
+    .servico-form-page .form-card-header h2 {
+        font-size: 16px;
+    }
+
+    .servico-form-page .form-card-header p {
+        font-size: 12px;
+    }
+
+    .servico-form-page .servico-form {
+        padding: 21px 17px 18px;
+    }
+
+    .servico-form-page .form-grid {
+        gap: 18px;
+    }
+
+    .servico-form-page .form-divider {
+        margin: 24px 0 20px;
+    }
+
+    .servico-form-page .form-actions {
         flex-direction: column-reverse;
+
         align-items: stretch;
     }
 
-    .btn-primary,
-    .btn-secondary {
+    .servico-form-page .form-actions .btn-primary,
+    .servico-form-page .form-actions .btn-secondary {
         width: 100%;
+    }
+}
+
+
+/* =========================================================
+   CELULAR PEQUENO
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .servico-form-page {
+        padding: 14px;
+    }
+
+    .servico-form-page .form-page-header h1 {
+        font-size: 23px;
+    }
+
+    .servico-form-page .form-card-header {
+        padding: 16px;
+    }
+
+    .servico-form-page .servico-form {
+        padding: 18px 14px 16px;
+    }
+
+    .servico-form-page .form-group input {
+        height: 44px;
+    }
+
+    .servico-form-page .input-prefix,
+    .servico-form-page .input-suffix {
+        height: 44px;
+    }
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .servico-form-page *,
+    .servico-form-page *::before,
+    .servico-form-page *::after {
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
     }
 }

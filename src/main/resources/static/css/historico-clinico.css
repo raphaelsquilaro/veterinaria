@@ -1,350 +1,1160 @@
-.historico-page {
-    padding: 32px;
-    background: #f8fafc;
-    min-height: calc(100vh - 70px);
+/* =========================================================
+   VETMARK - HISTÓRICO CLÍNICO
+   ========================================================= */
+
+:root {
+    --vet-primary: #2A9D8F;
+    --vet-primary-dark: #217A70;
+    --vet-primary-light: #DFF3EF;
+
+    --vet-secondary: #4A90A4;
+    --vet-secondary-light: #E8F4F7;
+
+    --vet-background: #F4F8F7;
+    --vet-surface: #FFFFFF;
+    --vet-surface-soft: #F8FBFA;
+
+    --vet-text: #203331;
+    --vet-text-secondary: #5F7471;
+    --vet-text-muted: #8A9A98;
+
+    --vet-border: #DDEAE7;
+    --vet-border-light: #EAF2F0;
+
+    --vet-success: #3BAA72;
+    --vet-warning: #E7A23B;
+    --vet-danger: #D95C5C;
+    --vet-danger-dark: #BD4949;
+    --vet-danger-light: #FDEAEA;
+
+    --vet-shadow-xs:
+            0 1px 3px rgba(32, 51, 49, 0.04);
+
+    --vet-shadow-sm:
+            0 4px 12px rgba(32, 51, 49, 0.06);
+
+    --vet-shadow-md:
+            0 8px 24px rgba(32, 51, 49, 0.08);
+
+    --vet-shadow-lg:
+            0 16px 40px rgba(32, 51, 49, 0.10);
+
+    --vet-radius-sm: 8px;
+    --vet-radius-md: 11px;
+    --vet-radius-lg: 14px;
+    --vet-radius-xl: 18px;
+
+    --vet-transition-fast: 0.15s ease;
+    --vet-transition-normal: 0.25s ease;
 }
 
-.page-header {
+
+/* =========================================================
+   PÁGINA
+   ========================================================= */
+
+.historico-page {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+    min-height: calc(100vh - 70px);
+
+    padding: 32px;
+
+    box-sizing: border-box;
+
+    color: var(--vet-text);
+
+    background:
+            radial-gradient(
+                    circle at top right,
+                    rgba(42, 157, 143, 0.055),
+                    transparent 30%
+            ),
+            radial-gradient(
+                    circle at bottom left,
+                    rgba(74, 144, 164, 0.035),
+                    transparent 28%
+            ),
+            linear-gradient(
+                    180deg,
+                    #F7FAF9 0%,
+                    var(--vet-background) 100%
+            );
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.historico-page .page-header {
+    position: relative;
+
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+
     gap: 20px;
+
     margin-bottom: 28px;
 }
 
-.page-header h1 {
-    margin: 0 0 8px;
-    font-size: 28px;
-    color: #111827;
+.historico-page .page-header::before {
+    content: "";
+
+    position: absolute;
+
+    top: -12px;
+    left: 0;
+
+    width: 48px;
+    height: 3px;
+
+    border-radius: 999px;
+
+    background: linear-gradient(
+            90deg,
+            var(--vet-primary),
+            var(--vet-secondary)
+    );
 }
 
-.page-header p {
+.historico-page .page-header h1 {
+    margin: 0 0 7px;
+
+    color: var(--vet-text);
+
+    font-size: 29px;
+    font-weight: 750;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.025em;
+}
+
+.historico-page .page-header p {
     margin: 0;
-    color: #6b7280;
+
+    color: var(--vet-text-secondary);
+
+    font-size: 14px;
+
+    line-height: 1.5;
 }
 
-.btn-primary {
+
+/* =========================================================
+   BOTÃO PRINCIPAL
+   ========================================================= */
+
+.historico-page .btn-primary {
+    position: relative;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     gap: 8px;
-    min-height: 42px;
+
+    min-height: 44px;
+
     padding: 0 18px;
-    border: none;
-    border-radius: 8px;
-    background: #2563eb;
-    color: #ffffff;
+
+    border: 1px solid transparent;
+    border-radius: var(--vet-radius-md);
+
+    background:
+            linear-gradient(
+                    135deg,
+                    var(--vet-primary),
+                    var(--vet-primary-dark)
+            );
+
+    color: #FFFFFF;
+
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
     cursor: pointer;
-    transition: 0.2s;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 5px 14px rgba(42, 157, 143, 0.18);
+
+    transition:
+            transform var(--vet-transition-fast),
+            box-shadow var(--vet-transition-normal);
 }
 
-.btn-primary:hover {
-    background: #1d4ed8;
+.historico-page .btn-primary::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.20),
+            transparent
+    );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.55s ease;
 }
 
-.toolbar {
+.historico-page .btn-primary:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 9px 22px rgba(42, 157, 143, 0.22);
+}
+
+.historico-page .btn-primary:hover::before {
+    left: 140%;
+}
+
+.historico-page .btn-primary:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.historico-page .toolbar {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+
+    gap: 16px;
+
     margin-bottom: 20px;
 }
 
-.search-box {
+
+/* =========================================================
+   BUSCA
+   ========================================================= */
+
+.historico-page .search-box {
     position: relative;
+
     width: 100%;
     max-width: 500px;
 }
 
-.search-box input {
+.historico-page .search-box input {
     width: 100%;
+
+    height: 44px;
+
     box-sizing: border-box;
-    padding: 12px 14px 12px 42px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #111827;
+
+    padding: 0 14px 0 42px;
+
+    border: 1px solid var(--vet-border);
+
+    border-radius: var(--vet-radius-md);
+
+    background: var(--vet-surface);
+
+    color: var(--vet-text);
+
     outline: none;
-    font-size: 14px;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    box-shadow: var(--vet-shadow-xs);
+
+    transition:
+            border-color var(--vet-transition-normal),
+            box-shadow var(--vet-transition-normal),
+            background var(--vet-transition-normal);
 }
 
-.search-box input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+.historico-page .search-box input::placeholder {
+    color: var(--vet-text-muted);
 }
 
-.search-icon {
+.historico-page .search-box input:hover {
+    border-color: #C7DDD9;
+}
+
+.historico-page .search-box input:focus {
+    border-color: var(--vet-primary);
+
+    background: #FCFFFE;
+
+    box-shadow:
+            0 0 0 3px rgba(42, 157, 143, 0.11),
+            0 4px 12px rgba(42, 157, 143, 0.06);
+}
+
+.historico-page .search-icon {
     position: absolute;
+
     left: 14px;
     top: 50%;
+
+    z-index: 1;
+
+    color: var(--vet-text-muted);
+
+    font-size: 15px;
+
     transform: translateY(-50%);
-    font-size: 16px;
+
+    pointer-events: none;
 }
 
-.table-card {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
+
+/* =========================================================
+   CARD DA TABELA
+   ========================================================= */
+
+.historico-page .table-card {
+    position: relative;
+
+    width: 100%;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #FFFFFF,
+                    #FCFEFD
+            );
+
+    border: 1px solid var(--vet-border);
+
+    border-radius: var(--vet-radius-xl);
+
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    box-shadow: var(--vet-shadow-md);
 }
 
-.table-wrapper {
+.historico-page .table-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+
+    background: linear-gradient(
+            90deg,
+            var(--vet-primary),
+            var(--vet-secondary)
+    );
+}
+
+
+/* =========================================================
+   WRAPPER DA TABELA
+   ========================================================= */
+
+.historico-page .table-wrapper {
     width: 100%;
+
     overflow-x: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #C8D9D6 transparent;
 }
 
-table {
+.historico-page .table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.historico-page .table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.historico-page .table-wrapper::-webkit-scrollbar-thumb {
+    background: #C8D9D6;
+
+    border-radius: 999px;
+}
+
+.historico-page .table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #AFC9C4;
+}
+
+
+/* =========================================================
+   TABELA
+   ========================================================= */
+
+.historico-page table {
     width: 100%;
+
     min-width: 950px;
+
     border-collapse: collapse;
 }
 
-thead {
-    background: #f9fafb;
+.historico-page thead {
+    background:
+            linear-gradient(
+                    180deg,
+                    #F8FBFA,
+                    #F5F9F8
+            );
 }
 
-th {
+.historico-page th {
     padding: 14px 18px;
+
+    border-bottom: 1px solid var(--vet-border);
+
+    color: var(--vet-text-secondary);
+
     text-align: left;
-    font-size: 12px;
-    font-weight: 700;
-    color: #6b7280;
+
+    font-size: 10px;
+    font-weight: 800;
+
     text-transform: uppercase;
-    letter-spacing: 0.03em;
-    border-bottom: 1px solid #e5e7eb;
-}
 
-td {
-    padding: 16px 18px;
-    border-bottom: 1px solid #f1f5f9;
-    color: #374151;
-    font-size: 14px;
-    vertical-align: middle;
-}
+    letter-spacing: 0.055em;
 
-tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.historico-row:hover {
-    background: #fafafa;
-}
-
-.date-info {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.date-info strong {
-    color: #111827;
-}
-
-.date-info span {
-    color: #6b7280;
-    font-size: 12px;
-}
-
-.pet-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.pet-avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: #f3f4f6;
-    font-size: 18px;
-}
-
-.pet-info strong,
-.veterinario-info strong {
-    display: block;
-    color: #111827;
-}
-
-.pet-info span,
-.veterinario-info span {
-    display: block;
-    margin-top: 3px;
-    color: #6b7280;
-    font-size: 12px;
-}
-
-.veterinario-info {
-    min-width: 150px;
-}
-
-.text-preview {
-    display: block;
-    max-width: 180px;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.action-buttons {
+.historico-page td {
+    padding: 16px 18px;
+
+    border-bottom: 1px solid var(--vet-border-light);
+
+    color: var(--vet-text-secondary);
+
+    font-size: 13px;
+
+    vertical-align: middle;
+}
+
+.historico-page tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.historico-page .historico-row {
+    transition:
+            background var(--vet-transition-fast);
+}
+
+.historico-page .historico-row:hover {
+    background:
+            linear-gradient(
+                    90deg,
+                    rgba(42, 157, 143, 0.035),
+                    rgba(74, 144, 164, 0.018)
+            );
+}
+
+
+/* =========================================================
+   DATA
+   ========================================================= */
+
+.historico-page .date-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.historico-page .date-info strong {
+    color: var(--vet-text);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.historico-page .date-info span {
+    color: var(--vet-text-muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   PET
+   ========================================================= */
+
+.historico-page .pet-info {
     display: flex;
     align-items: center;
+
+    gap: 10px;
+}
+
+.historico-page .pet-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(42, 157, 143, 0.12);
+
+    border-radius: 50%;
+
+    background:
+            linear-gradient(
+                    145deg,
+                    var(--vet-primary-light),
+                    var(--vet-secondary-light)
+            );
+
+    color: var(--vet-primary-dark);
+
+    font-size: 17px;
+
+    box-shadow:
+            0 3px 9px rgba(42, 157, 143, 0.06);
+}
+
+.historico-page .pet-info strong,
+.historico-page .veterinario-info strong {
+    display: block;
+
+    color: var(--vet-text);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.historico-page .pet-info span,
+.historico-page .veterinario-info span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--vet-text-muted);
+
+    font-size: 11px;
+}
+
+.historico-page .veterinario-info {
+    min-width: 150px;
+}
+
+
+/* =========================================================
+   PREVIEW DE TEXTO
+   ========================================================= */
+
+.historico-page .text-preview {
+    display: block;
+
+    max-width: 180px;
+
+    overflow: hidden;
+
+    color: var(--vet-text-secondary);
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   AÇÕES
+   ========================================================= */
+
+.historico-page .action-buttons {
+    display: flex;
+    align-items: center;
+
     gap: 6px;
 }
 
-.action-button {
+.historico-page .action-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     width: 34px;
     height: 34px;
-    border: 1px solid #e5e7eb;
-    border-radius: 7px;
-    background: #ffffff;
+
+    border: 1px solid var(--vet-border);
+
+    border-radius: var(--vet-radius-sm);
+
+    background: var(--vet-surface);
+
+    color: var(--vet-text-secondary);
+
     text-decoration: none;
+
     cursor: pointer;
-    transition: 0.2s;
+
+    box-shadow: var(--vet-shadow-xs);
+
+    transition:
+            background var(--vet-transition-fast),
+            border-color var(--vet-transition-fast),
+            color var(--vet-transition-fast),
+            transform var(--vet-transition-fast);
 }
 
-.action-button:hover {
-    background: #f9fafb;
+.historico-page .action-button:hover {
+    border-color: #C7DDD9;
+
+    background: var(--vet-surface-soft);
+
+    color: var(--vet-primary-dark);
+
+    transform: translateY(-1px);
 }
 
-.action-button.delete:hover {
-    border-color: #fecaca;
-    background: #fef2f2;
+.historico-page .action-button.delete:hover {
+    border-color: #F2CACA;
+
+    background: var(--vet-danger-light);
+
+    color: var(--vet-danger-dark);
 }
 
-.empty-state {
-    padding: 60px 20px !important;
+
+/* =========================================================
+   ESTADO VAZIO
+   ========================================================= */
+
+.historico-page .empty-state {
+    padding: 64px 20px !important;
+
     text-align: center !important;
 }
 
-.empty-icon {
-    font-size: 42px;
-    margin-bottom: 12px;
-}
-
-.empty-state h3 {
-    margin: 0 0 8px;
-    color: #111827;
-}
-
-.empty-state p {
-    margin: 0 0 20px;
-    color: #6b7280;
-}
-
-
-/* MODAL */
-
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
+.historico-page .empty-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    background: rgba(17, 24, 39, 0.45);
+
+    width: 64px;
+    height: 64px;
+
+    margin: 0 auto 15px;
+
+    border: 1px solid rgba(42, 157, 143, 0.12);
+
+    border-radius: 50%;
+
+    background:
+            linear-gradient(
+                    145deg,
+                    var(--vet-primary-light),
+                    var(--vet-secondary-light)
+            );
+
+    font-size: 29px;
+
+    box-shadow:
+            0 7px 18px rgba(42, 157, 143, 0.07);
 }
 
-.modal {
+.historico-page .empty-state h3 {
+    margin: 0 0 7px;
+
+    color: var(--vet-text);
+
+    font-size: 16px;
+    font-weight: 750;
+}
+
+.historico-page .empty-state p {
+    margin: 0 0 20px;
+
+    color: var(--vet-text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MODAL - FUNDO
+   ========================================================= */
+
+.historico-page .modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    background:
+            rgba(32, 51, 49, 0.48);
+
+    backdrop-filter: blur(4px);
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.historico-page .modal {
+    position: relative;
+
     width: 100%;
     max-width: 650px;
+
     max-height: 85vh;
+
     overflow-y: auto;
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #FFFFFF,
+                    #FBFDFC
+            );
+
+    border: 1px solid var(--vet-border);
+
+    border-radius: var(--vet-radius-xl);
+
+    box-shadow: var(--vet-shadow-lg);
+
+    animation: historicoModalIn 0.22s ease-out;
 }
 
-.modal-header {
+.historico-page .modal::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+
+    border-radius: var(--vet-radius-xl) var(--vet-radius-xl) 0 0;
+
+    background: linear-gradient(
+            90deg,
+            var(--vet-primary),
+            var(--vet-secondary)
+    );
+}
+
+
+/* =========================================================
+   CABEÇALHO DO MODAL
+   ========================================================= */
+
+.historico-page .modal-header {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-    padding: 22px 24px;
-    border-bottom: 1px solid #e5e7eb;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 24px;
+
+    border-bottom: 1px solid var(--vet-border-light);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #F8FBFA,
+                    #FFFFFF
+            );
 }
 
-.modal-header h2 {
+.historico-page .modal-header h2 {
     margin: 0 0 5px;
-    color: #111827;
+
+    color: var(--vet-text);
+
     font-size: 20px;
+    font-weight: 750;
+
+    line-height: 1.3;
 }
 
-.modal-header p {
+.historico-page .modal-header p {
     margin: 0;
-    color: #6b7280;
-    font-size: 14px;
+
+    color: var(--vet-text-secondary);
+
+    font-size: 12px;
+
+    line-height: 1.5;
 }
 
-.modal-close {
+
+/* =========================================================
+   FECHAR MODAL
+   ========================================================= */
+
+.historico-page .modal-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     width: 34px;
     height: 34px;
-    border: none;
-    border-radius: 7px;
-    background: #f3f4f6;
-    color: #374151;
-    font-size: 24px;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--vet-border);
+
+    border-radius: var(--vet-radius-sm);
+
+    background: var(--vet-surface-soft);
+
+    color: var(--vet-text-secondary);
+
+    font-size: 22px;
     line-height: 1;
+
     cursor: pointer;
+
+    transition:
+            background var(--vet-transition-fast),
+            border-color var(--vet-transition-fast),
+            color var(--vet-transition-fast),
+            transform var(--vet-transition-fast);
 }
 
-.modal-body {
+.historico-page .modal-close:hover {
+    border-color: #C8DCD8;
+
+    background: var(--vet-primary-light);
+
+    color: var(--vet-primary-dark);
+
+    transform: rotate(3deg);
+}
+
+
+/* =========================================================
+   CORPO DO MODAL
+   ========================================================= */
+
+.historico-page .modal-body {
     padding: 24px;
 }
 
-.modal-section {
+.historico-page .modal-section {
     margin-bottom: 22px;
 }
 
-.modal-section:last-child {
+.historico-page .modal-section:last-child {
     margin-bottom: 0;
 }
 
-.modal-section h3 {
+.historico-page .modal-section h3 {
     margin: 0 0 8px;
-    font-size: 14px;
-    color: #374151;
+
+    color: var(--vet-text);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.035em;
 }
 
-.modal-section p {
+.historico-page .modal-section p {
     margin: 0;
-    padding: 12px;
-    border-radius: 8px;
-    background: #f9fafb;
-    color: #4b5563;
-    line-height: 1.5;
+
+    padding: 13px 14px;
+
+    border: 1px solid var(--vet-border-light);
+
+    border-radius: var(--vet-radius-md);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #F9FCFB,
+                    #F6FAF9
+            );
+
+    color: var(--vet-text-secondary);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
     white-space: pre-wrap;
 }
 
 
+/* =========================================================
+   SCROLLBAR DO MODAL
+   ========================================================= */
+
+.historico-page .modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.historico-page .modal::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.historico-page .modal::-webkit-scrollbar-thumb {
+    background: #C8D9D6;
+
+    border-radius: 999px;
+}
+
+
+/* =========================================================
+   ACESSIBILIDADE
+   ========================================================= */
+
+.historico-page a:focus-visible,
+.historico-page button:focus-visible,
+.historico-page input:focus-visible {
+    outline: 3px solid rgba(42, 157, 143, 0.22);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   SELEÇÃO
+   ========================================================= */
+
+.historico-page ::selection {
+    background: var(--vet-primary-light);
+
+    color: var(--vet-primary-dark);
+}
+
+
+/* =========================================================
+   ANIMAÇÃO DO MODAL
+   ========================================================= */
+
+@keyframes historicoModalIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+                translateY(10px)
+                scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+                translateY(0)
+                scale(1);
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - 900PX
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .historico-page {
+        padding: 24px;
+    }
+
+    .historico-page .page-header {
+        align-items: flex-start;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - 768PX
+   ========================================================= */
+
 @media (max-width: 768px) {
 
     .historico-page {
+        min-height: calc(100vh - 60px);
+
         padding: 20px;
     }
 
-    .page-header {
+    .historico-page .page-header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+
+        gap: 16px;
     }
 
-    .btn-primary {
+    .historico-page .page-header h1 {
+        font-size: 26px;
+    }
+
+    .historico-page .btn-primary {
         width: 100%;
     }
 
-    .toolbar {
+    .historico-page .toolbar {
         width: 100%;
     }
 
-    .search-box {
+    .historico-page .search-box {
         max-width: none;
+    }
+
+    .historico-page .table-card {
+        border-radius: var(--vet-radius-lg);
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - 600PX
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .historico-page {
+        padding: 16px;
+    }
+
+    .historico-page .page-header {
+        margin-bottom: 22px;
+    }
+
+    .historico-page .page-header::before {
+        top: -8px;
+
+        width: 38px;
+    }
+
+    .historico-page .page-header h1 {
+        font-size: 24px;
+    }
+
+    .historico-page .page-header p {
+        font-size: 13px;
+    }
+
+    .historico-page .toolbar {
+        margin-bottom: 16px;
+    }
+
+    .historico-page .search-box input {
+        height: 43px;
+    }
+
+    .historico-page .modal-overlay {
+        padding: 14px;
+    }
+
+    .historico-page .modal {
+        max-height: 90vh;
+
+        border-radius: var(--vet-radius-lg);
+    }
+
+    .historico-page .modal-header {
+        padding: 20px;
+    }
+
+    .historico-page .modal-body {
+        padding: 20px;
+    }
+
+    .historico-page .modal-header h2 {
+        font-size: 18px;
+    }
+
+    .historico-page .modal-section {
+        margin-bottom: 18px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - 450PX
+   ========================================================= */
+
+@media (max-width: 450px) {
+
+    .historico-page {
+        padding: 14px;
+    }
+
+    .historico-page .page-header h1 {
+        font-size: 22px;
+    }
+
+    .historico-page .table-card {
+        border-radius: 12px;
+    }
+
+    .historico-page .modal-overlay {
+        padding: 10px;
+    }
+
+    .historico-page .modal-header {
+        padding: 18px;
+    }
+
+    .historico-page .modal-body {
+        padding: 18px;
+    }
+
+    .historico-page .modal-close {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .historico-page *,
+    .historico-page *::before,
+    .historico-page *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
     }
 }

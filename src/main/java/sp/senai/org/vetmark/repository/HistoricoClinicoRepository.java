@@ -8,5 +8,5 @@ import java.util.List;
 public interface HistoricoClinicoRepository
         extends JpaRepository<HistoricoClinico, Long> {
 
-    List<HistoricoClinico> findByPetIdOrderByDataConsultaDesc(Long petId);
+    List<HistoricoClinico> findByPetId(Long petId);
 }

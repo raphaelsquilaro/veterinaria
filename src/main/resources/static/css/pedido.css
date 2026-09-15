@@ -2,17 +2,91 @@
    VETMARK - LISTAGEM DE PEDIDOS
    ========================================================= */
 
+:root {
+    --vet-primary: #2A9D8F;
+    --vet-primary-dark: #217A70;
+    --vet-primary-light: #DFF3EF;
+
+    --vet-secondary: #4A90A4;
+    --vet-secondary-light: #E8F4F7;
+
+    --vet-background: #F4F8F7;
+    --vet-surface: #FFFFFF;
+    --vet-surface-soft: #F8FBFA;
+
+    --vet-text: #203331;
+    --vet-text-secondary: #5F7471;
+    --vet-text-muted: #8A9A98;
+
+    --vet-border: #DDEAE7;
+    --vet-border-light: #EAF2F0;
+
+    --vet-success: #3BAA72;
+    --vet-success-light: #E5F6ED;
+
+    --vet-warning: #E7A23B;
+    --vet-warning-light: #FFF3DF;
+
+    --vet-danger: #D95C5C;
+    --vet-danger-dark: #BD4949;
+    --vet-danger-light: #FDEAEA;
+
+    --vet-info-light: #E8F4F7;
+
+    --vet-shadow-xs:
+            0 1px 3px rgba(32, 51, 49, 0.04);
+
+    --vet-shadow-sm:
+            0 4px 12px rgba(32, 51, 49, 0.06);
+
+    --vet-shadow-md:
+            0 10px 28px rgba(32, 51, 49, 0.08);
+
+    --vet-radius-sm: 8px;
+    --vet-radius-md: 11px;
+    --vet-radius-lg: 14px;
+    --vet-radius-xl: 18px;
+
+    --vet-transition-fast: 0.15s ease;
+    --vet-transition-normal: 0.25s ease;
+}
+
+
+/* =========================================================
+   PÁGINA
+   ========================================================= */
+
 .pedido-page {
+    position: relative;
+
     flex: 1;
     min-width: 0;
     width: 100%;
+
     min-height: calc(100vh - 70px);
 
     padding: 32px;
 
-    background: #f6f8fb;
-
     box-sizing: border-box;
+
+    color: var(--vet-text);
+
+    background:
+            radial-gradient(
+                    circle at top right,
+                    rgba(42, 157, 143, 0.055),
+                    transparent 30%
+            ),
+            radial-gradient(
+                    circle at bottom left,
+                    rgba(74, 144, 164, 0.035),
+                    transparent 28%
+            ),
+            linear-gradient(
+                    180deg,
+                    #F7FAF9 0%,
+                    var(--vet-background) 100%
+            );
 }
 
 
@@ -21,32 +95,66 @@
    ========================================================= */
 
 .pedido-page .page-header {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     gap: 24px;
 
-    margin-bottom: 28px;
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 0 auto 28px;
+}
+
+.pedido-page .page-header::before {
+    content: "";
+
+    position: absolute;
+
+    top: -12px;
+    left: 0;
+
+    width: 48px;
+    height: 3px;
+
+    border-radius: 999px;
+
+    background:
+            linear-gradient(
+                    90deg,
+                    var(--vet-primary),
+                    var(--vet-secondary)
+            );
+}
+
+.pedido-page .page-title {
+    min-width: 0;
 }
 
 .pedido-page .page-title h1 {
-    margin: 0 0 7px;
+    margin: 8px 0 7px;
 
-    color: #1f2937;
+    color: var(--vet-text);
 
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 750;
 
-    letter-spacing: -0.5px;
+    line-height: 1.15;
+
+    letter-spacing: -0.025em;
 }
 
 .pedido-page .page-title p {
     margin: 0;
 
-    color: #6b7280;
+    color: var(--vet-text-secondary);
 
-    font-size: 15px;
+    font-size: 14px;
+
+    line-height: 1.55;
 }
 
 
@@ -66,32 +174,43 @@
 
     padding: 0 18px;
 
-    border: none;
-    border-radius: 9px;
+    box-sizing: border-box;
 
-    background: #2563eb;
-    color: #ffffff;
+    border: 1px solid transparent;
+    border-radius: var(--vet-radius-md);
 
-    font-size: 14px;
-    font-weight: 600;
+    background:
+            linear-gradient(
+                    135deg,
+                    var(--vet-primary),
+                    var(--vet-primary-dark)
+            );
+
+    color: #FFFFFF;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 700;
 
     text-decoration: none;
 
     cursor: pointer;
 
+    box-shadow:
+            0 5px 14px rgba(42, 157, 143, 0.16);
+
     transition:
-            background 0.2s ease,
-            transform 0.2s ease,
-            box-shadow 0.2s ease;
+            background var(--vet-transition-normal),
+            transform var(--vet-transition-fast),
+            box-shadow var(--vet-transition-normal);
 }
 
 .pedido-page .btn-primary:hover {
-    background: #1d4ed8;
-
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 
     box-shadow:
-            0 5px 14px rgba(37, 99, 235, 0.20);
+            0 8px 20px rgba(42, 157, 143, 0.22);
 }
 
 .pedido-page .btn-primary:active {
@@ -100,27 +219,34 @@
 
 
 /* =========================================================
-   CARD
+   CARD PRINCIPAL
    ========================================================= */
 
 .pedido-page .content-card {
     width: 100%;
+    max-width: 1400px;
 
-    background: #ffffff;
+    margin: 0 auto;
 
-    border: 1px solid #e5e7eb;
+    background:
+            linear-gradient(
+                    180deg,
+                    #FFFFFF,
+                    #FCFEFD
+            );
 
-    border-radius: 14px;
+    border: 1px solid var(--vet-border);
 
-    box-shadow:
-            0 2px 8px rgba(15, 23, 42, 0.04);
+    border-radius: var(--vet-radius-xl);
+
+    box-shadow: var(--vet-shadow-md);
 
     overflow: hidden;
 }
 
 
 /* =========================================================
-   BUSCA
+   ÁREA DE BUSCA
    ========================================================= */
 
 .pedido-page .search-area {
@@ -130,9 +256,14 @@
 
     padding: 20px 22px;
 
-    border-bottom: 1px solid #eef0f3;
+    border-bottom: 1px solid var(--vet-border-light);
 
-    background: #ffffff;
+    background:
+            linear-gradient(
+                    180deg,
+                    #F9FCFB,
+                    #FFFFFF
+            );
 }
 
 .pedido-page .search-box {
@@ -143,7 +274,7 @@
     align-items: center;
 
     width: 100%;
-    max-width: 420px;
+    max-width: 430px;
 }
 
 .pedido-page .search-icon {
@@ -156,7 +287,7 @@
     align-items: center;
     justify-content: center;
 
-    color: #9ca3af;
+    color: var(--vet-text-muted);
 
     font-size: 15px;
 
@@ -165,39 +296,50 @@
 
 .pedido-page .search-box input {
     width: 100%;
-    height: 42px;
+    height: 44px;
 
     padding: 0 14px 0 42px;
 
-    border: 1px solid #dfe3e8;
+    box-sizing: border-box;
 
-    border-radius: 9px;
+    border: 1px solid var(--vet-border);
 
-    background: #f9fafb;
+    border-radius: var(--vet-radius-md);
 
-    color: #1f2937;
+    background: var(--vet-surface-soft);
 
-    font-size: 14px;
+    color: var(--vet-text);
+
+    font-family: inherit;
+
+    font-size: 13px;
 
     outline: none;
 
+    box-shadow: var(--vet-shadow-xs);
+
     transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease,
-            background 0.2s ease;
+            border-color var(--vet-transition-normal),
+            box-shadow var(--vet-transition-normal),
+            background var(--vet-transition-normal);
 }
 
 .pedido-page .search-box input::placeholder {
-    color: #9ca3af;
+    color: var(--vet-text-muted);
+}
+
+.pedido-page .search-box input:hover {
+    border-color: #C7DDD9;
 }
 
 .pedido-page .search-box input:focus {
-    background: #ffffff;
+    background: #FFFFFF;
 
-    border-color: #2563eb;
+    border-color: var(--vet-primary);
 
     box-shadow:
-            0 0 0 3px rgba(37, 99, 235, 0.10);
+            0 0 0 3px rgba(42, 157, 143, 0.10),
+            0 4px 12px rgba(42, 157, 143, 0.05);
 }
 
 
@@ -209,6 +351,9 @@
     width: 100%;
 
     overflow-x: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #C8DAD7 transparent;
 }
 
 .pedido-page .data-table {
@@ -216,9 +361,10 @@
 
     min-width: 850px;
 
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
 
-    font-size: 14px;
+    font-size: 13px;
 }
 
 
@@ -227,7 +373,7 @@
    ========================================================= */
 
 .pedido-page .data-table thead {
-    background: #f8fafc;
+    background: #F6FAF9;
 }
 
 .pedido-page .data-table thead th {
@@ -235,18 +381,18 @@
 
     padding: 0 20px;
 
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--vet-border);
 
-    color: #6b7280;
+    color: var(--vet-text-secondary);
 
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 750;
 
     text-align: left;
 
     text-transform: uppercase;
 
-    letter-spacing: 0.4px;
+    letter-spacing: 0.045em;
 
     white-space: nowrap;
 }
@@ -257,14 +403,14 @@
    ========================================================= */
 
 .pedido-page .pedido-row {
-    background: #ffffff;
+    background: #FFFFFF;
 
     transition:
-            background 0.15s ease;
+            background var(--vet-transition-fast);
 }
 
 .pedido-page .pedido-row:hover {
-    background: #f8fafc;
+    background: #F8FCFB;
 }
 
 .pedido-page .data-table tbody td {
@@ -272,22 +418,26 @@
 
     padding: 10px 20px;
 
-    border-bottom: 1px solid #eef0f3;
+    border-bottom: 1px solid var(--vet-border-light);
 
-    color: #374151;
+    color: var(--vet-text-secondary);
 
     vertical-align: middle;
 }
 
+.pedido-page .data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
 
 /* =========================================================
-   PEDIDO
+   IDENTIFICAÇÃO DO PEDIDO
    ========================================================= */
 
 .pedido-page .pedido-id {
-    color: #2563eb !important;
+    color: var(--vet-primary-dark) !important;
 
-    font-weight: 700;
+    font-weight: 800;
 
     white-space: nowrap;
 }
@@ -298,7 +448,7 @@
    ========================================================= */
 
 .pedido-page .pedido-data {
-    color: #4b5563 !important;
+    color: var(--vet-text-secondary) !important;
 
     white-space: nowrap;
 }
@@ -314,6 +464,8 @@
     align-items: center;
 
     gap: 10px;
+
+    min-width: 0;
 }
 
 .pedido-page .cliente-avatar {
@@ -322,24 +474,39 @@
     align-items: center;
     justify-content: center;
 
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(42, 157, 143, 0.12);
 
     border-radius: 50%;
 
-    background: #eff6ff;
+    background:
+            linear-gradient(
+                    145deg,
+                    var(--vet-primary-light),
+                    var(--vet-secondary-light)
+            );
+
+    color: var(--vet-primary-dark);
 
     font-size: 15px;
-
-    flex-shrink: 0;
 }
 
 .pedido-page .cliente-info span:last-child {
-    color: #1f2937;
+    min-width: 0;
 
-    font-weight: 500;
+    color: var(--vet-text);
+
+    font-weight: 600;
 
     white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
 }
 
 
@@ -348,9 +515,9 @@
    ========================================================= */
 
 .pedido-page .pedido-valor {
-    color: #111827 !important;
+    color: var(--vet-text) !important;
 
-    font-weight: 700;
+    font-weight: 800;
 
     white-space: nowrap;
 }
@@ -366,53 +533,96 @@
     align-items: center;
     justify-content: center;
 
-    min-width: 90px;
+    min-width: 92px;
     min-height: 30px;
 
     padding: 0 11px;
 
+    box-sizing: border-box;
+
+    border: 1px solid transparent;
+
     border-radius: 999px;
 
-    background: #eff6ff;
-    color: #2563eb;
+    background: var(--vet-secondary-light);
+    color: var(--vet-secondary);
 
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 750;
 
     white-space: nowrap;
 }
 
 
-/* Status comuns */
+/* =========================================================
+   STATUS - PENDENTE
+   ========================================================= */
 
 .pedido-page .status-badge[data-status="PENDENTE"] {
-    background: #fff7ed;
-    color: #ea580c;
+    background: var(--vet-warning-light);
+    color: #A96816;
+
+    border-color: rgba(231, 162, 59, 0.14);
 }
+
+
+/* =========================================================
+   STATUS - CONFIRMADO
+   ========================================================= */
 
 .pedido-page .status-badge[data-status="CONFIRMADO"] {
-    background: #eff6ff;
-    color: #2563eb;
+    background: var(--vet-secondary-light);
+    color: #39788B;
+
+    border-color: rgba(74, 144, 164, 0.14);
 }
+
+
+/* =========================================================
+   STATUS - PROCESSANDO
+   ========================================================= */
 
 .pedido-page .status-badge[data-status="PROCESSANDO"] {
-    background: #f5f3ff;
-    color: #7c3aed;
+    background: #F1EEFF;
+    color: #7054B5;
+
+    border-color: rgba(112, 84, 181, 0.12);
 }
+
+
+/* =========================================================
+   STATUS - PAGO
+   ========================================================= */
 
 .pedido-page .status-badge[data-status="PAGO"] {
-    background: #ecfdf5;
-    color: #059669;
+    background: var(--vet-success-light);
+    color: #287A52;
+
+    border-color: rgba(59, 170, 114, 0.14);
 }
+
+
+/* =========================================================
+   STATUS - CONCLUÍDO
+   ========================================================= */
 
 .pedido-page .status-badge[data-status="CONCLUIDO"] {
-    background: #f0fdf4;
-    color: #16a34a;
+    background: var(--vet-success-light);
+    color: #287A52;
+
+    border-color: rgba(59, 170, 114, 0.14);
 }
 
+
+/* =========================================================
+   STATUS - CANCELADO
+   ========================================================= */
+
 .pedido-page .status-badge[data-status="CANCELADO"] {
-    background: #fef2f2;
-    color: #dc2626;
+    background: var(--vet-danger-light);
+    color: var(--vet-danger-dark);
+
+    border-color: rgba(217, 92, 92, 0.14);
 }
 
 
@@ -436,48 +646,77 @@
     align-items: center;
     justify-content: center;
 
-    width: 34px;
-    height: 34px;
+    width: 35px;
+    height: 35px;
 
-    border-radius: 8px;
+    border: 1px solid transparent;
+
+    border-radius: var(--vet-radius-sm);
 
     text-decoration: none;
 
-    font-size: 15px;
+    font-size: 14px;
+
+    cursor: pointer;
 
     transition:
-            background 0.2s ease,
-            transform 0.2s ease;
+            background var(--vet-transition-normal),
+            border-color var(--vet-transition-normal),
+            color var(--vet-transition-normal),
+            transform var(--vet-transition-fast),
+            box-shadow var(--vet-transition-normal);
 }
 
 
-/* Editar */
+/* =========================================================
+   AÇÃO - EDITAR
+   ========================================================= */
 
 .pedido-page .btn-edit {
-    background: #eff6ff;
+    background: var(--vet-secondary-light);
 
-    color: #2563eb;
+    color: var(--vet-secondary);
+
+    border-color: rgba(74, 144, 164, 0.10);
 }
 
 .pedido-page .btn-edit:hover {
-    background: #dbeafe;
+    background: #DCEEF2;
+
+    color: #39788B;
 
     transform: translateY(-1px);
+
+    box-shadow:
+            0 4px 10px rgba(74, 144, 164, 0.10);
 }
 
 
-/* Excluir */
+/* =========================================================
+   AÇÃO - EXCLUIR
+   ========================================================= */
 
 .pedido-page .btn-delete {
-    background: #fef2f2;
+    background: var(--vet-danger-light);
 
-    color: #dc2626;
+    color: var(--vet-danger);
+
+    border-color: rgba(217, 92, 92, 0.10);
 }
 
 .pedido-page .btn-delete:hover {
-    background: #fee2e2;
+    background: #F9DDDD;
+
+    color: var(--vet-danger-dark);
 
     transform: translateY(-1px);
+
+    box-shadow:
+            0 4px 10px rgba(217, 92, 92, 0.10);
+}
+
+.pedido-page .btn-action:active {
+    transform: translateY(0);
 }
 
 
@@ -486,11 +725,18 @@
    ========================================================= */
 
 .pedido-page .empty-state {
-    padding: 65px 20px !important;
+    padding: 68px 20px !important;
 
     text-align: center;
 
-    color: #6b7280;
+    color: var(--vet-text-secondary);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #FFFFFF,
+                    #FAFCFB
+            );
 }
 
 .pedido-page .empty-icon {
@@ -499,14 +745,23 @@
     align-items: center;
     justify-content: center;
 
-    width: 64px;
-    height: 64px;
+    width: 66px;
+    height: 66px;
 
     margin: 0 auto 18px;
 
+    border: 1px solid rgba(42, 157, 143, 0.13);
+
     border-radius: 50%;
 
-    background: #eff6ff;
+    background:
+            linear-gradient(
+                    145deg,
+                    var(--vet-primary-light),
+                    var(--vet-secondary-light)
+            );
+
+    color: var(--vet-primary-dark);
 
     font-size: 28px;
 }
@@ -514,23 +769,63 @@
 .pedido-page .empty-state h3 {
     margin: 0 0 8px;
 
-    color: #374151;
+    color: var(--vet-text);
 
     font-size: 17px;
-    font-weight: 700;
+    font-weight: 750;
 }
 
 .pedido-page .empty-state p {
     margin: 0 0 22px;
 
-    color: #9ca3af;
+    color: var(--vet-text-muted);
 
-    font-size: 14px;
+    font-size: 13px;
 }
 
 
 /* =========================================================
-   RESPONSIVIDADE
+   ACESSIBILIDADE
+   ========================================================= */
+
+.pedido-page a:focus-visible,
+.pedido-page button:focus-visible,
+.pedido-page input:focus-visible {
+    outline: 3px solid rgba(42, 157, 143, 0.22);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   SELEÇÃO
+   ========================================================= */
+
+.pedido-page ::selection {
+    background: var(--vet-primary-light);
+
+    color: var(--vet-primary-dark);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - 1100PX
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .pedido-page {
+        padding: 28px;
+    }
+
+    .pedido-page .data-table {
+        min-width: 800px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - 900PX
    ========================================================= */
 
 @media (max-width: 900px) {
@@ -544,10 +839,18 @@
     }
 
     .pedido-page .page-title h1 {
-        font-size: 26px;
+        font-size: 27px;
+    }
+
+    .pedido-page .content-card {
+        border-radius: var(--vet-radius-lg);
     }
 }
 
+
+/* =========================================================
+   RESPONSIVIDADE - 650PX
+   ========================================================= */
 
 @media (max-width: 650px) {
 
@@ -576,6 +879,69 @@
     }
 
     .pedido-page .content-card {
-        border-radius: 10px;
+        border-radius: var(--vet-radius-lg);
+    }
+
+    .pedido-page .data-table thead th,
+    .pedido-page .data-table tbody td {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - 480PX
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .pedido-page {
+        padding: 15px 12px;
+    }
+
+    .pedido-page .page-header::before {
+        top: -8px;
+
+        width: 38px;
+    }
+
+    .pedido-page .page-title h1 {
+        font-size: 23px;
+    }
+
+    .pedido-page .page-title p {
+        font-size: 13px;
+    }
+
+    .pedido-page .search-area {
+        padding: 14px;
+    }
+
+    .pedido-page .search-box input {
+        height: 42px;
+    }
+
+    .pedido-page .empty-state {
+        padding: 54px 16px !important;
+    }
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pedido-page *,
+    .pedido-page *::before,
+    .pedido-page *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
     }
 }

@@ -4,29 +4,101 @@
    ========================================================= */
 
 
-/* ---------------------------------------------------------
-   PÁGINA
-   --------------------------------------------------------- */
+/* =========================================================
+   VARIÁVEIS
+   ========================================================= */
 
-.pets-page {
-    flex: 1;
-    min-width: 0;
+:root {
+    --vet-primary: #2A9D8F;
+    --vet-primary-dark: #217A70;
+    --vet-primary-light: #DFF3EF;
 
-    padding: 32px;
+    --vet-secondary: #4A90A4;
+    --vet-secondary-light: #E8F4F7;
 
-    min-height: calc(100vh - 70px);
+    --vet-background: #F4F8F7;
+    --vet-surface: #FFFFFF;
+    --vet-surface-soft: #F8FBFA;
 
-    background: #f6f8fb;
+    --vet-text: #203331;
+    --vet-text-secondary: #5F7471;
+    --vet-text-muted: #8A9A98;
 
-    box-sizing: border-box;
+    --vet-border: #DDEAE7;
+    --vet-border-light: #EAF2F0;
+
+    --vet-success: #3BAA72;
+    --vet-success-light: #E5F6ED;
+
+    --vet-warning: #E7A23B;
+    --vet-warning-light: #FFF4DF;
+
+    --vet-danger: #D95C5C;
+    --vet-danger-dark: #BD4949;
+    --vet-danger-light: #FDEAEA;
+
+    --vet-shadow-xs:
+            0 1px 3px rgba(32, 51, 49, 0.04);
+
+    --vet-shadow-sm:
+            0 4px 12px rgba(32, 51, 49, 0.06);
+
+    --vet-shadow-md:
+            0 8px 24px rgba(32, 51, 49, 0.08);
+
+    --vet-shadow-lg:
+            0 16px 40px rgba(32, 51, 49, 0.10);
+
+    --radius-sm: 8px;
+    --radius-md: 11px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --radius-xxl: 22px;
+
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
+   PÁGINA
+   ========================================================= */
+
+.pets-page {
+    position: relative;
+
+    flex: 1;
+    min-width: 0;
+
+    min-height: calc(100vh - 70px);
+
+    padding: 32px;
+
+    box-sizing: border-box;
+
+    background:
+            radial-gradient(
+                    circle at top right,
+                    rgba(42, 157, 143, 0.055),
+                    transparent 30%
+            ),
+            linear-gradient(
+                    180deg,
+                    #F7FAF9 0%,
+                    var(--vet-background) 100%
+            );
+
+    color: var(--vet-text);
+}
+
+
+/* =========================================================
    CABEÇALHO
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .page-header {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -36,108 +108,192 @@
     margin-bottom: 28px;
 }
 
-.pets-page .page-header h1 {
-    margin: 0 0 6px;
+.pets-page .page-header::before {
+    content: "";
 
-    color: #1f2937;
+    position: absolute;
+
+    top: -12px;
+    left: 0;
+
+    width: 42px;
+    height: 3px;
+
+    border-radius: 999px;
+
+    background: linear-gradient(
+            90deg,
+            var(--vet-primary),
+            var(--vet-secondary)
+    );
+}
+
+.pets-page .page-header h1 {
+    margin: 0 0 7px;
+
+    color: var(--vet-text);
 
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 750;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.025em;
 }
 
 .pets-page .page-header p {
     margin: 0;
 
-    color: #6b7280;
+    color: var(--vet-text-secondary);
 
-    font-size: 15px;
+    font-size: 14px;
+
+    line-height: 1.6;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    BOTÃO PRINCIPAL
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .btn-primary {
+    position: relative;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
     gap: 8px;
 
-    padding: 12px 18px;
+    min-height: 44px;
 
-    border: none;
-    border-radius: 10px;
+    padding: 11px 18px;
 
-    background: #2563eb;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
 
-    color: #ffffff;
+    background:
+            linear-gradient(
+                    135deg,
+                    var(--vet-primary),
+                    var(--vet-primary-dark)
+            );
 
+    color: #FFFFFF;
+
+    font-family: inherit;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
+
+    line-height: 1;
 
     text-decoration: none;
 
+    white-space: nowrap;
+
     cursor: pointer;
 
+    overflow: hidden;
+
+    box-shadow:
+            0 5px 14px rgba(42, 157, 143, 0.18);
+
     transition:
-            background 0.2s ease,
-            transform 0.2s ease,
-            box-shadow 0.2s ease;
+            transform var(--transition-normal),
+            box-shadow var(--transition-normal),
+            background var(--transition-normal);
+}
+
+.pets-page .btn-primary::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.20),
+            transparent
+    );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.55s ease;
 }
 
 .pets-page .btn-primary:hover {
-    background: #1d4ed8;
-
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 
     box-shadow:
-            0 5px 14px rgba(37, 99, 235, 0.20);
+            0 9px 22px rgba(42, 157, 143, 0.23);
+}
+
+.pets-page .btn-primary:hover::before {
+    left: 140%;
+}
+
+.pets-page .btn-primary:active {
+    transform: translateY(0);
 }
 
 .pets-page .btn-primary span {
-    font-size: 20px;
+    position: relative;
+
+    font-size: 19px;
     line-height: 1;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    TOOLBAR
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .pets-toolbar {
     display: flex;
     align-items: center;
 
+    gap: 18px;
+
     margin-bottom: 20px;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    BUSCA
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .search-box {
     position: relative;
 
     width: 100%;
-    max-width: 480px;
+    max-width: 500px;
 }
 
 .pets-page .search-icon {
     position: absolute;
 
-    left: 15px;
     top: 50%;
+    left: 15px;
+
+    z-index: 2;
 
     transform: translateY(-50%);
 
-    color: #9ca3af;
+    color: var(--vet-text-muted);
 
-    font-size: 21px;
+    font-size: 20px;
 
     pointer-events: none;
+
+    transition:
+            color var(--transition-fast),
+            transform var(--transition-fast);
 }
 
 .pets-page .search-box input {
@@ -148,146 +304,284 @@
 
     box-sizing: border-box;
 
-    border: 1px solid #dbe1e8;
-    border-radius: 10px;
+    border: 1px solid var(--vet-border);
+    border-radius: var(--radius-md);
 
-    background: #ffffff;
+    background:
+            linear-gradient(
+                    180deg,
+                    #FFFFFF,
+                    #FBFDFC
+            );
 
-    color: #1f2937;
+    color: var(--vet-text);
 
     font-family: inherit;
     font-size: 14px;
 
     outline: none;
 
+    box-shadow: var(--vet-shadow-xs);
+
     transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
+            border-color var(--transition-normal),
+            box-shadow var(--transition-normal),
+            background var(--transition-normal);
 }
 
 .pets-page .search-box input::placeholder {
-    color: #9ca3af;
+    color: var(--vet-text-muted);
+}
+
+.pets-page .search-box input:hover {
+    border-color: #C7DCD8;
 }
 
 .pets-page .search-box input:focus {
-    border-color: #2563eb;
+    border-color: var(--vet-primary);
+
+    background: var(--vet-surface);
 
     box-shadow:
-            0 0 0 3px rgba(37, 99, 235, 0.10);
+            0 0 0 3px rgba(42, 157, 143, 0.11),
+            var(--vet-shadow-sm);
+}
+
+.pets-page .search-box:focus-within .search-icon {
+    color: var(--vet-primary);
+
+    transform:
+            translateY(-50%)
+            scale(1.05);
 }
 
 
-/* ---------------------------------------------------------
-   CARD
-   --------------------------------------------------------- */
+/* =========================================================
+   CARD DA TABELA
+   ========================================================= */
 
 .pets-page .table-card {
-    background: #ffffff;
+    position: relative;
 
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
+    width: 100%;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #FFFFFF 0%,
+                    #FEFFFF 100%
+            );
+
+    border: 1px solid var(--vet-border);
+    border-radius: var(--radius-lg);
 
     overflow: hidden;
 
-    box-shadow:
-            0 2px 8px rgba(15, 23, 42, 0.04);
+    box-shadow: var(--vet-shadow-sm);
+
+    transition:
+            border-color var(--transition-normal),
+            box-shadow var(--transition-normal);
+}
+
+.pets-page .table-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+
+    background: linear-gradient(
+            90deg,
+            var(--vet-primary),
+            var(--vet-secondary)
+    );
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    CABEÇALHO DA TABELA
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .table-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
+    gap: 18px;
+
     padding: 20px 24px;
 
-    border-bottom: 1px solid #eef0f3;
+    border-bottom: 1px solid var(--vet-border-light);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    rgba(248, 251, 250, 0.90),
+                    rgba(255, 255, 255, 0.95)
+            );
 }
 
 .pets-page .table-header h2 {
-    margin: 0 0 4px;
+    margin: 0 0 5px;
 
-    color: #1f2937;
+    color: var(--vet-text);
 
     font-size: 17px;
-    font-weight: 650;
+    font-weight: 700;
+
+    letter-spacing: -0.01em;
 }
 
 .pets-page .pet-count {
-    color: #6b7280;
+    color: var(--vet-text-muted);
 
     font-size: 13px;
+    font-weight: 500;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    WRAPPER
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .table-wrapper {
     width: 100%;
 
     overflow-x: auto;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+            #C7D9D5
+            transparent;
+}
+
+.pets-page .table-wrapper::-webkit-scrollbar {
+    height: 7px;
+}
+
+.pets-page .table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.pets-page .table-wrapper::-webkit-scrollbar-thumb {
+    background: #C7D9D5;
+
+    border-radius: 999px;
+}
+
+.pets-page .table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #AFC8C3;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    TABELA
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .pets-table {
     width: 100%;
-
     min-width: 1000px;
 
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
 
     text-align: left;
 }
 
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
 .pets-page .pets-table thead {
-    background: #f8fafc;
+    background:
+            linear-gradient(
+                    180deg,
+                    #F8FBFA,
+                    #F5F9F8
+            );
 }
 
 .pets-page .pets-table th {
-    padding: 14px 20px;
+    padding: 14px 18px;
 
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--vet-border);
 
-    color: #6b7280;
+    color: var(--vet-text-secondary);
 
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 750;
+
+    text-align: left;
 
     text-transform: uppercase;
 
-    letter-spacing: 0.04em;
+    letter-spacing: 0.065em;
 
     white-space: nowrap;
 }
 
+.pets-page .pets-table th:first-child {
+    padding-left: 24px;
+}
+
+.pets-page .pets-table th:last-child {
+    padding-right: 24px;
+}
+
+
+/* =========================================================
+   CÉLULAS
+   ========================================================= */
+
 .pets-page .pets-table td {
-    padding: 16px 20px;
+    padding: 16px 18px;
 
-    border-bottom: 1px solid #eef0f3;
+    border-bottom: 1px solid var(--vet-border-light);
 
-    color: #374151;
+    color: var(--vet-text-secondary);
 
     font-size: 14px;
+
+    line-height: 1.4;
 
     vertical-align: middle;
 }
 
+.pets-page .pets-table td:first-child {
+    padding-left: 24px;
+}
+
+.pets-page .pets-table td:last-child {
+    padding-right: 24px;
+}
+
+
+/* =========================================================
+   LINHAS
+   ========================================================= */
+
 .pets-page .pets-table tbody tr {
-    transition: background 0.15s ease;
+    background: var(--vet-surface);
+
+    transition:
+            background var(--transition-fast),
+            box-shadow var(--transition-fast);
 }
 
 .pets-page .pets-table tbody tr:hover {
-    background: #f8fafc;
+    background:
+            linear-gradient(
+                    90deg,
+                    rgba(223, 243, 239, 0.45),
+                    rgba(255, 255, 255, 0.85)
+            );
 }
 
 .pets-page .pets-table tbody tr:last-child td {
@@ -295,9 +589,9 @@
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    INFORMAÇÕES DO PET
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .pet-info {
     display: flex;
@@ -305,7 +599,7 @@
 
     gap: 12px;
 
-    min-width: 180px;
+    min-width: 200px;
 }
 
 .pets-page .pet-avatar {
@@ -318,11 +612,20 @@
 
     flex-shrink: 0;
 
+    border: 1px solid rgba(42, 157, 143, 0.12);
     border-radius: 50%;
 
-    background: #eff6ff;
+    background:
+            linear-gradient(
+                    145deg,
+                    var(--vet-primary-light),
+                    var(--vet-secondary-light)
+            );
 
     font-size: 21px;
+
+    box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, 0.70);
 }
 
 .pets-page .pet-info strong {
@@ -330,47 +633,62 @@
 
     margin-bottom: 3px;
 
-    color: #1f2937;
+    color: var(--vet-text);
 
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
+
+    line-height: 1.3;
 }
 
 .pets-page .pet-info small {
     display: block;
 
-    color: #9ca3af;
+    color: var(--vet-text-muted);
 
     font-size: 12px;
+
+    line-height: 1.35;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    BADGE DE ESPÉCIE
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .species-badge {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
 
-    padding: 6px 10px;
+    gap: 5px;
 
-    border-radius: 20px;
+    min-height: 28px;
 
-    background: #eff6ff;
+    padding: 4px 11px;
 
-    color: #2563eb;
+    border: 1px solid rgba(42, 157, 143, 0.13);
+    border-radius: 999px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    var(--vet-primary-light),
+                    var(--vet-secondary-light)
+            );
+
+    color: var(--vet-primary-dark);
 
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
 
     white-space: nowrap;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    CLIENTE / TUTOR
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .owner-info {
     display: flex;
@@ -378,7 +696,7 @@
 
     gap: 9px;
 
-    min-width: 150px;
+    min-width: 170px;
 }
 
 .pets-page .owner-avatar {
@@ -386,49 +704,58 @@
     align-items: center;
     justify-content: center;
 
-    width: 30px;
-    height: 30px;
+    width: 31px;
+    height: 31px;
 
     flex-shrink: 0;
 
+    border: 1px solid var(--vet-border);
     border-radius: 50%;
 
-    background: #f1f5f9;
+    background:
+            linear-gradient(
+                    145deg,
+                    #F3F8F7,
+                    #EAF3F1
+            );
 
-    color: #475569;
+    color: var(--vet-text-secondary);
 
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 750;
 }
 
 .pets-page .owner-info > span {
-    color: #374151;
+    color: var(--vet-text-secondary);
 
     font-size: 13px;
+    font-weight: 550;
 
     white-space: nowrap;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    INFORMAÇÃO NÃO CADASTRADA
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .not-informed {
-    color: #9ca3af !important;
+    color: var(--vet-text-muted) !important;
 
     font-size: 13px;
+
+    font-style: italic;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    AÇÕES
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .pets-page .actions-column {
     width: 100px;
 
-    text-align: center;
+    text-align: center !important;
 }
 
 .pets-page .action-buttons {
@@ -436,7 +763,7 @@
     align-items: center;
     justify-content: center;
 
-    gap: 8px;
+    gap: 7px;
 }
 
 .pets-page .action-button {
@@ -444,81 +771,126 @@
     align-items: center;
     justify-content: center;
 
-    width: 34px;
-    height: 34px;
+    width: 35px;
+    height: 35px;
 
     padding: 0;
 
-    border: 1px solid transparent;
+    border: 1px solid var(--vet-border);
+    border-radius: var(--radius-sm);
 
-    border-radius: 8px;
+    background: var(--vet-surface);
 
-    background: transparent;
+    color: var(--vet-text-secondary);
 
-    font-size: 16px;
+    font-family: inherit;
+    font-size: 15px;
 
     text-decoration: none;
 
     cursor: pointer;
 
+    box-shadow: var(--vet-shadow-xs);
+
     transition:
-            background 0.2s ease,
-            border-color 0.2s ease,
-            transform 0.2s ease;
+            background var(--transition-fast),
+            border-color var(--transition-fast),
+            color var(--transition-fast),
+            transform var(--transition-fast),
+            box-shadow var(--transition-fast);
 }
 
 .pets-page .action-button:hover {
-    transform: translateY(-1px);
-}
-
-
-/* Editar */
-
-.pets-page .action-button.edit {
-    background: #eff6ff;
-
-    border-color: #dbeafe;
-}
-
-.pets-page .action-button.edit:hover {
-    background: #dbeafe;
-}
-
-
-/* Excluir */
-
-.pets-page .action-button.delete {
-    background: #fef2f2;
-
-    border-color: #fee2e2;
-}
-
-.pets-page .action-button.delete:hover {
-    background: #fee2e2;
+    transform: translateY(-2px);
 }
 
 
 /* ---------------------------------------------------------
-   ESTADO VAZIO
+   EDITAR
    --------------------------------------------------------- */
 
+.pets-page .action-button.edit:hover {
+    border-color: #B8DED8;
+
+    background: var(--vet-primary-light);
+
+    color: var(--vet-primary-dark);
+
+    box-shadow:
+            0 4px 10px rgba(42, 157, 143, 0.11);
+}
+
+
+/* ---------------------------------------------------------
+   EXCLUIR
+   --------------------------------------------------------- */
+
+.pets-page .action-button.delete:hover {
+    border-color: #EDC0C0;
+
+    background: var(--vet-danger-light);
+
+    color: var(--vet-danger-dark);
+
+    box-shadow:
+            0 4px 10px rgba(217, 92, 92, 0.11);
+}
+
+
+/* =========================================================
+   ESTADO VAZIO
+   ========================================================= */
+
 .pets-page .empty-state {
+    position: relative;
+
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
 
-    padding: 60px 30px;
+    min-height: 350px;
 
-    background: #ffffff;
+    padding: 50px 40px;
 
-    border: 1px solid #e5e7eb;
+    background:
+            radial-gradient(
+                    circle at top,
+                    rgba(42, 157, 143, 0.055),
+                    transparent 45%
+            ),
+            var(--vet-surface);
 
-    border-radius: 14px;
+    border: 1px solid var(--vet-border);
+    border-radius: var(--radius-lg);
 
     text-align: center;
 
-    box-shadow:
-            0 2px 8px rgba(15, 23, 42, 0.04);
+    box-shadow: var(--vet-shadow-sm);
+
+    overflow: hidden;
+}
+
+.pets-page .empty-state::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 90px;
+    height: 3px;
+
+    transform: translateX(-50%);
+
+    border-radius: 0 0 999px 999px;
+
+    background: linear-gradient(
+            90deg,
+            var(--vet-primary),
+            var(--vet-secondary)
+    );
 }
 
 .pets-page .empty-icon {
@@ -526,48 +898,63 @@
     align-items: center;
     justify-content: center;
 
-    width: 70px;
-    height: 70px;
+    width: 76px;
+    height: 76px;
 
     margin-bottom: 18px;
 
+    border: 1px solid rgba(42, 157, 143, 0.12);
     border-radius: 50%;
 
-    background: #eff6ff;
+    background:
+            linear-gradient(
+                    145deg,
+                    var(--vet-primary-light),
+                    var(--vet-secondary-light)
+            );
 
-    font-size: 30px;
+    font-size: 32px;
+
+    box-shadow:
+            0 8px 22px rgba(42, 157, 143, 0.08);
 }
 
 .pets-page .empty-state h2 {
     margin: 0 0 8px;
 
-    color: #1f2937;
+    color: var(--vet-text);
 
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 750;
+
+    letter-spacing: -0.015em;
 }
 
 .pets-page .empty-state p {
-    max-width: 420px;
+    max-width: 440px;
 
-    margin: 0 0 24px;
+    margin: 0 0 22px;
 
-    color: #6b7280;
+    color: var(--vet-text-secondary);
 
     font-size: 14px;
 
-    line-height: 1.6;
+    line-height: 1.65;
 }
 
 
-/* ---------------------------------------------------------
-   NENHUM RESULTADO
-   --------------------------------------------------------- */
+/* =========================================================
+   NENHUM RESULTADO DA BUSCA
+   ========================================================= */
 
 .pets-page .no-search-results {
-    padding: 35px 20px;
+    padding: 40px 20px;
 
-    color: #6b7280;
+    border-top: 1px solid var(--vet-border-light);
+
+    background: var(--vet-surface-soft);
+
+    color: var(--vet-text-secondary);
 
     text-align: center;
 }
@@ -575,7 +962,9 @@
 .pets-page .no-search-results span {
     display: block;
 
-    margin-bottom: 10px;
+    margin-bottom: 9px;
+
+    color: var(--vet-primary);
 
     font-size: 28px;
 }
@@ -584,12 +973,38 @@
     margin: 0;
 
     font-size: 14px;
+
+    line-height: 1.5;
 }
 
 
-/* ---------------------------------------------------------
-   RESPONSIVIDADE
-   --------------------------------------------------------- */
+/* =========================================================
+   ACESSIBILIDADE / FOCO
+   ========================================================= */
+
+.pets-page a:focus-visible,
+.pets-page button:focus-visible,
+.pets-page input:focus-visible {
+    outline: 3px solid rgba(42, 157, 143, 0.22);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   SELEÇÃO
+   ========================================================= */
+
+.pets-page ::selection {
+    background: var(--vet-primary-light);
+
+    color: var(--vet-primary-dark);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - TABLET
+   ========================================================= */
 
 @media (max-width: 1000px) {
 
@@ -601,22 +1016,52 @@
         align-items: flex-start;
 
         flex-direction: column;
+
+        gap: 18px;
     }
 
     .pets-page .page-header .btn-primary {
         width: 100%;
     }
 
+    .pets-page .pets-toolbar {
+        width: 100%;
+    }
+
     .pets-page .search-box {
         max-width: none;
+    }
+
+    .pets-page .table-header {
+        padding: 18px 20px;
+    }
+
+    .pets-page .pets-table {
+        min-width: 950px;
     }
 }
 
 
+/* =========================================================
+   RESPONSIVIDADE - CELULAR
+   ========================================================= */
+
 @media (max-width: 600px) {
 
     .pets-page {
+        min-height: calc(100vh - 60px);
+
         padding: 18px;
+    }
+
+    .pets-page .page-header {
+        margin-bottom: 22px;
+    }
+
+    .pets-page .page-header::before {
+        top: -8px;
+
+        width: 34px;
     }
 
     .pets-page .page-header h1 {
@@ -625,10 +1070,23 @@
 
     .pets-page .page-header p {
         font-size: 13px;
+
+        line-height: 1.55;
+    }
+
+    .pets-page .table-card {
+        border-radius: var(--radius-md);
     }
 
     .pets-page .table-header {
-        padding: 16px;
+        align-items: flex-start;
+        flex-direction: column;
+
+        padding: 17px;
+    }
+
+    .pets-page .pets-table {
+        min-width: 850px;
     }
 
     .pets-page .pets-table th,
@@ -636,7 +1094,93 @@
         padding: 13px 14px;
     }
 
+    .pets-page .pets-table th:first-child,
+    .pets-page .pets-table td:first-child {
+        padding-left: 17px;
+    }
+
+    .pets-page .pets-table th:last-child,
+    .pets-page .pets-table td:last-child {
+        padding-right: 17px;
+    }
+
+    .pets-page .pet-info {
+        gap: 9px;
+
+        min-width: 190px;
+    }
+
+    .pets-page .pet-avatar {
+        width: 37px;
+        height: 37px;
+
+        font-size: 18px;
+    }
+
+    .pets-page .pet-info strong {
+        font-size: 13px;
+    }
+
+    .pets-page .owner-info {
+        min-width: 150px;
+    }
+
     .pets-page .empty-state {
+        min-height: 300px;
+
         padding: 45px 20px;
+    }
+
+    .pets-page .empty-icon {
+        width: 68px;
+        height: 68px;
+
+        font-size: 29px;
+    }
+}
+
+
+/* =========================================================
+   CELULAR PEQUENO
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .pets-page {
+        padding: 14px;
+    }
+
+    .pets-page .page-header h1 {
+        font-size: 23px;
+    }
+
+    .pets-page .search-box input {
+        height: 44px;
+    }
+
+    .pets-page .table-header {
+        padding: 15px;
+    }
+
+    .pets-page .empty-state {
+        padding: 42px 16px;
+    }
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pets-page *,
+    .pets-page *::before,
+    .pets-page *::after {
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
     }
 }

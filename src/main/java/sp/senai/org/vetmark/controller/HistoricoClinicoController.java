@@ -38,34 +38,6 @@ public class HistoricoClinicoController {
         return "historico-clinico/listagem";
     }
 
-
-    @GetMapping("/pet/{petId}")
-    public String historicoDoPet(
-            @PathVariable Long petId,
-            Model model
-    ) {
-
-        var pet = petRepository.findById(petId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Pet não encontrado"
-                        )
-                );
-
-        model.addAttribute(
-                "pet",
-                pet
-        );
-
-        model.addAttribute(
-                "historicos",
-                service.findByPetId(petId)
-        );
-
-        return "historico-clinico/pet";
-    }
-
-
     @GetMapping("/cadastro")
     public String cadastroHistorico(
             Model model

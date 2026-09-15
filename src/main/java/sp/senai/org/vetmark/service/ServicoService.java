@@ -17,20 +17,48 @@ public class ServicoService {
         this.repository = repository;
     }
 
-    public List<ServicoResponse> findAll() {
+    // =========================
+    // MÉTODOS DO THYMELEAF
+    // =========================
+
+    public List<Servico> findAll() {
+        return repository.findAll();
+    }
+
+    public Servico findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Serviço não encontrado")
+                );
+    }
+
+    public Servico save(Servico servico) {
+        return repository.save(servico);
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    // =========================
+    // MÉTODOS DA API
+    // =========================
+
+    public List<ServicoResponse> listarApi() {
+
         return repository.findAll()
                 .stream()
                 .map(this::toResponse)
                 .toList();
     }
 
-    public ServicoResponse findById(Long id) {
-        Servico servico = repository.findById(id)
-                .orElseThrow();
-        return toResponse(servico);
+    public ServicoResponse buscarApi(Long id) {
+
+        return toResponse(findById(id));
     }
 
-    public ServicoResponse create(ServicoRequest request) {
+    public ServicoResponse criarApi(ServicoRequest request) {
+
         Servico servico = new Servico();
 
         servico.setNome(request.nome());
@@ -38,16 +66,35 @@ public class ServicoService {
         servico.setValor(request.valor());
         servico.setAtivo(request.ativo());
 
-        Servico savedServico = repository.save(servico);
-
-        return toResponse(savedServico);
+        return toResponse(repository.save(servico));
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public ServicoResponse atualizarApi(
+            Long id,
+            ServicoRequest request
+    ) {
+
+        Servico servico = findById(id);
+
+        servico.setNome(request.nome());
+        servico.setDescricao(request.descricao());
+        servico.setValor(request.valor());
+        servico.setAtivo(request.ativo());
+
+        return toResponse(repository.save(servico));
     }
+
+    public void excluirApi(Long id) {
+
+        repository.delete(findById(id));
+    }
+
+    // =========================
+    // CONVERSÃO ENTITY → RESPONSE
+    // =========================
 
     private ServicoResponse toResponse(Servico servico) {
+
         return new ServicoResponse(
                 servico.getId(),
                 servico.getNome(),

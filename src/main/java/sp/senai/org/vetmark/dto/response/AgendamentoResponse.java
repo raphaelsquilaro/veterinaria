@@ -1,17 +1,32 @@
 package sp.senai.org.vetmark.dto.response;
 
-import sp.senai.org.vetmark.model.entity.Cliente;
-import sp.senai.org.vetmark.model.entity.Servico;
+import lombok.Builder;
+import lombok.Data;
 import sp.senai.org.vetmark.model.enums.StatusAgendamento;
 
 import java.time.LocalDateTime;
 
-public record AgendamentoResponse(
-        Long id,
-        LocalDateTime dataHora,
-        StatusAgendamento status,
-        String observacoes,
-        Cliente cliente,
-        Servico servico
-) {
+@Data
+@Builder
+public class AgendamentoResponse {
+
+    private Long id;
+
+    private LocalDateTime dataHora;
+
+    private StatusAgendamento status;
+
+    private String observacoes;
+
+    private Long clienteId;
+    private String clienteNome;
+
+    private Long petId;
+    private String petNome;
+
+    private Long veterinarioId;
+    private String veterinarioNome;
+
+    private Long servicoId;
+    private String servicoNome;
 }
